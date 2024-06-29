@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Universidad>
+    <Escuela>
+        <Nombre></Nombre>
+        <Titulacion>
+            <Nombre></Nombre>
+            <Campus></Campus>
+            <CursoAcademico>
+                <Año></Año>
+                <Creditos></Creditos>
+                <Asignaturas>
+                    <Nombre></Nombre>
+                    <Creditos></Creditos>
+                    <nAlumnos></nAlumnos>
+                    <Profesor></Profesor>
+                </Asignaturas>
+            </CursoAcademico>
+        </Titulacion>
+
+        <TitulacionDoble>
+            <Nombre></Nombre>
+            <Campus></Campus>
+            <CursoAcademico>
+                <Año></Año>
+                <Creditos></Creditos>
+                <Asignaturas>
+                    <Nombre></Nombre>
+                    <Codigo></Codigo>
+                    <Creditos></Creditos>
+                    <nAlumnos></nAlumnos>
+                    <Profesor></Profesor>
+                    <Clase></Clase>
+                    <AulaExamen></AulaExamen>
+                </Asignaturas>
+            </CursoAcademico>
+        </TitulacionDoble>
+    </Escuela>
+
+    <Campus>
+        <Nombre></Nombre>
+        <Edificio>
+            <Numero></Numero>
+            <Aulas>
+                <Numero></Numero>
+                <CapacidaClase></CapacidaClase>
+                <CapacidadExamen></CapacidadExamen>
+                <Tipo></Tipo>
+            </Aulas>
+        </Edificio>
+    </Campus>
+</Universidad>
