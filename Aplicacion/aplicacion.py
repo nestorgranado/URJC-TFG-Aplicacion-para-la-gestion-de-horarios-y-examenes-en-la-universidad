@@ -3,12 +3,124 @@ from xml.dom import minidom
 import platform
 import os
 
-def limpiar_consola():
-    if platform.system() == "Windows":
-        os.system('cls')
-    else:
-        os.system('clear')
+class Universidad:
+    def __init__(self):
+        self.campus = []
+        self.escuelas = []
+    def addCampus(self, campus):
+        self.campus.append(campus)
 
+    def addEscuela(self, escuela):
+        self.escuelas.append(escuela)
+    
+    def show(self):
+        print("-Universidad-")
+        for campus in self.campus:
+            campus.show()
+        for escuela in self.escuelas:
+            escuela.show()
+
+class Campus:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.edificos = []
+
+    def addEdificio(self, edificio):
+        self.edificos.append(edificio)
+
+    def show(self):
+        print(" -Campus-")
+        print(f"    nombre : {self.nombre}")
+        for edificio in self.edificos:
+            edificio.show()
+
+class Edificio:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.aulas = []
+    
+    def addAula(self, aula):
+        self.aulas.append(aula)
+
+    def show(self):
+        print("     -Edificio-")
+        print(f"        nombre : {self.nombre}")
+        for aula in self.aulas:
+            aula.show()
+
+class Aulas:
+    def __init__(self, numero, capacidadClase, capacidadExamen, tipo):
+        self.numero = numero
+        self.capacidadClase = capacidadClase
+        self.capacidadExamen = capacidadExamen
+        self.tipo = tipo
+    
+    def show(self):
+        print("         -Aula-")
+        print(f"            nuemro : {self.numero}")
+        print(f"            capacidadClase: {self.capacidadClase}")
+        print(f"            capaciadExamen: {self.capacidadExamen}")
+        print(f"            tipo: {self.tipo}")
+
+class Escuela:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.titulaciones = []
+
+    def addTitulacion(self, titulacion):
+        self.titulaciones.append(titulacion)
+
+    def show(self):
+        print(" -Escuela-")
+        print(f"    nombre : {self.nombre}")
+        for titulacion in self.titulaciones:
+            titulacion.show()
+
+class Titulacion:
+    def __init__(self, nombre, campus):
+        self.nombre = nombre
+        self.campus = campus
+        self.cursos = []
+    
+    def addCurso(self, curso):
+        self.cursos.append(curso)
+
+    def show(self):
+        print("     -Titulacion-")
+        print(f"        nombre : {self.nombre}")
+        print(f"        campus : {self.campus}")
+        for curso in self.cursos:
+            curso.show()
+
+class Curso:
+    def __init__(self, año, creditos):
+        self.año = año
+        self.creditos = creditos
+        self.asignaturas = []
+    
+    def addAsignatura(self, asignatura):
+        self.asignaturas.append(asignatura)
+    
+    def show(self):
+        print("         -Curso-")
+        print(f"            año : {self.año}")
+        print(f"            creditos : {self.creditos}")
+        for asignatura in self.asignaturas:
+            asignatura.show()
+
+class Asignatura:
+    def __init__(self, nombre, creditos, alumnos, profesor):
+        self.nombre = nombre
+        self.creditos = creditos
+        self.alumnos = alumnos
+        self.profesor = profesor
+
+    def show(self):
+        print("             -Asignatura-")
+        print(f"                nombre : {self.nombre}")
+        print(f"                creditos: {self.creditos}")
+        print(f"                alumnos: {self.alumnos}")
+        print(f"                profesor: {self.profesor}")
 
 def CargaAsignatura(asignatura):
     nombre = input("------Introduzca el nombre de la asignatura: ")
@@ -121,7 +233,7 @@ def CargaAula(aula):
     tipo = input("----Introduzca el tipo de aula (clase ó laboratorio): ").strip().lower()
     while tipo not in ["clase", "laboratorio"]:
         tipo = input("----Introduzca el tipo de aula (clase ó laboratorio): ").strip().lower()
-    ET.SubElement(aula, "Numero").text = tipo
+    ET.SubElement(aula, "Tipo").text = tipo
 
 
 
@@ -217,12 +329,52 @@ def CargarDatos():
     # Guardar datos
     GuardarDatos(root)
 
-"""
-opcion = input("¿Quiere cargar datos o importarlos? (cargar ó importar)").strip().lower()
-match opcion:
-    case "cargar":
-        CargarDatos()
-    case "importar datos":
-        ImportarDatos()
-"""
-CargarDatos()
+def ImportarDatos():
+    ruta_archivo = input("introduzca la ruta del archivo que quiere importar: ")
+    try:
+        new_Universidad = Universidad()
+        tree = ET.parse(ruta_archivo)
+        root = tree.getroot()
+        for campus in root.findall("Campus"):
+            new_campus = Campus(campus.find("Nombre").text)
+            for edificio in campus.findall("Edificio"):
+                new_edificio = Edificio(edificio.find("Nombre").text)
+                for aula in edificio.findall("Aula"):
+                    new_aula = Aulas(aula.find("Numero").text, aula.find("CapacidadClase").text, aula.find("CapacidadExamen").text, aula.find("Tipo").text)
+                    new_edificio.addAula(new_aula)
+                new_campus.addEdificio(new_edificio)
+            new_Universidad.addCampus(new_campus)
+        
+        for escuela in root.findall("Escuela"):
+            new_escuela = Escuela(escuela.find("Nombre").text)
+            for titulacion in escuela.findall("Titulacion"):
+                new_titulacion = Titulacion(titulacion.find("Nombre").text, titulacion.find("Campus").text)
+                for curso in titulacion.findall("Curso"):
+                    new_curso = Curso(curso.find("Año").text, curso.find("Creditos").text)
+                    for asignatura in curso.findall("Asignatura"):
+                        new_asignatura = Asignatura(asignatura.find("Nombre").text, asignatura.find("Creditos").text, asignatura.find("nAlumnos").text, asignatura.find("Profesor").text)
+                        new_curso.addAsignatura(new_asignatura)
+                    new_titulacion.addCurso(new_curso)
+                new_escuela.addTitulacion(new_titulacion)
+            new_Universidad.addEscuela(new_escuela)
+
+        return new_Universidad
+
+    except FileNotFoundError:
+        print("El archivo no fue encontrado. Por favor, verifica la ruta e inténtalo de nuevo.")
+    except ET.ParseError:
+        print("El archivo no es un XML válido. Por favor, verifica el contenido del archivo.")
+    except Exception as e:
+        print(f"Ocurrió un error: {e}")
+        
+salir = False
+while salir == False:
+    opcion = input("¿Quiere cargar datos, importarlos o salir? (cargar, importar ó salir) ").strip().lower()
+    match opcion:
+        case "cargar":
+            CargarDatos()
+        case "importar":
+            universidad = ImportarDatos()
+            universidad.show()
+        case "salir":
+            salir = True
