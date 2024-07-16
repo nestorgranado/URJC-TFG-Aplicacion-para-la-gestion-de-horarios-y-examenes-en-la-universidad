@@ -122,7 +122,7 @@ class Asignatura:
         print(f"                alumnos: {self.alumnos}")
         print(f"                profesor: {self.profesor}")
 
-def CargaAsignatura(asignatura):
+def cargaAsignatura(asignatura):
     nombre = input("------Introduzca el nombre de la asignatura: ")
     ET.SubElement(asignatura, "Nombre").text = nombre
 
@@ -147,7 +147,7 @@ def CargaAsignatura(asignatura):
 
     return creditos
 
-def CargaCurso(curso):
+def cargaCurso(curso):
     año = input("----Introduzca el numero del curso: ")
     ET.SubElement(curso, "Año").text = año
 
@@ -156,7 +156,7 @@ def CargaCurso(curso):
     creditos = 0
     while salir == False:
         asignatura = ET.SubElement(curso, "Asignatura")
-        creditos += CargaAsignatura(asignatura)
+        creditos += cargaAsignatura(asignatura)
         parar = input("------Quiere añadir otra Asignatura (si ó no): ").strip().lower()
         while parar not in ["si", "no"]:
             print("------Introduzca si ó no")
@@ -167,7 +167,7 @@ def CargaCurso(curso):
     ET.SubElement(curso, "Creditos").text = str(creditos)          
     print("-------------------------------------------------")
 
-def CargaTitulacion(titulacion, campusList):
+def cargaTitulacion(titulacion, campusList):
     nombre = input("--Introduzca el nombre de la titulación: ")
     ET.SubElement(titulacion, "Nombre").text = nombre
 
@@ -184,7 +184,7 @@ def CargaTitulacion(titulacion, campusList):
     salir = False
     while salir == False:
         curso = ET.SubElement(titulacion, "Curso")
-        CargaCurso(curso)
+        cargaCurso(curso)
         parar = input("----Quiere añadir otro Curso Académico (si ó no): ").strip().lower()
         while parar not in ["si", "no"]:
             print("----Introduzca si ó no")
@@ -193,7 +193,7 @@ def CargaTitulacion(titulacion, campusList):
             salir = True
     print("-------------------------------------------------")
     
-def CargaEscuelas(escuela, campusList):
+def cargaEscuelas(escuela, campusList):
     nombre = input("Introduzaca el nombre de la Escuela: ")
     ET.SubElement(escuela, "Nombre").text = nombre
 
@@ -201,7 +201,7 @@ def CargaEscuelas(escuela, campusList):
     salir = False
     while salir == False:
         titulacion = ET.SubElement(escuela, "Titulacion")
-        CargaTitulacion(titulacion, campusList)
+        cargaTitulacion(titulacion, campusList)
         parar = input("--Quiere añadir otra Titulación (si ó no): ").strip().lower()
         while parar not in ["si", "no"]:
             print("--Introduzca si ó no")
@@ -210,7 +210,7 @@ def CargaEscuelas(escuela, campusList):
             salir = True
     print("-------------------------------------------------")
 
-def CargaAula(aula):
+def cargaAula(aula):
     numero = input("----Introduzca el número del Aula: ")
     ET.SubElement(aula, "Numero").text = numero
 
@@ -237,14 +237,14 @@ def CargaAula(aula):
 
 
 
-def CargaEdificio(edificio):
+def cargaEdificio(edificio):
     nombre = input("--Introduzaca el nombre del Edificio (EJ. Aulario1): ")
     ET.SubElement(edificio, "Nombre").text = nombre
     print("----Introduzca las Aulas")
     salir = False
     while salir == False:
         aula = ET.SubElement(edificio, "Aula")
-        CargaAula(aula)
+        cargaAula(aula)
         parar = input("----Quiere añadir otra Aula (si ó no): ").strip().lower()
         while parar not in ["si", "no"]:
             print("----Introduzca si ó no")
@@ -253,7 +253,7 @@ def CargaEdificio(edificio):
             salir = True
     print("-------------------------------------------------")
 
-def CargaCampus(Campus):
+def cargaCampus(Campus):
     nombre = input("Introduzaca el nombre del Campus: ").strip().lower()
     ET.SubElement(Campus, "Nombre").text = nombre
 
@@ -261,7 +261,7 @@ def CargaCampus(Campus):
     salir = False
     while salir == False:
         edificio = ET.SubElement(Campus, "Edificio")
-        CargaEdificio(edificio)
+        cargaEdificio(edificio)
         parar = input("--Quiere añadir otro Edificio (si ó no): ").strip().lower()
         while parar not in ["si", "no"]:
             print("--Introduzca si ó no")
@@ -271,7 +271,7 @@ def CargaCampus(Campus):
         print("-------------------------------------------------")
     return nombre
 
-def PrevisualizarXML(root):
+def previsualizarXML(root):
     # Convertir el árbol XML a una cadena y formatearla
     xml_str = ET.tostring(root, encoding='unicode')
     parsed_str = minidom.parseString(xml_str)
@@ -281,7 +281,7 @@ def PrevisualizarXML(root):
     return formatted_xml
 
 
-def GuardarDatos(root):
+def guardarDatos(root):
     arbol = ET.ElementTree(root)
     # Obtener la ruta del archivo .py actual
     current_directory = os.path.dirname(os.path.abspath(__file__))
@@ -294,7 +294,7 @@ def GuardarDatos(root):
     
     print(f"Archivo XML guardado en: {xml_file_path}")
 
-def CargarDatos():
+def cargarDatos():
     root = ET.Element("Univerisdad")
     campusList = []
 
@@ -302,7 +302,7 @@ def CargarDatos():
     salir = False
     while salir == False:
         Campus = ET.SubElement(root,"Campus")
-        campusList.append(CargaCampus(Campus))
+        campusList.append(cargaCampus(Campus))
         parar = input("Quiere añadir otro Campus (si ó no): ").strip().lower()
         while parar not in ["si", "no"]:
             print("Introduzca si ó no")
@@ -315,7 +315,7 @@ def CargarDatos():
     salir = False
     while salir == False:
         escuela = ET.SubElement(root,"Escuela")
-        CargaEscuelas(escuela, campusList)
+        cargaEscuelas(escuela, campusList)
         parar = input("Quiere añadir otra Escuela (si ó no): ").strip().lower()
         while parar not in ["si", "no"]:
             print("Introduzca si ó no")
@@ -325,11 +325,11 @@ def CargarDatos():
     print("-------------------------------------------------")
 
     # Previsualizar el xml generado
-    PrevisualizarXML(root)
+    previsualizarXML(root)
     # Guardar datos
-    GuardarDatos(root)
+    guardarDatos(root)
 
-def ImportarDatos():
+def importarDatos():
     ruta_archivo = input("introduzca la ruta del archivo que quiere importar: ")
     try:
         new_Universidad = Universidad()
@@ -366,15 +366,15 @@ def ImportarDatos():
         print("El archivo no es un XML válido. Por favor, verifica el contenido del archivo.")
     except Exception as e:
         print(f"Ocurrió un error: {e}")
-        
+
 salir = False
 while salir == False:
     opcion = input("¿Quiere cargar datos, importarlos o salir? (cargar, importar ó salir) ").strip().lower()
     match opcion:
         case "cargar":
-            CargarDatos()
+            cargarDatos()
         case "importar":
-            universidad = ImportarDatos()
+            universidad = importarDatos()
             universidad.show()
         case "salir":
             salir = True
