@@ -1,11 +1,13 @@
 class Universidad:
-    def __init__(self):
+    def __init__(self, nombre):
+        self.nombre = nombre
         self.campus = []
         self.escuelas = []
-    def addCampus(self, campus):
+
+    def agregar_campus(self, campus):
         self.campus.append(campus)
 
-    def addEscuela(self, escuela):
+    def agregar_escuela(self, escuela):
         self.escuelas.append(escuela)
     
     def getCampus(self):
@@ -86,103 +88,128 @@ class Aula:
         return self.tipo
 
 class Escuela:
-    def __init__(self):
-        self.nombre = ""
-        self.titulaciones = []
-
-    def addTitulacion(self, titulacion):
+    def __init__(self, nombre):
+        self.nombre = nombre            # Nombre de la Escuela
+        self.titulaciones = []          # Lista de titulaciones que pertenecen a la escuela (Inicialmente vacia)
+    
+    def agregar_titulacion(self, titulacion):
         self.titulaciones.append(titulacion)
-
+    
+    def setTitulaciones(self, titulacionesList):
+        self.titulaciones = titulacionesList
+    
     def getTitulaciones(self):
         return self.titulaciones
-    
-    def setNombre(self, nombre):
-        self.nombre = nombre
-    
+
     def getNombre(self):
         return self.nombre
 
+    def mostrarEscuela(self):
+        print(f"Escuela: {self.nombre}")
+        titulaciones = self.titulaciones
+        for titulacion in titulaciones:
+            print(f"{titulacion.getCodigo()}, {titulacion.getNombre()}")
+            asignaturas = titulacion.getAsignaturas()
+            for asignatura in asignaturas:
+                print(f"    {asignatura.getCodigo()},  {asignatura.getNombre()}")
+
 class Titulacion:
-    def __init__(self):
-        self.nombre = ""
-        self.campus = ""
-        self.cursos = []
-    
-    def addCurso(self, curso):
-        self.cursos.append(curso)
-    
-    def getCurso(self):
-        return self.cursos
-    
-    def setNombre(self, nombre):
-        self.nombre = nombre
-    
+    def __init__(self, codigo, nombre, campus=None):
+        self.codigo = codigo            # Código Titulación
+        self.nombre = nombre            # Nombre Titulación
+        self.campus = campus            # Campus (opcional)
+        self.asignaturas = []           # Lista de asignaturas de la titulacion (Inicialmente vacia)
+
+    # Getters y Setters para 'codigo'
+    def getCodigo(self):
+        return self.codigo
+
+    def setCodigo(self, codigo):
+        self.codigo = codigo
+
+    # Getters y Setters para 'nombre'
     def getNombre(self):
         return self.nombre
-    
-    def setCampus(self, campus):
-        self.campus = campus
-    
+
+    def setNombre(self, nombre):
+        self.nombre = nombre
+
+    # Getters y Setters para 'campus'
     def getCampus(self):
         return self.campus
-    
-class Curso:
-    def __init__(self):
-        self.año = ""
-        self.creditos = ""
-        self.asignaturas = []
-    
-    def addAsignatura(self, asignatura):
+
+    def setCampus(self, campus):
+        self.campus = campus
+
+    # Métodos para asignaturas
+    def agregar_asignatura(self, asignatura):
         self.asignaturas.append(asignatura)
+    
+    def setAsignaturas(self, asignaturaList):
+        self.asignaturas = asignaturaList
 
     def getAsignaturas(self):
         return self.asignaturas
-    
-    def setAño(self, año):
-        self.año = año
 
-    def getAño(self):
-        return self.año
-    
-    def setCreditos(self, creditos):
-        self.creditos = creditos
-
-    def getCreditos(self):
-        return self.creditos
     
 class Asignatura:
-    def __init__(self):
-        self.nombre = ""
-        self.creditos = ""
-        self.alumnos = ""
-        self.profesor = ""
+    def __init__(self, codigo, nombre, titulacion, numAlumnos, profesor=None, curso=None):
+        self.codigo = codigo                # Código de la asignatura
+        self.nombre = nombre                # Nombre de la asignatura
+        self.titulacion = titulacion        # Titulación a la que pertenece
+        self.numAlumnos = numAlumnos        # Número de alumnos
+        self.profesor = profesor            # Profesor responsable de la asignatura (opcional)
+        self.curso = curso                  # Curso de la asignatura (opcional)
+        self.asignaturas_hijas = []         # Lista de asignaturas hijas (inicialmente vacía)
 
-    def fill(self, nombre, creditos, alumnos, profesor):
-        self.nombre = nombre
-        self.creditos = creditos
-        self.alumnos = alumnos
-        self.profesor = profesor
-    
-    def setNombre(self, nombre):
-        self.nombre = nombre
-    
+    # Getters y Setters para 'codigo'
+    def getCodigo(self):
+        return self.codigo
+
+    def setCodigo(self, codigo):
+        self.codigo = codigo
+
+    # Getters y Setters para 'nombre'
     def getNombre(self):
         return self.nombre
-    
-    def setCreditos(self, creditos):
-        self.creditos = creditos
-    
-    def getCreditos(self):
-        return self.creditos
-    
-    def setAlumnos(self, alumnos):
-        self.alumnos = alumnos
-    
-    def getAlumnos(self):
-        return self.alumnos
-    
-    def setProfesor(self, profesor):
-        self.profesor = profesor
-    
+
+    def setNombre(self, nombre):
+        self.nombre = nombre
+
+    # Getters y Setters para 'titulacion'
+    def getTitulacion(self):
+        return self.titulacion
+
+    def setTitulacion(self, titulacion):
+        self.titulacion = titulacion
+
+    # Getters y Setters para 'numAlumnos'
+    def getNumAlumnos(self):
+        return self.numAlumnos
+
+    def setNumAlumnos(self, numAlumnos):
+        self.numAlumnos = numAlumnos
+
+    # Getters y Setters para 'profesor'
     def getProfesor(self):
         return self.profesor
+
+    def setProfesor(self, profesor):
+        self.profesor = profesor
+
+    # Getters y Setters para 'curso'
+    def getCurso(self):
+        return self.curso
+
+    def setCurso(self, curso):
+        self.curso = curso
+
+    # Métodos para asignaturas hijas
+    def agregar_hija(self, asignatura_hija):
+        self.asignaturas_hijas.append(asignatura_hija)
+
+    def setAsignaturas_hijas(self, asignaturasHijasList):
+        self.asignaturas_hijas = asignaturasHijasList
+    
+    def getAsignaturas_hijas(self):
+        return self.asignaturas_hijas
