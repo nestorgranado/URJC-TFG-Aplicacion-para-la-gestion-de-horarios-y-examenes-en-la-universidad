@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowyBUPlC.ui'
+## Form generated from reading UI file 'MainWindowZOWhvl.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -35,45 +35,30 @@ class Ui_MainWindow(object):
         self.addModify.setGeometry(QRect(20, 10, 356, 120))
         self.gridLayout_3 = QGridLayout(self.addModify)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.institucion = QPushButton(self.addModify)
-        self.institucion.setObjectName(u"institucion")
-
-        self.gridLayout_3.addWidget(self.institucion, 0, 0, 1, 1)
-
         self.campus = QPushButton(self.addModify)
         self.campus.setObjectName(u"campus")
 
         self.gridLayout_3.addWidget(self.campus, 0, 1, 1, 1)
-
-        self.escuela = QPushButton(self.addModify)
-        self.escuela.setObjectName(u"escuela")
-
-        self.gridLayout_3.addWidget(self.escuela, 0, 2, 1, 1)
-
-        self.modificar = QPushButton(self.addModify)
-        self.modificar.setObjectName(u"modificar")
-
-        self.gridLayout_3.addWidget(self.modificar, 0, 3, 1, 1)
-
-        self.edificio = QPushButton(self.addModify)
-        self.edificio.setObjectName(u"edificio")
-
-        self.gridLayout_3.addWidget(self.edificio, 1, 1, 1, 1)
-
-        self.titulacion = QPushButton(self.addModify)
-        self.titulacion.setObjectName(u"titulacion")
-
-        self.gridLayout_3.addWidget(self.titulacion, 1, 2, 1, 1)
 
         self.aula = QPushButton(self.addModify)
         self.aula.setObjectName(u"aula")
 
         self.gridLayout_3.addWidget(self.aula, 2, 1, 1, 1)
 
-        self.asignatura = QPushButton(self.addModify)
-        self.asignatura.setObjectName(u"asignatura")
+        self.institucion = QPushButton(self.addModify)
+        self.institucion.setObjectName(u"institucion")
 
-        self.gridLayout_3.addWidget(self.asignatura, 2, 2, 1, 1)
+        self.gridLayout_3.addWidget(self.institucion, 0, 0, 1, 1)
+
+        self.edificio = QPushButton(self.addModify)
+        self.edificio.setObjectName(u"edificio")
+
+        self.gridLayout_3.addWidget(self.edificio, 1, 1, 1, 1)
+
+        self.modificar = QPushButton(self.addModify)
+        self.modificar.setObjectName(u"modificar")
+
+        self.gridLayout_3.addWidget(self.modificar, 0, 2, 1, 1)
 
         self.importExport = QGroupBox(self.datos)
         self.importExport.setObjectName(u"importExport")
@@ -157,14 +142,11 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.addModify.setTitle(QCoreApplication.translate("MainWindow", u"A\u00f1adir/Modificar", None))
-        self.institucion.setText(QCoreApplication.translate("MainWindow", u"Instituci\u00f3n", None))
         self.campus.setText(QCoreApplication.translate("MainWindow", u"Campus", None))
-        self.escuela.setText(QCoreApplication.translate("MainWindow", u"Escuela", None))
-        self.modificar.setText(QCoreApplication.translate("MainWindow", u"Modificar Datos", None))
-        self.edificio.setText(QCoreApplication.translate("MainWindow", u"Edificio", None))
-        self.titulacion.setText(QCoreApplication.translate("MainWindow", u"Titulacion", None))
         self.aula.setText(QCoreApplication.translate("MainWindow", u"Aula", None))
-        self.asignatura.setText(QCoreApplication.translate("MainWindow", u"Asignatura", None))
+        self.institucion.setText(QCoreApplication.translate("MainWindow", u"Instituci\u00f3n", None))
+        self.edificio.setText(QCoreApplication.translate("MainWindow", u"Edificio", None))
+        self.modificar.setText(QCoreApplication.translate("MainWindow", u"Modificar Datos", None))
         self.importExport.setTitle(QCoreApplication.translate("MainWindow", u"Importar/Exportar", None))
         self.importar.setText(QCoreApplication.translate("MainWindow", u"Importar Datos", None))
         self.exportar.setText(QCoreApplication.translate("MainWindow", u"Exportar Datos", None))

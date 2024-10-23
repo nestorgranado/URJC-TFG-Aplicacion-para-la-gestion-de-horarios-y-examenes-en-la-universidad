@@ -43,45 +43,10 @@
        <string>Añadir/Modificar</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="institucion">
-         <property name="text">
-          <string>Institución</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="campus">
          <property name="text">
           <string>Campus</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="escuela">
-         <property name="text">
-          <string>Escuela</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="modificar">
-         <property name="text">
-          <string>Modificar Datos</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="edificio">
-         <property name="text">
-          <string>Edificio</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QPushButton" name="titulacion">
-         <property name="text">
-          <string>Titulacion</string>
          </property>
         </widget>
        </item>
@@ -92,10 +57,24 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="asignatura">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="institucion">
          <property name="text">
-          <string>Asignatura</string>
+          <string>Institución</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="edificio">
+         <property name="text">
+          <string>Edificio</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="modificar">
+         <property name="text">
+          <string>Modificar Datos</string>
          </property>
         </widget>
        </item>

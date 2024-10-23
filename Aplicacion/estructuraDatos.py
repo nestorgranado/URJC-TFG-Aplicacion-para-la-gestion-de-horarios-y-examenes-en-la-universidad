@@ -9,55 +9,61 @@ class Universidad:
 
     def agregar_escuela(self, escuela):
         self.escuelas.append(escuela)
+
+    def setCampus(self, campusList):
+        self.campus = campusList
     
     def getCampus(self):
         return self.campus
     
+    def setEscuelas(self, escuelasList):
+        self.escuelas = escuelasList
+    
     def getEscuelas(self):
         return self.escuelas
-
-class Campus:
-    def __init__(self):
-        self.nombre = ""
-        self.edificos = []
-
-    def addEdificio(self, edificio):
-        self.edificos.append(edificio)
-
+    
     def setNombre(self, nombre):
         self.nombre = nombre
-
+    
     def getNombre(self):
         return self.nombre
 
+class Campus:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.edificos = []
+
+    def agregar_edificio(self, edificio):
+        self.edificos.append(edificio)
+    
     def getEdificios(self):
         return self.edificos
 
+    def setNombre(self, nombre):
+        self.nombre = nombre
+
+    def getNombre(self):
+        return self.nombre
+
 class Edificio:
-    def __init__(self):
-        self.nombre = ""
+    def __init__(self, nombre):
+        self.nombre = nombre
         self.aulas = []
 
-    def addAula(self, aula):
+    def agregar_aula(self, aula):
         self.aulas.append(aula)
+
+    def getAulas(self):
+        return self.aulas
 
     def setNombre(self, nombre):
         self.nombre = nombre
 
     def getNombre(self):
         return self.nombre
-    
-    def getAulas(self):
-        return self.aulas
 
 class Aula:
-    def __init__(self):
-        self.numero = ""
-        self.capacidadClase = ""
-        self.capacidadExamen = ""
-        self.tipo = ""
-    
-    def fill(self, numero, capacidadClase, capacidadExamen, tipo):
+    def __init__(self, numero, capacidadClase, capacidadExamen, tipo):
         self.numero = numero
         self.capacidadClase = capacidadClase
         self.capacidadExamen = capacidadExamen

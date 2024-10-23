@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="campus">
     <attribute name="title">
@@ -309,6 +309,57 @@
       <string>Titulaciones</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="codTitulacionText_3">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Nombre Titulación</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLabel" name="codCampus_3">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Campus</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QLineEdit" name="codCampusText_3">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="codTitulacion_3">
         <property name="font">
@@ -321,77 +372,35 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="codTitulacionText_3">
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="codCampus_3">
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Código Campus</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QLineEdit" name="codCampusText_3">
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="4">
+      <item row="1" column="0" colspan="6">
        <widget class="QGroupBox" name="asignaturas_3">
         <property name="title">
          <string>Asignatura</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="0">
-          <widget class="QLabel" name="asignatura_3">
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit_2">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="6">
+          <widget class="QLabel" name="alumnos_3">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
             </font>
            </property>
            <property name="text">
-            <string>Asignatura</string>
+            <string>Num Alumnos</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1" colspan="3">
-          <widget class="QLineEdit" name="lineEdit_8">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="creditos_3">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Créditos</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QSpinBox" name="creditosText_3">
+         <item row="0" column="7">
+          <widget class="QLineEdit" name="lineEdit_9">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -411,8 +420,8 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="7">
-          <widget class="QLineEdit" name="lineEdit_9">
+         <item row="3" column="0" colspan="10">
+          <widget class="QTableWidget" name="tableWidget_4">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -420,43 +429,40 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="date_3">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Año</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1" colspan="2">
-          <widget class="QDateEdit" name="dateText_3">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="displayFormat">
-            <string>yyyy</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="alumnos_3">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
             </font>
            </property>
            <property name="text">
-            <string>Num Alumnos</string>
+            <string>Código Asignatura</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="5">
+         <item row="0" column="2">
+          <widget class="QLabel" name="asignatura_3">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Nombre Asignatura</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3" colspan="3">
+          <widget class="QLineEdit" name="lineEdit_8">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="7">
           <widget class="QSpinBox" name="alumnosText_3">
            <property name="font">
             <font>
@@ -465,7 +471,28 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0" colspan="2">
+         <item row="1" column="2">
+          <widget class="QLabel" name="date_3">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Curso</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3" colspan="3">
+          <widget class="QLineEdit" name="lineEdit_3">
+           <property name="font">
+            <font>
+             <pointsize>9</pointsize>
+            </font>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
           <widget class="QPushButton" name="nuevo_4">
            <property name="font">
             <font>
@@ -477,7 +504,7 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
+         <item row="2" column="1">
           <widget class="QPushButton" name="borrar_4">
            <property name="font">
             <font>
@@ -489,7 +516,7 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="3" colspan="2">
+         <item row="2" column="2">
           <widget class="QPushButton" name="modificar_4">
            <property name="font">
             <font>
@@ -499,55 +526,6 @@
            <property name="text">
             <string>Modificar</string>
            </property>
-          </widget>
-         </item>
-         <item row="3" column="0" colspan="8">
-          <widget class="QTableWidget" name="tableWidget_4">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <column>
-            <property name="text">
-             <string>Escuela</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Nueva columna</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Titulación</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Asignatura</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Año</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Créditos</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Alumnos</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Profesor</string>
-            </property>
-           </column>
           </widget>
          </item>
         </layout>
