@@ -5,8 +5,8 @@ import xml.etree.ElementTree as ET
 import os
 from estructuraDatos import *
 
-# Función para cargar el archivo según su tipo (CSV o Excel)
-def _cargar_archivo_Escuelas(path):
+# Funciones para cargar el archivo según su tipo (CSV o Excel)
+def cargar_archivo_Escuelas(path):
     # Detectar la extensión del archivo
     _, extension = os.path.splitext(path)
     
@@ -38,7 +38,7 @@ def _cargar_archivo_Escuelas(path):
     
     return df
 
-def _cargar_archivo_Campus(path):
+def cargar_archivo_Campus(path):
     _, extension = os.path.splitext(path)
 
     if extension == '.csv':
@@ -62,9 +62,10 @@ def _cargar_archivo_Campus(path):
     
     return df
 
-def importar_Escuelas(path):
+# Funciones para importar los datos
+def importar_Escuelas(path, nombre):
     # Cargar el archivo
-    df = _cargar_archivo_Escuelas(path)
+    df = cargar_archivo_Escuelas(path)
 
     # Diccionarios para titulaciones y asignaturas
     titulaciones_dict = {}
@@ -80,7 +81,10 @@ def importar_Escuelas(path):
 
         # Crear la titulación si no existe
         if codigo_plan not in titulaciones_dict:
-            titulacion = Titulacion(codigo=codigo_plan, nombre=nombre_plan)
+            nombreTitulacion = nombre_plan.split(" (")[0]  
+            campus = nombre_plan.split(" (")[1][:-1]
+
+            titulacion = Titulacion(codigo=codigo_plan, nombre=nombreTitulacion, campus=campus)
             titulaciones_dict[codigo_plan] = titulacion
 
         # Crear la asignatura si no existe
@@ -108,43 +112,52 @@ def importar_Escuelas(path):
     titulaciones = list(titulaciones_dict.values())
 
     # Crear escuela con las titulaciones leidas
-    escuela = Escuela("ETSII")
+    escuela = Escuela(nombre)
     escuela.setTitulaciones(titulaciones)
 
     return escuela
 
 def importar_Campus(path):
-    df = _cargar_archivo_Campus(path)
+    # Cargar el archivo
+    df = cargar_archivo_Campus(path)
 
+    # Crear diccionarios para campus y edificios
     campus_dict = {}
     edificios_dict = {}
 
+    # Iterar sobre cada fila del archivo
     for _, row in df.iterrows():
         campus_nombre = row['CAMPUS']
         edificio_nombre = row['EDIFICIO']
 
+        # Crear campus si no existe
         if campus_nombre not in campus_dict:
             campus = Campus(campus_nombre)
             campus_dict[campus_nombre] = campus
 
-        if edificio_nombre not in edificios_dict:
+        # Crear edificios
+        if (campus_nombre, edificio_nombre) not in edificios_dict:
             edificio = Edificio(edificio_nombre)
             campus_dict[campus_nombre].agregar_edificio(edificio)
-            edificios_dict[edificio_nombre] = edificio
+            edificios_dict[(campus_nombre, edificio_nombre)] = edificio
         
         aula = Aula(row['ESPACIO'].split('(')[0].strip(), row['CAPACIDAD DOCENTE'], row['CAPACIDAD EXAMEN'], row['ESPACIO'].split()[0])
-        edificios_dict[edificio_nombre].agregar_aula(aula)
+        edificios_dict[(campus_nombre, edificio_nombre)].agregar_aula(aula)
 
     campuses = list(campus_dict.values())
 
     return campuses
 
 def importarXML(path):
+    # cargar XML
     tree = ET.parse(path)
+    # Obtener a raiz de XML
     root = tree.getroot()
 
+    # Crear una universidad
     institucion = Universidad(root.find('Nombre').text)
 
+    # Recorrer los campus
     for campusXML in root.findall('Campus'):
         campus = Campus(campusXML.find('Nombre').text)
         for edificioXML in campusXML.findall('Edificio'):
@@ -160,6 +173,7 @@ def importarXML(path):
             campus.agregar_edificio(edificio)
         institucion.agregar_campus(campus)
 
+    # Recorrer las escuelas
     for escuelaXML in root.findall('Escuela'):
         escuela = Escuela(escuelaXML.find('Nombre').text)
         for titulacionesXML in escuelaXML.findall('Titulación'):
@@ -184,3 +198,38 @@ def importarXML(path):
         institucion.agregar_escuela(escuela)
 
     return institucion.getCampus(), institucion.getEscuelas()
+
+def importarInstitucion(path):
+    error = ""
+    campuses = []
+    escuelas = []
+
+    # Comprobar si la rura existe
+    if os.path.exists(path):
+        # Obtener nombre del archivo y la extensión
+        nombre_archivo_con_extension = os.path.basename(path)
+        nombre_archivo, extension = os.path.splitext(nombre_archivo_con_extension) 
+
+        # Dividir funcionalida si el archivo es xml o no
+        if extension in ['.xls', '.xlsx', '.csv']:
+            # Depende del nombre del archivo se importaran las escuelas o los campus
+            if nombre_archivo == 'uxxi':
+                escuela = importar_Escuelas(path, "ETSII")
+                escuelas.append(escuela)
+
+            elif nombre_archivo == 'mostoles2324.v1':
+                campuses = importar_Campus(path)
+
+            else:
+                error = (f"Error: el archivo '{path}' no contiene los datos necesarios para la aplicación")
+
+        elif extension == '.xml':
+            campuses, escuelas = importarXML(path)
+
+        else:
+            error = (f"Error: el formato '{extension}' no es soportado")
+
+    else:
+        error = (f"Error: El archivo '{path}' no existe.")
+    
+    return escuelas, campuses, error

@@ -27,6 +27,12 @@ class Universidad:
     
     def getNombre(self):
         return self.nombre
+    
+    def isEmpty(self):
+        if not self.campus and not self.escuelas:
+            return True
+        else:
+            return False
 
 class Campus:
     def __init__(self, nombre):
@@ -35,6 +41,9 @@ class Campus:
 
     def agregar_edificio(self, edificio):
         self.edificos.append(edificio)
+
+    def setEdificios(self, edificioList):
+        self.edificos = edificioList
     
     def getEdificios(self):
         return self.edificos
@@ -52,6 +61,9 @@ class Edificio:
 
     def agregar_aula(self, aula):
         self.aulas.append(aula)
+
+    def setAulas(self, aulaList):
+        self.aula = aulaList
 
     def getAulas(self):
         return self.aulas

@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="title">
-       <string>Añadir/Modificar</string>
+       <string>Modificar</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="1">
@@ -50,10 +50,10 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="aula">
+       <item row="0" column="2">
+        <widget class="QPushButton" name="escuela">
          <property name="text">
-          <string>Aula</string>
+          <string>Escuela</string>
          </property>
         </widget>
        </item>
@@ -64,17 +64,31 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="asignatura">
+         <property name="text">
+          <string>Asignatura</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="aula">
+         <property name="text">
+          <string>Aula</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QPushButton" name="titulacion">
+         <property name="text">
+          <string>Titulacion</string>
+         </property>
+        </widget>
+       </item>
        <item row="1" column="1">
         <widget class="QPushButton" name="edificio">
          <property name="text">
           <string>Edificio</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="modificar">
-         <property name="text">
-          <string>Modificar Datos</string>
          </property>
         </widget>
        </item>

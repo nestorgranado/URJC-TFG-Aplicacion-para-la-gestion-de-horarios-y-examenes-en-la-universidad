@@ -6,7 +6,9 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import platform
 
+# Exportar las Escuelas
 def exportarEscuelas(root, universidad):
+    # Por cada escuela crear un elemnto "Escuela" y un atributo "Nombre" y recorrer la lista de Titulcaiones
     for escuela in universidad.getEscuelas():
         escuelaXML = ET.SubElement(root, "Escuela")
         ET.SubElement(escuelaXML, "Nombre").text = escuela.getNombre()
@@ -28,7 +30,9 @@ def exportarEscuelas(root, universidad):
                     ET.SubElement(hijasXML, "Código").text = hija[0]
                     ET.SubElement(hijasXML, "Nombre").text = hija[1]
 
+# Exportar los Campus
 def exportarCampus(root, universidad):
+    # Por cada campus se crear un elemento "Campus" y un atributo "Nombre" y se recorre la lista de Edificios
     for campus in universidad.getCampus():
         campusXML = ET.SubElement(root, "Campus")
         ET.SubElement(campusXML, "Nombre").text = campus.getNombre()
@@ -43,12 +47,17 @@ def exportarCampus(root, universidad):
                 ET.SubElement(aulaXML, "Tipo").text = aula.getTipo()
 
 
+# Exportar main
 def exportar(path, universidad):
+    # Crear el elemento raiz
     root = ET.Element("Institución")
+    # Crear el atributo "Nombre"
     ET.SubElement(root, "Nombre").text = universidad.getNombre()
+    # Exportar las escuelas y los campus
     exportarCampus(root, universidad)
     exportarEscuelas(root, universidad)
 
+    # Crear el arbol XML
     arbol = ET.ElementTree(root)
 
     # Guardar el árbol XML en el archivo

@@ -22,7 +22,7 @@
       </font>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Institución</string>
      </property>
     </widget>
    </item>
@@ -37,7 +37,7 @@
     <widget class="QLineEdit" name="nombreText"/>
    </item>
    <item row="2" column="0">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="save">
      <property name="text">
       <string>Guardar</string>
      </property>
