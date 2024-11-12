@@ -7,20 +7,32 @@ class Universidad:
     def agregar_campus(self, campus):
         self.campus.append(campus)
 
-    def agregar_escuela(self, escuela):
-        self.escuelas.append(escuela)
+    def sumar_campus(self, campusList):
+        if self.campus == []:
+            self.setCampus(campusList)
+        else:
+            self.campus += campusList
 
     def setCampus(self, campusList):
         self.campus = campusList
     
     def getCampus(self):
-        return self.campus
+        return list(self.campus)
+
+    def agregar_escuela(self, escuela):
+        self.escuelas.append(escuela)
+
+    def sumar_escuelas(self, escuelaList):
+        if self.escuelas == []:
+            self.setEscuelas(escuelaList)
+        else:
+            self.escuelas += escuelaList
     
     def setEscuelas(self, escuelasList):
         self.escuelas = escuelasList
     
     def getEscuelas(self):
-        return self.escuelas
+        return list(self.escuelas)
     
     def setNombre(self, nombre):
         self.nombre = nombre
@@ -46,7 +58,7 @@ class Campus:
         self.edificos = edificioList
     
     def getEdificios(self):
-        return self.edificos
+        return list(self.edificos)
 
     def setNombre(self, nombre):
         self.nombre = nombre
@@ -66,7 +78,7 @@ class Edificio:
         self.aula = aulaList
 
     def getAulas(self):
-        return self.aulas
+        return list(self.aulas)
 
     def setNombre(self, nombre):
         self.nombre = nombre
@@ -117,7 +129,7 @@ class Escuela:
         self.titulaciones = titulacionesList
     
     def getTitulaciones(self):
-        return self.titulaciones
+        return list(self.titulaciones)
 
     def getNombre(self):
         return self.nombre
@@ -167,7 +179,7 @@ class Titulacion:
         self.asignaturas = asignaturaList
 
     def getAsignaturas(self):
-        return self.asignaturas
+        return list(self.asignaturas)
 
     
 class Asignatura:
@@ -230,4 +242,4 @@ class Asignatura:
         self.asignaturas_hijas = asignaturasHijasList
     
     def getAsignaturas_hijas(self):
-        return self.asignaturas_hijas
+        return list(self.asignaturas_hijas)

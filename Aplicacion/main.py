@@ -47,9 +47,9 @@ class ImportarUI(QWidget, Ui_importar):
         # Si no hay error comprobar que se ha importado y añadirlo a la Institución
         if error == "": 
             if not campuses:
-                institucion.setEscuelas(escuelas)
+                institucion.sumar_escuelas(escuelas)
             elif not escuelas:
-                institucion.setCampus(campuses)   
+                institucion.sumar_campus(campuses)   
         else:
             dialogoError = DialogoError(error)
             dialogoError.exec()
@@ -153,11 +153,11 @@ class ModificarName(QWidget, Ui_ModificarName):
             self.selected_index = None
 
     def guardarCampus(self):
-        institucion.setCampus(self.nameList)
+        institucion.sumar_campus(self.nameList)
         self.close()
 
     def guardarEscuela(self):
-        institucion.setEscuelas(self.nameList)
+        institucion.sumar_escuelas(self.nameList)
         self.close()
 
 # Clase para Modificar Datos de los Edififcios
