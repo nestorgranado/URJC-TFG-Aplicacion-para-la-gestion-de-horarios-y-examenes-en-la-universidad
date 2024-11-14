@@ -1,3 +1,5 @@
+from datetime import datetime
+
 class Universidad:
     def __init__(self, nombre):
         self.nombre = nombre
@@ -180,7 +182,6 @@ class Titulacion:
 
     def getAsignaturas(self):
         return list(self.asignaturas)
-
     
 class Asignatura:
     def __init__(self, codigo, nombre, titulacion, numAlumnos, profesor=None, curso=None):
@@ -243,3 +244,108 @@ class Asignatura:
     
     def getAsignaturas_hijas(self):
         return list(self.asignaturas_hijas)
+
+class Curso:
+    def __init__(self):
+        self.nombre = f"{datetime.now().year}-{datetime.now().year + 1}"
+        self.gurpos = []
+        self.numAlumnos = 0
+
+    def isEmpty(self):
+        empty = False
+        if not self.gurpos:
+            return True
+        return empty
+
+    def calcularAulumnos(self):
+        self.numAlumnos = 0
+        for grupo in self.gurpos:
+            self.numAlumnos += grupo.getNumAlumnos()
+
+    def getNombre(self):
+        return self.nombre
+    
+    def setNombre(self, nombre):
+        self.nombre = nombre
+    
+    def getNumAlumnos(self):
+        return self.numAlumnos
+    
+    def setNumAlumnos(self, numAlumnos):
+        self.numAlumnos = numAlumnos
+    
+    def agregar_gurpo(grupo):
+        self.gurpos.append(grupo)
+
+    def getGrupos(self):
+        return self.gurpos
+    
+    def setGrupos(self, gruposList):
+        self.gurpos = gruposList
+        self.calcularAulumnos()
+
+class Grupo:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.numAlumnos = 0
+
+    def getNombre(self):
+        return self.nombre
+    
+    def setNombre(self, nombre):
+        self.nombre = nombre
+    
+    def getNumAlumnos(self):
+        return self.numAlumnos
+    
+    def setNumAlumnos(self, numAlumnos):
+        self.numAlumnos = numAlumnos
+    
+    def sumarAlumnos(self, numero):
+        self.numAlumnos += numero
+
+class Dias:
+    def __init__(self):
+        self.numDias = "7"
+        self.dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
+
+    def añadirDia(self, dia):
+        self.dias.append(dia)
+        self.numDias = str(len(self.dias))
+    
+    def quitarUltimoDia(self):
+        self.dias.pop()
+        self.numDias -= 1
+
+    def getNumDias(self):
+        return int(self.numDias)
+    
+    def setDias(self, daisList):
+        self.dias = daisList
+        self.numDias = str(len(self.dias))
+    
+    def getDias(self):
+        return list(self.dias)
+
+class Horas:
+    def __init__(self):
+        self.numHoras = "7"
+        self.horas = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"]
+
+    def añadirHoras(self, hora):
+        self.horas.append(hora)
+        self.numHoras = str(len(self.horas))
+    
+    def quitarUltimaHora(self):
+        self.horas.pop()
+        self.numHoras -= 1
+
+    def getNumHoras(self):
+        return int(self.numHoras)
+    
+    def setHoras(self, horasList):
+        self.horas = horasList
+        self.numHoras = str(len(self.horas))
+    
+    def getHoras(self):
+        return list(self.horas)

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <Institución>
     <Nombre>URJC</Nombre>
     <Campus>
@@ -8557,3 +8557,57 @@
         </Titulación>
     </Escuela>
 </Institución>
+<DiasPorSemana>
+    <NuemroDias>8</NuemroDias>
+    <Dia>
+        <Nombre>Lunes</Nombre>
+    </Dia>
+    <Dia>
+        <Nombre>Martes</Nombre>
+    </Dia>
+    <Dia>
+        <Nombre>Miercoles</Nombre>
+    </Dia>
+    <Dia>
+        <Nombre>Jueves</Nombre>
+    </Dia>
+    <Dia>
+        <Nombre>Viernes</Nombre>
+    </Dia>
+    <Dia>
+        <Nombre>Sabado</Nombre>
+    </Dia>
+    <Dia>
+        <Nombre>Domingo</Nombre>
+    </Dia>
+    <Dia>
+        <Nombre>Nuevo dia 7</Nombre>
+    </Dia>
+</DiasPorSemana>
+<HorasporDia>
+    <NuemroHoras>8</NuemroHoras>
+    <Hora>
+        <Nombre>09:00</Nombre>
+    </Hora>
+    <Hora>
+        <Nombre>10:00</Nombre>
+    </Hora>
+    <Hora>
+        <Nombre>11:00</Nombre>
+    </Hora>
+    <Hora>
+        <Nombre>12:00</Nombre>
+    </Hora>
+    <Hora>
+        <Nombre>13:00</Nombre>
+    </Hora>
+    <Hora>
+        <Nombre>14:00</Nombre>
+    </Hora>
+    <Hora>
+        <Nombre>15:00</Nombre>
+    </Hora>
+    <Hora>
+        <Nombre>Nueva hora 7</Nombre>
+    </Hora>
+</HorasporDia>

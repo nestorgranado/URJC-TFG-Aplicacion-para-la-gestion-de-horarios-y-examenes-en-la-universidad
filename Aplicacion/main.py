@@ -1,7 +1,8 @@
 # Librerías externas
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, QDialog, QVBoxLayout, QLabel, QListWidget, QComboBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, QDialog, QVBoxLayout, QLabel, QListWidget, QComboBox, QAbstractItemView
 from PySide6.QtCore import Qt
+from collections import defaultdict
 
 # Imports de las interfaces
 from interfaces.MainWindow import Ui_MainWindow
@@ -12,6 +13,8 @@ from interfaces.Ui_modifyBuilding import Ui_ModificarEdificio
 from interfaces.Ui_modifyAula import Ui_ModificarAula
 from interfaces.Ui_modifyTitulation import Ui_ModificarTitulacion
 from interfaces.Ui_modifyAsignatura import Ui_ModificarAsignatura
+from interfaces.Ui_days import Ui_dias
+from interfaces.Ui_hour import Ui_horas
 
 # Funcionalidades
 from estructuraDatos import *
@@ -683,11 +686,109 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         institucion.setEscuelas(self.escuelas)
         self.close()
 
+class DiasUI(QWidget, Ui_dias):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.numero = diasSemana.getNumDias()
+        self.dias = diasSemana.getDias()
+
+        self.numDiasText.setValue(self.numero)
+        self.previousValue = self.numDiasText.value()
+        self.listaDias.addItems(self.dias)
+
+        # Hacer los elementos editables
+        for index in range(self.listaDias.count()):
+            item = self.listaDias.item(index)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)
+            
+        self.listaDias.setEditTriggers(QAbstractItemView.DoubleClicked)
+
+        self.numDiasText.valueChanged.connect(self.actualizarDias)
+        self.listaDias.itemChanged.connect(self.actualizarDatos)
+        self.save.clicked.connect(self.guardar)
+
+    def actualizarDias(self, value):
+        if value > self.previousValue:
+            for i in range(self.previousValue, value):
+                self.dias.append(f"Nuevo dia {i+1}")
+        elif value < self.previousValue:
+            for i in range(self.previousValue, value, -1):
+                self.dias.pop()
+            
+        self.previousValue = value
+
+        self.listaDias.clear()
+        self.listaDias.addItems(self.dias)
+
+        # Hacer los elementos editables
+        for index in range(self.listaDias.count()):
+            item = self.listaDias.item(index)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)
+
+    def actualizarDatos(self):
+        self.dias = [self.listaDias.item(i).text() for i in range(self.listaDias.count())]
+
+    def guardar(self):
+        diasSemana.setDias(self.dias)
+        self.close()
+
+
+class HorasUI(QWidget, Ui_horas):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.numero = horasDia.getNumHoras()
+        self.horas = horasDia.getHoras()
+
+        self.numHorasText.setValue(self.numero)
+        self.previousValue = self.numHorasText.value()
+        self.listaHoras.addItems(self.horas)
+
+        # Hacer los elementos editables
+        for index in range(self.listaHoras.count()):
+            item = self.listaHoras.item(index)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)
+            
+        self.listaHoras.setEditTriggers(QAbstractItemView.DoubleClicked)
+
+        self.numHorasText.valueChanged.connect(self.actualizarHoras)
+        self.listaHoras.itemChanged.connect(self.actualizarDatos)
+        self.save.clicked.connect(self.guardar)
+
+    def actualizarHoras(self, value):
+        if value > self.previousValue:
+            for i in range(self.previousValue, value):
+                self.horas.append(f"Nueva hora {i+1}")
+        elif value < self.previousValue:
+            for i in range(self.previousValue, value, -1):
+                self.horas.pop()
+            
+        self.previousValue = value
+
+        self.listaHoras.clear()
+        self.listaHoras.addItems(self.horas)
+
+        # Hacer los elementos editables
+        for index in range(self.listaHoras.count()):
+            item = self.listaHoras.item(index)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)
+
+    def actualizarDatos(self):
+        self.horas = [self.listaHoras.item(i).text() for i in range(self.listaHoras.count())]
+
+    def guardar(self):
+        horasDia.setHoras(self.horas)
+        self.close()
+
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
+        # Datos institución
         self.institucion.clicked.connect(self.mostrarModificarInstitucionUI)
 
         self.campus.clicked.connect(self.mostrarModificarCampusUI)
@@ -698,9 +799,40 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.titulacion.clicked.connect(self.mostrarModificarTitulacionUI)
         self.asignatura.clicked.connect(self.mostrarModificarAsignaturaUI)
 
+        # Dias/Horas/Descansos
+        self.dias.clicked.connect(self.mostrarDiasUI)
+        self.horas.clicked.connect(self.mostrarHorasUI)
+
+        # Exportar/Importar
         self.importar.clicked.connect(self.mostrarImportUI)
         self.exportar.clicked.connect(self.exportarFunction)
-    
+
+    def crearCurso(self):
+        # Variables
+        alumnosTotales = 0
+        grupos_dict = {}
+
+        # Obtener escuelas
+        escuelas = institucion.getEscuelas()
+
+        for escuela in escuelas:
+            for titulacion in escuela.getTitulaciones():
+                for asignatura in titulacion.getAsignaturas():
+                    numero_grupo = asignatura.getCurso()
+                    grupos_dict.setdefault(numero_grupo, Grupo(numero_curso))
+                    grupos_dict[numero_grupo].sumarAlumnos(asignatura.getNumAlumnos())
+        
+        curso.setGrupos(list(grupos_dict.values()))
+        curso.calcularAulumnos()
+
+    def mostrarDiasUI(self):
+        self.diasUI = DiasUI()
+        self.diasUI.show()
+
+    def mostrarHorasUI(self):
+        self.horasUI = HorasUI()
+        self.horasUI.show()
+        
     def exportarFunction(self):
         # Nombre y extensión predeterminada del archivo
         default_filename = "archivo_guardado.xml"
@@ -714,7 +846,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion)
+            exportar(file_path, institucion, curso, diasSemana, horasDia)
 
     def mostrarImportUI(self):
         self.importUI = ImportarUI()
@@ -750,6 +882,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     institucion = Universidad("URJC")
+    curso = Curso()
+    diasSemana = Dias()
+    horasDia = Horas()
+
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()

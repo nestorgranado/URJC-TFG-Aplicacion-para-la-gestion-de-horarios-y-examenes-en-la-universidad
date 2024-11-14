@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowIiyGfm.ui'
+## Form generated from reading UI file 'MainWindowutFvqE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
-        self.tabWidget.setGeometry(QRect(120, 100, 401, 261))
+        self.tabWidget.setGeometry(QRect(120, 60, 411, 261))
         self.datos = QWidget()
         self.datos.setObjectName(u"datos")
         self.addModify = QGroupBox(self.datos)
@@ -70,21 +70,18 @@ class Ui_MainWindow(object):
 
         self.gridLayout_3.addWidget(self.edificio, 1, 1, 1, 1)
 
-        self.importExport = QGroupBox(self.datos)
-        self.importExport.setObjectName(u"importExport")
-        self.importExport.setGeometry(QRect(20, 140, 361, 60))
-        self.gridLayout_5 = QGridLayout(self.importExport)
-        self.gridLayout_5.setObjectName(u"gridLayout_5")
-        self.importar = QPushButton(self.importExport)
-        self.importar.setObjectName(u"importar")
-
-        self.gridLayout_5.addWidget(self.importar, 0, 0, 1, 1)
-
-        self.exportar = QPushButton(self.importExport)
-        self.exportar.setObjectName(u"exportar")
-
-        self.gridLayout_5.addWidget(self.exportar, 0, 1, 1, 1)
-
+        self.horario = QGroupBox(self.datos)
+        self.horario.setObjectName(u"horario")
+        self.horario.setGeometry(QRect(20, 140, 361, 80))
+        self.horas = QPushButton(self.horario)
+        self.horas.setObjectName(u"horas")
+        self.horas.setGeometry(QRect(147, 30, 72, 24))
+        self.descansos = QPushButton(self.horario)
+        self.descansos.setObjectName(u"descansos")
+        self.descansos.setGeometry(QRect(224, 30, 71, 24))
+        self.dias = QPushButton(self.horario)
+        self.dias.setObjectName(u"dias")
+        self.dias.setGeometry(QRect(70, 30, 72, 24))
         self.tabWidget.addTab(self.datos, "")
         self.restricciones = QWidget()
         self.restricciones.setObjectName(u"restricciones")
@@ -93,25 +90,10 @@ class Ui_MainWindow(object):
         self.tiempo.setGeometry(QRect(20, 10, 356, 90))
         self.gridLayout = QGridLayout(self.tiempo)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.dias = QPushButton(self.tiempo)
-        self.dias.setObjectName(u"dias")
-
-        self.gridLayout.addWidget(self.dias, 0, 0, 1, 1)
-
-        self.horas = QPushButton(self.tiempo)
-        self.horas.setObjectName(u"horas")
-
-        self.gridLayout.addWidget(self.horas, 0, 1, 1, 1)
-
-        self.descansos = QPushButton(self.tiempo)
-        self.descansos.setObjectName(u"descansos")
-
-        self.gridLayout.addWidget(self.descansos, 0, 2, 1, 1)
-
         self.nuevaTiempo = QPushButton(self.tiempo)
         self.nuevaTiempo.setObjectName(u"nuevaTiempo")
 
-        self.gridLayout.addWidget(self.nuevaTiempo, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.nuevaTiempo, 0, 0, 1, 1)
 
         self.lugar = QGroupBox(self.restricciones)
         self.lugar.setObjectName(u"lugar")
@@ -139,6 +121,21 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.nuevaLugar, 1, 0, 1, 1)
 
         self.tabWidget.addTab(self.restricciones, "")
+        self.importExport = QGroupBox(self.centralwidget)
+        self.importExport.setObjectName(u"importExport")
+        self.importExport.setGeometry(QRect(120, 330, 411, 61))
+        self.gridLayout_5 = QGridLayout(self.importExport)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.importar = QPushButton(self.importExport)
+        self.importar.setObjectName(u"importar")
+
+        self.gridLayout_5.addWidget(self.importar, 0, 0, 1, 1)
+
+        self.exportar = QPushButton(self.importExport)
+        self.exportar.setObjectName(u"exportar")
+
+        self.gridLayout_5.addWidget(self.exportar, 0, 1, 1, 1)
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -151,7 +148,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.addModify.setTitle(QCoreApplication.translate("MainWindow", u"Modificar", None))
+        self.addModify.setTitle(QCoreApplication.translate("MainWindow", u"Instituci\u00f3n", None))
         self.campus.setText(QCoreApplication.translate("MainWindow", u"Campus", None))
         self.escuela.setText(QCoreApplication.translate("MainWindow", u"Escuela", None))
         self.institucion.setText(QCoreApplication.translate("MainWindow", u"Instituci\u00f3n", None))
@@ -159,14 +156,12 @@ class Ui_MainWindow(object):
         self.aula.setText(QCoreApplication.translate("MainWindow", u"Aula", None))
         self.titulacion.setText(QCoreApplication.translate("MainWindow", u"Titulacion", None))
         self.edificio.setText(QCoreApplication.translate("MainWindow", u"Edificio", None))
-        self.importExport.setTitle(QCoreApplication.translate("MainWindow", u"Importar/Exportar", None))
-        self.importar.setText(QCoreApplication.translate("MainWindow", u"Importar Datos", None))
-        self.exportar.setText(QCoreApplication.translate("MainWindow", u"Exportar Datos", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.datos), QCoreApplication.translate("MainWindow", u"Datos", None))
-        self.tiempo.setTitle(QCoreApplication.translate("MainWindow", u"Restricicones de Tiempo", None))
-        self.dias.setText(QCoreApplication.translate("MainWindow", u"D\u00edas", None))
+        self.horario.setTitle(QCoreApplication.translate("MainWindow", u"Horarios", None))
         self.horas.setText(QCoreApplication.translate("MainWindow", u"Horas", None))
         self.descansos.setText(QCoreApplication.translate("MainWindow", u"Descansos", None))
+        self.dias.setText(QCoreApplication.translate("MainWindow", u"D\u00edas", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.datos), QCoreApplication.translate("MainWindow", u"Datos", None))
+        self.tiempo.setTitle(QCoreApplication.translate("MainWindow", u"Restricicones de Tiempo", None))
         self.nuevaTiempo.setText(QCoreApplication.translate("MainWindow", u"Nueva Restricci\u00f3n", None))
         self.lugar.setTitle(QCoreApplication.translate("MainWindow", u"Restricciones de Lugar", None))
         self.resEdififcio.setText(QCoreApplication.translate("MainWindow", u"Edififcio", None))
@@ -174,5 +169,8 @@ class Ui_MainWindow(object):
         self.resAula.setText(QCoreApplication.translate("MainWindow", u"Aula", None))
         self.nuevaLugar.setText(QCoreApplication.translate("MainWindow", u"Nueva Restricci\u00f3n", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.restricciones), QCoreApplication.translate("MainWindow", u"Restricciones", None))
+        self.importExport.setTitle(QCoreApplication.translate("MainWindow", u"Importar/Exportar", None))
+        self.importar.setText(QCoreApplication.translate("MainWindow", u"Importar Datos", None))
+        self.exportar.setText(QCoreApplication.translate("MainWindow", u"Exportar Datos", None))
     # retranslateUi
 

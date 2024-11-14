@@ -18,8 +18,8 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>100</y>
-      <width>401</width>
+      <y>60</y>
+      <width>411</width>
       <height>261</height>
      </rect>
     </property>
@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="title">
-       <string>Modificar</string>
+       <string>Institución</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="1">
@@ -94,34 +94,57 @@
        </item>
       </layout>
      </widget>
-     <widget class="QGroupBox" name="importExport">
+     <widget class="QGroupBox" name="horario">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>140</y>
         <width>361</width>
-        <height>60</height>
+        <height>80</height>
        </rect>
       </property>
       <property name="title">
-       <string>Importar/Exportar</string>
+       <string>Horarios</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="importar">
-         <property name="text">
-          <string>Importar Datos</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="exportar">
-         <property name="text">
-          <string>Exportar Datos</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="horas">
+       <property name="geometry">
+        <rect>
+         <x>147</x>
+         <y>30</y>
+         <width>72</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Horas</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="descansos">
+       <property name="geometry">
+        <rect>
+         <x>224</x>
+         <y>30</y>
+         <width>71</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Descansos</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="dias">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>30</y>
+         <width>72</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Días</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="restricciones">
@@ -142,27 +165,6 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QPushButton" name="dias">
-         <property name="text">
-          <string>Días</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="horas">
-         <property name="text">
-          <string>Horas</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="descansos">
-         <property name="text">
-          <string>Descansos</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
         <widget class="QPushButton" name="nuevaTiempo">
          <property name="text">
           <string>Nueva Restricción</string>
@@ -215,6 +217,35 @@
       </layout>
      </widget>
     </widget>
+   </widget>
+   <widget class="QGroupBox" name="importExport">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>330</y>
+      <width>411</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Importar/Exportar</string>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="importar">
+       <property name="text">
+        <string>Importar Datos</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="exportar">
+       <property name="text">
+        <string>Exportar Datos</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

@@ -6,6 +6,15 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import platform
 
+# Función para convertir un elemento XML en una cadena
+def xmlToString(raiz, incluir_declaracion=False):
+    # Generar la cadena XML
+    xml_string = ET.tostring(raiz, encoding="utf-8").decode("utf-8")
+    if incluir_declaracion:
+        # Agregar declaración XML solo si se especifica
+        xml_string = f'<?xml version="1.0" encoding="utf-8"?>\n{xml_string}'
+    return xml_string
+
 # Exportar las Escuelas
 def exportarEscuelas(root, universidad):
     # Por cada escuela crear un elemnto "Escuela" y un atributo "Nombre" y recorrer la lista de Titulcaiones
@@ -46,21 +55,70 @@ def exportarCampus(root, universidad):
                 ET.SubElement(aulaXML, "CapacidadExamen").text = str(aula.getCapacidadExamen())
                 ET.SubElement(aulaXML, "Tipo").text = aula.getTipo()
 
+# Exportar Cursos
+def exportarCursos(root, cursos):
+    # Crea un elemenro "Curso" y un atributo "Nombre" y "Número Alumnos" y se recorre los grupos
+    cursoXML = ET.SubElement(root, "Curso")
+    ET.SubElement(cursoXML, "Nombre").text = cursos.getNombre()
+    ET.SubElement(cursoXML, "NúmeroAlumnos").text = str(cursos.getNumAlumnos())
+    for grupo in cursos.getGrupos():
+        grupoXML = ET.SubElement(cursoXML, "Grupo")
+        ET.SubElement(grupoXML, "Nombre").text = grupo.getNombre()
+        ET.SubElement(grupoXML, "NúmeroAlumnos").text = str(grupo.getNumAlumnos())
+
+# Exportar Institución
+def exportarIntitucion(universidad, cursos):
+    # Crear el elemento raiz
+    institucion = ET.Element("Institución")
+    # Crear el atributo "Nombre"
+    ET.SubElement(institucion, "Nombre").text = universidad.getNombre()
+
+    # Exportar datos de la institución
+    exportarCampus(institucion, universidad)
+    exportarEscuelas(institucion, universidad)
+    if not cursos.isEmpty():
+        exportarCursos(institucion, cursos)
+
+    return institucion
+
+def exportarDias(diasSemana):
+    # exportar datos del los dias
+    dias = ET.Element("DiasPorSemana")
+    ET.SubElement(dias, "NuemroDias").text = str(diasSemana.getNumDias())
+
+    for dia in diasSemana.getDias():
+        diaXML = ET.SubElement(dias, "Dia")
+        ET.SubElement(diaXML, "Nombre").text = dia
+
+    return dias
+
+def exportarHoras(horasDia):
+    # exportar datos del las horas
+    horas = ET.Element("HorasporDia")
+    ET.SubElement(horas, "NuemroHoras").text = str(horasDia.getNumHoras())
+
+    for hora in horasDia.getHoras():
+        horaXML = ET.SubElement(horas, "Hora")
+        ET.SubElement(horaXML, "Nombre").text = hora
+
+    return horas
 
 # Exportar main
-def exportar(path, universidad):
-    # Crear el elemento raiz
-    root = ET.Element("Institución")
-    # Crear el atributo "Nombre"
-    ET.SubElement(root, "Nombre").text = universidad.getNombre()
-    # Exportar las escuelas y los campus
-    exportarCampus(root, universidad)
-    exportarEscuelas(root, universidad)
+def exportar(path, universidad, cursos, diasSemana, horasDia):
+    # Exportar datos
+    institucion = exportarIntitucion(universidad, cursos)
+    dias = exportarDias(diasSemana)
+    horas = exportarHoras(horasDia)
 
-    # Crear el arbol XML
-    arbol = ET.ElementTree(root)
+    # Convertir los documentos XML a cadenas de texto
+    xml_int = xmlToString(institucion, incluir_declaracion=True)
+    xml_dias = xmlToString(dias)
+    xml_horas = xmlToString(horas)
 
-    # Guardar el árbol XML en el archivo
-    arbol.write(path, encoding="utf-8", xml_declaration=True)
-
-
+    # Guardar archivo
+    with open(path, "w", encoding="utf-8") as archivo:
+        archivo.write(xml_int)
+        archivo.write("\n")  # Agrega una línea en blanco entre documentos
+        archivo.write(xml_dias)
+        archivo.write("\n")
+        archivo.write(xml_horas)
