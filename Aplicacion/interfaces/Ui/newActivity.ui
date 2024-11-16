@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Actividades</class>
+ <widget class="QWidget" name="Actividades">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>285</width>
+    <height>128</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>actividades</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="Title">
+     <property name="font">
+      <font>
+       <pointsize>28</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Nueva Actividad</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="clases">
+     <property name="text">
+      <string>Clases</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="examenes">
+     <property name="text">
+      <string>Examen</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

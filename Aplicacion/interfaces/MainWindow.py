@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowutFvqE.ui'
+## Form generated from reading UI file 'MainWindowNpLhHz.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -136,6 +136,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_5.addWidget(self.exportar, 0, 1, 1, 1)
 
+        self.crearHorario = QPushButton(self.centralwidget)
+        self.crearHorario.setObjectName(u"crearHorario")
+        self.crearHorario.setGeometry(QRect(270, 400, 121, 24))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -172,5 +175,6 @@ class Ui_MainWindow(object):
         self.importExport.setTitle(QCoreApplication.translate("MainWindow", u"Importar/Exportar", None))
         self.importar.setText(QCoreApplication.translate("MainWindow", u"Importar Datos", None))
         self.exportar.setText(QCoreApplication.translate("MainWindow", u"Exportar Datos", None))
+        self.crearHorario.setText(QCoreApplication.translate("MainWindow", u"Crear Horario", None))
     # retranslateUi
 

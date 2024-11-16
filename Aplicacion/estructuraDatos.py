@@ -349,3 +349,34 @@ class Horas:
     
     def getHoras(self):
         return list(self.horas)
+
+class Actividad:
+    def __init__(self, asignatura, profesor, curso, duracion):
+        self.asignatura = asignatura
+        self.profesor = profesor
+        self.curso = curso
+        self.duracion = duracion
+
+    def getAsignatura(self):
+        return self.asignatura
+
+    def setAsignatura(self, asignatura):
+        self.asignatura = asignatura
+
+    def getProfesor(self):
+        return self.profesor
+
+    def setProfesor(self, profesor):
+        self.profesor = profesor
+
+    def getCurso(self):
+        return self.curso
+
+    def setCurso(self, curso):
+        self.curso = curso
+
+    def getDuracion(self):
+        return self.duracion
+
+    def setDuracion(self, duracion):
+        self.duracion = duracion

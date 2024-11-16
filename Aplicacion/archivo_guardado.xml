@@ -8557,8 +8557,32 @@
         </Titulación>
     </Escuela>
 </Institución>
+<Curso>
+    <Nombre>2024-2025</Nombre>
+    <NúmeroAlumnos>12587</NúmeroAlumnos>
+    <Grupo>
+        <Nombre>1</Nombre>
+        <NúmeroAlumnos>3383</NúmeroAlumnos>
+    </Grupo>
+    <Grupo>
+        <Nombre>2</Nombre>
+        <NúmeroAlumnos>2871</NúmeroAlumnos>
+    </Grupo>
+    <Grupo>
+        <Nombre>3</Nombre>
+        <NúmeroAlumnos>2833</NúmeroAlumnos>
+    </Grupo>
+    <Grupo>
+        <Nombre>4</Nombre>
+        <NúmeroAlumnos>3149</NúmeroAlumnos>
+    </Grupo>
+    <Grupo>
+        <Nombre>5</Nombre>
+        <NúmeroAlumnos>351</NúmeroAlumnos>
+    </Grupo>
+</Curso>
 <DiasPorSemana>
-    <NuemroDias>8</NuemroDias>
+    <NuemroDias>7</NuemroDias>
     <Dia>
         <Nombre>Lunes</Nombre>
     </Dia>
@@ -8580,12 +8604,9 @@
     <Dia>
         <Nombre>Domingo</Nombre>
     </Dia>
-    <Dia>
-        <Nombre>Nuevo dia 7</Nombre>
-    </Dia>
 </DiasPorSemana>
 <HorasporDia>
-    <NuemroHoras>8</NuemroHoras>
+    <NuemroHoras>7</NuemroHoras>
     <Hora>
         <Nombre>09:00</Nombre>
     </Hora>
@@ -8607,7 +8628,246 @@
     <Hora>
         <Nombre>15:00</Nombre>
     </Hora>
-    <Hora>
-        <Nombre>Nueva hora 7</Nombre>
-    </Hora>
 </HorasporDia>
+<Actividades>
+    <Actividad>
+        <Asignatura>2034001, LOGICA</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>3</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034002, MATEMATICA DISCRETA Y ALGEBRA</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034003, FUNDAMENTOS FISICOS DE LA INFORMATICA</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034004, INTRODUCCION A LA PROGRAMACION</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034006, CALCULO</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034007, PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034008, ESTRUCTURAS DE DATOS</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034009, INTRODUCCION A LA INFORMATICA</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034010, INFORMATICA Y SOCIEDAD</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034011, ESTADISTICA</Asignatura>
+        <Profesor />
+        <Curso>1</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034005, IDIOMA MODERNO</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034012, PROGRAMACION ORIENTADA A OBJETOS</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034013, ARQUITECTURA E INGENIERIA DE COMPUTADORES</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034014, BASES DE DATOS</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034015, FUNDAMENTOS DE LA WEB</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034016, ANALISIS E INGENIERIA DE REQUISITOS</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034017, METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034018, REDES DE COMPUTADORES</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034019, DISEÑO Y ANALISIS DE ALGORITMOS</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034020, METODOLOGIA DE LA PROGRAMACION</Asignatura>
+        <Profesor />
+        <Curso>2</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034021, INVESTIGACION OPERATIVA</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034022, INGENIERIA DEL CONOCIMIENTO</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034023, PROCESOS DE SOFTWARE</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034024, DISEÑO Y ARQUITECTURA DEL SOFTWARE</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034025, SISTEMAS OPERATIVOS</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034026, EVOLUCION Y ADAPTACION DEL SOFTWARE</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034027, SEGURIDAD INFORMATICA</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034028, DESARROLLO DE APLICACIONES WEB</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034029, INTERACCION PERSONA-ORDENADOR</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034030, CALIDAD DEL SOFTWARE</Asignatura>
+        <Profesor />
+        <Curso>3</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034031, INGENIERIA DE SISTEMAS DE INFORMACION</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034032, PARADIGMAS DE PROGRAMACION</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034033, RECONOCIMIENTO ACADEMICO DE CREDITOS</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034034, MULTIMEDIA</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034035, PROGRAMACION CONCURRENTE</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034036, PRACTICAS EXTERNAS</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034037, TRABAJO FIN DE GRADO</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034039, TECNOLOGIAS DE BASES DE DATOS</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034040, LABORATORIO DE DISPOSITIVOS MOVILES</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+    <Actividad>
+        <Asignatura>2034041, GRAFICOS POR COMPUTADOR</Asignatura>
+        <Profesor />
+        <Curso>4</Curso>
+        <Duracion>2</Duracion>
+    </Actividad>
+</Actividades>

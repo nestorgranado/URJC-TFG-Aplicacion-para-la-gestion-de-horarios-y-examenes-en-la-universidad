@@ -15,6 +15,10 @@ from interfaces.Ui_modifyTitulation import Ui_ModificarTitulacion
 from interfaces.Ui_modifyAsignatura import Ui_ModificarAsignatura
 from interfaces.Ui_days import Ui_dias
 from interfaces.Ui_hour import Ui_horas
+from interfaces.Ui_newActivity import Ui_Actividades
+from interfaces.Ui_schedule import Ui_Horario
+from interfaces.Ui_addExam import Ui_Examenes
+from interfaces.Ui_modifyExam import Ui_ModificarExamenes
 
 # Funcionalidades
 from estructuraDatos import *
@@ -686,6 +690,7 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         institucion.setEscuelas(self.escuelas)
         self.close()
 
+# Añadir Días por Semana
 class DiasUI(QWidget, Ui_dias):
     def __init__(self):
         super().__init__()
@@ -734,7 +739,7 @@ class DiasUI(QWidget, Ui_dias):
         diasSemana.setDias(self.dias)
         self.close()
 
-
+# Añadir Horas por día
 class HorasUI(QWidget, Ui_horas):
     def __init__(self):
         super().__init__()
@@ -783,6 +788,138 @@ class HorasUI(QWidget, Ui_horas):
         horasDia.setHoras(self.horas)
         self.close()
 
+# Añadir actividades
+class NuevoExamen(QWidget, Ui_Examenes):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.escuelas = institucion.getEscuelas()
+
+        self.listaTitulaciones = {}
+        for escuela in self.escuelas:
+            for titulaciones in escuela.getTitulaciones():
+                self.listaTitulaciones[titulaciones.getNombre()] = titulaciones
+
+        self.titulacionText.addItem("Seleccione una opción...")
+        self.titulacionText.addItems(list(self.listaTitulaciones.keys()))
+
+        self.save.clicked.connect(self.guardar)
+
+    def guardar(self):
+        tit = self.listaTitulaciones[self.titulacionText.currentText()]
+        for asignatura in tit.getAsignaturas():
+            nombre = asignatura.getCodigo() + ", " + asignatura.getNombre()
+            nuevaActividad = Actividad(nombre, asignatura.getProfesor(), asignatura.getCurso(), self.duarcionText.value())
+            actividades.append(nuevaActividad)
+        self.close()
+
+class ModificarExamen(QWidget, Ui_ModificarExamenes):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.actividades = list(actividades)
+        for actividad in self.actividades:
+            self.actividadesList.addItem(actividad.getAsignatura())
+
+        self.actividadesList.itemClicked.connect(self.updateLineEditText)
+        self.modificar.clicked.connect(self.modificar_elemento)
+        self.add.clicked.connect(self.agregar_elemento)
+        self.sup.clicked.connect(self.borrar_elemento)
+        self.save.clicked.connect(self.guardar)
+
+        self.index = None
+
+    def updateLineEditText(self, item):
+        self.index = self.actividadesList.row(item)  # Guardar índice del elemento seleccionado
+        # Rellenar los datos del elemneto selecionado
+        self.asignaturaText.setText(self.actividades[self.index].getAsignatura())
+        self.profesorText.setText(self.actividades[self.index].getProfesor())
+        self.alumnosText.setText(str(self.actividades[self.index].getCurso()))
+        self.duracionText.setValue(self.actividades[self.index].getDuracion())
+
+    def modificar_elemento(self):
+        if self.index is not None:  # Verificar si hay un elemento seleccionado
+            # Obtener el nuevo texto del QLineEdit
+            nuevo_asignatura = self.asignaturaText.text()
+            nuevo_profesor = self.profesorText.text()
+            nuevo_alumnos = int(self.alumnosText.text())
+            nuevo_duracion = self.duracionText.value()
+            
+            # Actualizar el elemento
+            self.actividades[self.index].setAsignatura(nuevo_asignatura)
+            self.actividades[self.index].setProfesor(nuevo_profesor)
+            self.actividades[self.index].setCurso(nuevo_alumnos)
+            self.actividades[self.index].setDuracion(nuevo_duracion)
+         
+            # Actualizar el elemento visualmente en el QListWidget
+            self.actividadesList.item(self.index).setText(nuevo_asignatura)
+    
+    def agregar_elemento(self):
+        # Obtener el nuevo texto del QLineEdit
+        nuevo_asignatura = self.asignaturaText.text()
+        nuevo_profesor = self.profesorText.text()
+        nuevo_alumnos = self.alumnosText.text()
+        nuevo_duracion = self.duracionText.getvalue()
+        
+        # Agregar el nuevo texto a la lista de Campus
+        nuevaActividad = Actividad(nuevo_asignatura, nuevo_profesor, nuevo_alumnos, nuevo_duracion)
+        self.actividades[self.index].append(nuevaActividad)
+        
+        # Agregar el nuevo texto como un nuevo item en el QListWidget
+        self.actividadesList.addItem(nuevo_asignatura)
+
+    def borrar_elemento(self):
+        if self.index is not None:  # Verificar si hay un elemento seleccionado
+            # Eliminar el elemento
+            del self.actividades[self.index]
+            
+            # Eliminar el elemento del QListWidget
+            self.actividadesList.takeItem(self.index)
+            
+            # Limpiar el QLineEdit y reiniciar el índice seleccionado
+            self.asignaturaText.clear()
+            self.profesorText.clear()
+            self.alumnosText.clear()
+            self.duracionText.clear()
+            self.index = None
+
+    def guardar(self):
+        actividades = list(self.actividades)
+        self.close()        
+
+class ExamenesUI(QWidget, Ui_Horario):
+    def __init__(self, titulo):
+        super().__init__()
+        self.setupUi(self)
+
+        self.Title.setText(titulo)
+
+        if titulo == "Nuevo Examen":
+            self.add.clicked.connect(self.mostrarNuevoExamenUI)
+            self.modificar.clicked.connect(self.mostrarModificarExamenUI)
+
+    def mostrarNuevoExamenUI(self):
+        self.nuevoExamenUI = NuevoExamen()
+        self.nuevoExamenUI.show()
+
+    def mostrarModificarExamenUI(self):
+        self.modificarExamenUI = ModificarExamen()
+        self.modificarExamenUI.show()
+
+class ActividadesUI(QWidget, Ui_Actividades):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.examenes.clicked.connect(self.mostrarExamenesUI)
+
+    def mostrarExamenesUI(self):
+        self.examenesUI = ExamenesUI("Nuevo Examen")
+        self.examenesUI.show()
+
+# Main Window
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -807,6 +944,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.importar.clicked.connect(self.mostrarImportUI)
         self.exportar.clicked.connect(self.exportarFunction)
 
+        # Crear Horario
+        self.crearHorario.clicked.connect(self.mostrarActividadesUI)
+
     def crearCurso(self):
         # Variables
         alumnosTotales = 0
@@ -819,11 +959,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             for titulacion in escuela.getTitulaciones():
                 for asignatura in titulacion.getAsignaturas():
                     numero_grupo = asignatura.getCurso()
-                    grupos_dict.setdefault(numero_grupo, Grupo(numero_curso))
+                    grupos_dict.setdefault(numero_grupo, Grupo(numero_grupo))
                     grupos_dict[numero_grupo].sumarAlumnos(asignatura.getNumAlumnos())
         
         curso.setGrupos(list(grupos_dict.values()))
         curso.calcularAulumnos()
+
+    def mostrarActividadesUI(self):
+        self.crearCurso()
+        self.actividadesUI = ActividadesUI()
+        self.actividadesUI.show()
 
     def mostrarDiasUI(self):
         self.diasUI = DiasUI()
@@ -846,7 +991,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, curso, diasSemana, horasDia)
+            exportar(file_path, institucion, curso, diasSemana, horasDia, actividades)
 
     def mostrarImportUI(self):
         self.importUI = ImportarUI()
@@ -885,6 +1030,7 @@ if __name__ == '__main__':
     curso = Curso()
     diasSemana = Dias()
     horasDia = Horas()
+    actividades = []
 
     app = QApplication(sys.argv)
     window = MainWindow()
