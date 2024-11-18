@@ -1,0 +1,1877 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<fet version="6.18.1">
+  <Mode>Official</Mode>
+  <Institution_Name>URJC</Institution_Name>
+  <Comments>Comentario predefinido</Comments>
+  <Days_List>
+    <Number_of_Days>7</Number_of_Days>
+    <Day>
+      <Name>Lunes</Name>
+    </Day>
+    <Day>
+      <Name>Martes</Name>
+    </Day>
+    <Day>
+      <Name>Miercoles</Name>
+    </Day>
+    <Day>
+      <Name>Jueves</Name>
+    </Day>
+    <Day>
+      <Name>Viernes</Name>
+    </Day>
+    <Day>
+      <Name>Sabado</Name>
+    </Day>
+    <Day>
+      <Name>Domingo</Name>
+    </Day>
+  </Days_List>
+  <Hours_List>
+    <Number_of_Hours>7</Number_of_Hours>
+    <Hour>
+      <Name>09:00</Name>
+    </Hour>
+    <Hour>
+      <Name>10:00</Name>
+    </Hour>
+    <Hour>
+      <Name>11:00</Name>
+    </Hour>
+    <Hour>
+      <Name>12:00</Name>
+    </Hour>
+    <Hour>
+      <Name>13:00</Name>
+    </Hour>
+    <Hour>
+      <Name>14:00</Name>
+    </Hour>
+    <Hour>
+      <Name>15:00</Name>
+    </Hour>
+  </Hours_List>
+  <Subjects_List>
+    <Subject>
+      <Name>LOGICA</Name>
+      <Comments>LOGICA</Comments>
+    </Subject>
+    <Subject>
+      <Name>MATEMATICA DISCRETA Y ALGEBRA</Name>
+      <Comments>MATEMATICA DISCRETA Y ALGEBRA</Comments>
+    </Subject>
+    <Subject>
+      <Name>FUNDAMENTOS FISICOS DE LA INFORMATICA</Name>
+      <Comments>FUNDAMENTOS FISICOS DE LA INFORMATICA</Comments>
+    </Subject>
+    <Subject>
+      <Name>INTRODUCCION A LA PROGRAMACION</Name>
+      <Comments>INTRODUCCION A LA PROGRAMACION</Comments>
+    </Subject>
+    <Subject>
+      <Name>CALCULO</Name>
+      <Comments>CALCULO</Comments>
+    </Subject>
+    <Subject>
+      <Name>PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Name>
+      <Comments>PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Comments>
+    </Subject>
+    <Subject>
+      <Name>ESTRUCTURAS DE DATOS</Name>
+      <Comments>ESTRUCTURAS DE DATOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>INTRODUCCION A LA INFORMATICA</Name>
+      <Comments>INTRODUCCION A LA INFORMATICA</Comments>
+    </Subject>
+    <Subject>
+      <Name>INFORMATICA Y SOCIEDAD</Name>
+      <Comments>INFORMATICA Y SOCIEDAD</Comments>
+    </Subject>
+    <Subject>
+      <Name>ESTADISTICA</Name>
+      <Comments>ESTADISTICA</Comments>
+    </Subject>
+    <Subject>
+      <Name>IDIOMA MODERNO</Name>
+      <Comments>IDIOMA MODERNO</Comments>
+    </Subject>
+    <Subject>
+      <Name>PROGRAMACION ORIENTADA A OBJETOS</Name>
+      <Comments>PROGRAMACION ORIENTADA A OBJETOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>ARQUITECTURA E INGENIERIA DE COMPUTADORES</Name>
+      <Comments>ARQUITECTURA E INGENIERIA DE COMPUTADORES</Comments>
+    </Subject>
+    <Subject>
+      <Name>BASES DE DATOS</Name>
+      <Comments>BASES DE DATOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>FUNDAMENTOS DE LA WEB</Name>
+      <Comments>FUNDAMENTOS DE LA WEB</Comments>
+    </Subject>
+    <Subject>
+      <Name>ANALISIS E INGENIERIA DE REQUISITOS</Name>
+      <Comments>ANALISIS E INGENIERIA DE REQUISITOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Name>
+      <Comments>METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Comments>
+    </Subject>
+    <Subject>
+      <Name>REDES DE COMPUTADORES</Name>
+      <Comments>REDES DE COMPUTADORES</Comments>
+    </Subject>
+    <Subject>
+      <Name>DISEÑO Y ANALISIS DE ALGORITMOS</Name>
+      <Comments>DISEÑO Y ANALISIS DE ALGORITMOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>METODOLOGIA DE LA PROGRAMACION</Name>
+      <Comments>METODOLOGIA DE LA PROGRAMACION</Comments>
+    </Subject>
+    <Subject>
+      <Name>INVESTIGACION OPERATIVA</Name>
+      <Comments>INVESTIGACION OPERATIVA</Comments>
+    </Subject>
+    <Subject>
+      <Name>INGENIERIA DEL CONOCIMIENTO</Name>
+      <Comments>INGENIERIA DEL CONOCIMIENTO</Comments>
+    </Subject>
+    <Subject>
+      <Name>PROCESOS DE SOFTWARE</Name>
+      <Comments>PROCESOS DE SOFTWARE</Comments>
+    </Subject>
+    <Subject>
+      <Name>DISEÑO Y ARQUITECTURA DEL SOFTWARE</Name>
+      <Comments>DISEÑO Y ARQUITECTURA DEL SOFTWARE</Comments>
+    </Subject>
+    <Subject>
+      <Name>SISTEMAS OPERATIVOS</Name>
+      <Comments>SISTEMAS OPERATIVOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>EVOLUCION Y ADAPTACION DEL SOFTWARE</Name>
+      <Comments>EVOLUCION Y ADAPTACION DEL SOFTWARE</Comments>
+    </Subject>
+    <Subject>
+      <Name>SEGURIDAD INFORMATICA</Name>
+      <Comments>SEGURIDAD INFORMATICA</Comments>
+    </Subject>
+    <Subject>
+      <Name>DESARROLLO DE APLICACIONES WEB</Name>
+      <Comments>DESARROLLO DE APLICACIONES WEB</Comments>
+    </Subject>
+    <Subject>
+      <Name>INTERACCION PERSONA-ORDENADOR</Name>
+      <Comments>INTERACCION PERSONA-ORDENADOR</Comments>
+    </Subject>
+    <Subject>
+      <Name>CALIDAD DEL SOFTWARE</Name>
+      <Comments>CALIDAD DEL SOFTWARE</Comments>
+    </Subject>
+    <Subject>
+      <Name>INGENIERIA DE SISTEMAS DE INFORMACION</Name>
+      <Comments>INGENIERIA DE SISTEMAS DE INFORMACION</Comments>
+    </Subject>
+    <Subject>
+      <Name>PARADIGMAS DE PROGRAMACION</Name>
+      <Comments>PARADIGMAS DE PROGRAMACION</Comments>
+    </Subject>
+    <Subject>
+      <Name>RECONOCIMIENTO ACADEMICO DE CREDITOS</Name>
+      <Comments>RECONOCIMIENTO ACADEMICO DE CREDITOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>MULTIMEDIA</Name>
+      <Comments>MULTIMEDIA</Comments>
+    </Subject>
+    <Subject>
+      <Name>PROGRAMACION CONCURRENTE</Name>
+      <Comments>PROGRAMACION CONCURRENTE</Comments>
+    </Subject>
+    <Subject>
+      <Name>PRACTICAS EXTERNAS</Name>
+      <Comments>PRACTICAS EXTERNAS</Comments>
+    </Subject>
+    <Subject>
+      <Name>TRABAJO FIN DE GRADO</Name>
+      <Comments>TRABAJO FIN DE GRADO</Comments>
+    </Subject>
+    <Subject>
+      <Name>TECNOLOGIAS DE BASES DE DATOS</Name>
+      <Comments>TECNOLOGIAS DE BASES DE DATOS</Comments>
+    </Subject>
+    <Subject>
+      <Name>LABORATORIO DE DISPOSITIVOS MOVILES</Name>
+      <Comments>LABORATORIO DE DISPOSITIVOS MOVILES</Comments>
+    </Subject>
+    <Subject>
+      <Name>GRAFICOS POR COMPUTADOR</Name>
+      <Comments>GRAFICOS POR COMPUTADOR</Comments>
+    </Subject>
+  </Subjects_List>
+  <Activity_Tags_List></Activity_Tags_List>
+  <Teachers_List>
+    <Teacher>
+      <Name>Profesor- LOGICA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>LOGICA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- LOGICA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- MATEMATICA DISCRETA Y ALGEBRA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>MATEMATICA DISCRETA Y ALGEBRA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- MATEMATICA DISCRETA Y ALGEBRA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- FUNDAMENTOS FISICOS DE LA INFORMATICA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>FUNDAMENTOS FISICOS DE LA INFORMATICA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- FUNDAMENTOS FISICOS DE LA INFORMATICA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- INTRODUCCION A LA PROGRAMACION</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>INTRODUCCION A LA PROGRAMACION</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- INTRODUCCION A LA PROGRAMACION</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- CALCULO</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>CALCULO</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- CALCULO</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- ESTRUCTURAS DE DATOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>ESTRUCTURAS DE DATOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- ESTRUCTURAS DE DATOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- INTRODUCCION A LA INFORMATICA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>INTRODUCCION A LA INFORMATICA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- INTRODUCCION A LA INFORMATICA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- INFORMATICA Y SOCIEDAD</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>INFORMATICA Y SOCIEDAD</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- INFORMATICA Y SOCIEDAD</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- ESTADISTICA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>ESTADISTICA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- ESTADISTICA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- IDIOMA MODERNO</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>IDIOMA MODERNO</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- IDIOMA MODERNO</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- PROGRAMACION ORIENTADA A OBJETOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>PROGRAMACION ORIENTADA A OBJETOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- PROGRAMACION ORIENTADA A OBJETOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- ARQUITECTURA E INGENIERIA DE COMPUTADORES</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>ARQUITECTURA E INGENIERIA DE COMPUTADORES</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- ARQUITECTURA E INGENIERIA DE COMPUTADORES</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- BASES DE DATOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>BASES DE DATOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- BASES DE DATOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- FUNDAMENTOS DE LA WEB</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>FUNDAMENTOS DE LA WEB</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- FUNDAMENTOS DE LA WEB</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- ANALISIS E INGENIERIA DE REQUISITOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>ANALISIS E INGENIERIA DE REQUISITOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- ANALISIS E INGENIERIA DE REQUISITOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- REDES DE COMPUTADORES</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>REDES DE COMPUTADORES</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- REDES DE COMPUTADORES</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- DISEÑO Y ANALISIS DE ALGORITMOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>DISEÑO Y ANALISIS DE ALGORITMOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- DISEÑO Y ANALISIS DE ALGORITMOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- METODOLOGIA DE LA PROGRAMACION</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>METODOLOGIA DE LA PROGRAMACION</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- METODOLOGIA DE LA PROGRAMACION</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- INVESTIGACION OPERATIVA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>INVESTIGACION OPERATIVA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- INVESTIGACION OPERATIVA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- INGENIERIA DEL CONOCIMIENTO</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>INGENIERIA DEL CONOCIMIENTO</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- INGENIERIA DEL CONOCIMIENTO</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- PROCESOS DE SOFTWARE</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>PROCESOS DE SOFTWARE</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- PROCESOS DE SOFTWARE</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- DISEÑO Y ARQUITECTURA DEL SOFTWARE</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>DISEÑO Y ARQUITECTURA DEL SOFTWARE</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- DISEÑO Y ARQUITECTURA DEL SOFTWARE</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- SISTEMAS OPERATIVOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>SISTEMAS OPERATIVOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- SISTEMAS OPERATIVOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- EVOLUCION Y ADAPTACION DEL SOFTWARE</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>EVOLUCION Y ADAPTACION DEL SOFTWARE</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- EVOLUCION Y ADAPTACION DEL SOFTWARE</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- SEGURIDAD INFORMATICA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>SEGURIDAD INFORMATICA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- SEGURIDAD INFORMATICA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- DESARROLLO DE APLICACIONES WEB</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>DESARROLLO DE APLICACIONES WEB</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- DESARROLLO DE APLICACIONES WEB</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- INTERACCION PERSONA-ORDENADOR</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>INTERACCION PERSONA-ORDENADOR</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- INTERACCION PERSONA-ORDENADOR</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- CALIDAD DEL SOFTWARE</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>CALIDAD DEL SOFTWARE</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- CALIDAD DEL SOFTWARE</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- INGENIERIA DE SISTEMAS DE INFORMACION</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>INGENIERIA DE SISTEMAS DE INFORMACION</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- INGENIERIA DE SISTEMAS DE INFORMACION</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- PARADIGMAS DE PROGRAMACION</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>PARADIGMAS DE PROGRAMACION</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- PARADIGMAS DE PROGRAMACION</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- RECONOCIMIENTO ACADEMICO DE CREDITOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>RECONOCIMIENTO ACADEMICO DE CREDITOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- RECONOCIMIENTO ACADEMICO DE CREDITOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- MULTIMEDIA</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>MULTIMEDIA</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- MULTIMEDIA</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- PROGRAMACION CONCURRENTE</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>PROGRAMACION CONCURRENTE</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- PROGRAMACION CONCURRENTE</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- PRACTICAS EXTERNAS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>PRACTICAS EXTERNAS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- PRACTICAS EXTERNAS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- TRABAJO FIN DE GRADO</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>TRABAJO FIN DE GRADO</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- TRABAJO FIN DE GRADO</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- TECNOLOGIAS DE BASES DE DATOS</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>TECNOLOGIAS DE BASES DE DATOS</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- TECNOLOGIAS DE BASES DE DATOS</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- LABORATORIO DE DISPOSITIVOS MOVILES</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>LABORATORIO DE DISPOSITIVOS MOVILES</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- LABORATORIO DE DISPOSITIVOS MOVILES</Comments>
+    </Teacher>
+    <Teacher>
+      <Name>Profesor- GRAFICOS POR COMPUTADOR</Name>
+      <Target_Number_of_Hours>0</Target_Number_of_Hours>
+      <Qualified_Subjects>
+        <Qualified_Subject>GRAFICOS POR COMPUTADOR</Qualified_Subject>
+      </Qualified_Subjects>
+      <Comments>Profesor- GRAFICOS POR COMPUTADOR</Comments>
+    </Teacher>
+  </Teachers_List>
+  <Students_List>
+    <Year>
+      <Name>2024-2025</Name>
+      <Number_of_Students>12587</Number_of_Students>
+      <Comments></Comments>
+      <!--The information regarding categories, divisions of each category, and separator is only used in the divide year automatically by categories dialog.-->
+      <Number_of_Categories>0</Number_of_Categories>
+      <Separator></Separator>
+      <Group>
+        <Name>1</Name>
+        <Number_of_Students>3383</Number_of_Students>
+        <Comments></Comments>
+      </Group>
+      <Group>
+        <Name>2</Name>
+        <Number_of_Students>2871</Number_of_Students>
+        <Comments></Comments>
+      </Group>
+      <Group>
+        <Name>3</Name>
+        <Number_of_Students>2833</Number_of_Students>
+        <Comments></Comments>
+      </Group>
+      <Group>
+        <Name>4</Name>
+        <Number_of_Students>3149</Number_of_Students>
+        <Comments></Comments>
+      </Group>
+      <Group>
+        <Name>5</Name>
+        <Number_of_Students>351</Number_of_Students>
+        <Comments></Comments>
+      </Group>
+    </Year>
+  </Students_List>
+  <Activities_List>
+    <Activity>
+      <Teacher>Profesor- LOGICA</Teacher>
+      <Subject>LOGICA</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>1</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- MATEMATICA DISCRETA Y ALGEBRA</Teacher>
+      <Subject>MATEMATICA DISCRETA Y ALGEBRA</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>2</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- FUNDAMENTOS FISICOS DE LA INFORMATICA</Teacher>
+      <Subject>FUNDAMENTOS FISICOS DE LA INFORMATICA</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>3</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- INTRODUCCION A LA PROGRAMACION</Teacher>
+      <Subject>INTRODUCCION A LA PROGRAMACION</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>4</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- CALCULO</Teacher>
+      <Subject>CALCULO</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>5</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Teacher>
+      <Subject>PRINCIPIOS JURIDICOS BASICOS, DEONTOLOGIA PROFESIONAL E IGUALDAD</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>6</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- ESTRUCTURAS DE DATOS</Teacher>
+      <Subject>ESTRUCTURAS DE DATOS</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>7</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- INTRODUCCION A LA INFORMATICA</Teacher>
+      <Subject>INTRODUCCION A LA INFORMATICA</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>8</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- INFORMATICA Y SOCIEDAD</Teacher>
+      <Subject>INFORMATICA Y SOCIEDAD</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>9</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- ESTADISTICA</Teacher>
+      <Subject>ESTADISTICA</Subject>
+      <Students>1</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>10</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- IDIOMA MODERNO</Teacher>
+      <Subject>IDIOMA MODERNO</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>11</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- PROGRAMACION ORIENTADA A OBJETOS</Teacher>
+      <Subject>PROGRAMACION ORIENTADA A OBJETOS</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>12</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- ARQUITECTURA E INGENIERIA DE COMPUTADORES</Teacher>
+      <Subject>ARQUITECTURA E INGENIERIA DE COMPUTADORES</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>13</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- BASES DE DATOS</Teacher>
+      <Subject>BASES DE DATOS</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>14</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- FUNDAMENTOS DE LA WEB</Teacher>
+      <Subject>FUNDAMENTOS DE LA WEB</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>15</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- ANALISIS E INGENIERIA DE REQUISITOS</Teacher>
+      <Subject>ANALISIS E INGENIERIA DE REQUISITOS</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>16</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Teacher>
+      <Subject>METODOS OPERATIVOS Y ESTADISTICOS DE GESTION</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>17</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- REDES DE COMPUTADORES</Teacher>
+      <Subject>REDES DE COMPUTADORES</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>18</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- DISEÑO Y ANALISIS DE ALGORITMOS</Teacher>
+      <Subject>DISEÑO Y ANALISIS DE ALGORITMOS</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>19</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- METODOLOGIA DE LA PROGRAMACION</Teacher>
+      <Subject>METODOLOGIA DE LA PROGRAMACION</Subject>
+      <Students>2</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>20</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- INVESTIGACION OPERATIVA</Teacher>
+      <Subject>INVESTIGACION OPERATIVA</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>21</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- INGENIERIA DEL CONOCIMIENTO</Teacher>
+      <Subject>INGENIERIA DEL CONOCIMIENTO</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>22</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- PROCESOS DE SOFTWARE</Teacher>
+      <Subject>PROCESOS DE SOFTWARE</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>23</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- DISEÑO Y ARQUITECTURA DEL SOFTWARE</Teacher>
+      <Subject>DISEÑO Y ARQUITECTURA DEL SOFTWARE</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>24</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- SISTEMAS OPERATIVOS</Teacher>
+      <Subject>SISTEMAS OPERATIVOS</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>25</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- EVOLUCION Y ADAPTACION DEL SOFTWARE</Teacher>
+      <Subject>EVOLUCION Y ADAPTACION DEL SOFTWARE</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>26</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- SEGURIDAD INFORMATICA</Teacher>
+      <Subject>SEGURIDAD INFORMATICA</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>27</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- DESARROLLO DE APLICACIONES WEB</Teacher>
+      <Subject>DESARROLLO DE APLICACIONES WEB</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>28</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- INTERACCION PERSONA-ORDENADOR</Teacher>
+      <Subject>INTERACCION PERSONA-ORDENADOR</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>29</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- CALIDAD DEL SOFTWARE</Teacher>
+      <Subject>CALIDAD DEL SOFTWARE</Subject>
+      <Students>3</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>30</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- INGENIERIA DE SISTEMAS DE INFORMACION</Teacher>
+      <Subject>INGENIERIA DE SISTEMAS DE INFORMACION</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>31</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- PARADIGMAS DE PROGRAMACION</Teacher>
+      <Subject>PARADIGMAS DE PROGRAMACION</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>32</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- RECONOCIMIENTO ACADEMICO DE CREDITOS</Teacher>
+      <Subject>RECONOCIMIENTO ACADEMICO DE CREDITOS</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>33</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- MULTIMEDIA</Teacher>
+      <Subject>MULTIMEDIA</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>34</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- PROGRAMACION CONCURRENTE</Teacher>
+      <Subject>PROGRAMACION CONCURRENTE</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>35</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- PRACTICAS EXTERNAS</Teacher>
+      <Subject>PRACTICAS EXTERNAS</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>36</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- TRABAJO FIN DE GRADO</Teacher>
+      <Subject>TRABAJO FIN DE GRADO</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>37</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- TECNOLOGIAS DE BASES DE DATOS</Teacher>
+      <Subject>TECNOLOGIAS DE BASES DE DATOS</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>38</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- LABORATORIO DE DISPOSITIVOS MOVILES</Teacher>
+      <Subject>LABORATORIO DE DISPOSITIVOS MOVILES</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>39</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+    <Activity>
+      <Teacher>Profesor- GRAFICOS POR COMPUTADOR</Teacher>
+      <Subject>GRAFICOS POR COMPUTADOR</Subject>
+      <Students>4</Students>
+      <Duration>2</Duration>
+      <Total_Duration>2</Total_Duration>
+      <Id>40</Id>
+      <Activity_Group_Id>0</Activity_Group_Id>
+      <Active>true</Active>
+      <Comments></Comments>
+    </Activity>
+  </Activities_List>
+  <Buildings_List>
+    <Building>
+      <Name>AULARIO 1</Name>
+      <Comments></Comments>
+    </Building>
+    <Building>
+      <Name>AULARIO 2</Name>
+      <Comments></Comments>
+    </Building>
+    <Building>
+      <Name>AULARIO 3</Name>
+      <Comments></Comments>
+    </Building>
+    <Building>
+      <Name>LABORATORIOS 1</Name>
+      <Comments></Comments>
+    </Building>
+    <Building>
+      <Name>LABORATORIOS 2</Name>
+      <Comments></Comments>
+    </Building>
+    <Building>
+      <Name>LABORATORIOS 3</Name>
+      <Comments></Comments>
+    </Building>
+  </Buildings_List>
+  <Rooms_List>
+    <Room>
+      <Name>AULA 001-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>39</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 002-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>39</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA MAGNA 003-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>96</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 004-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>73</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 005-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>72</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 006-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>77</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 101-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>43</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 103-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 104-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>64</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 105-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>58</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 106-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>40</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 107-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>91</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 109-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>39</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 110-AULARIO 1</Name>
+      <Building>AULARIO 1</Building>
+      <Capacity>14</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 001-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>88</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 002-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>55</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA MAGNA 003-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>102</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 004-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>72</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 005-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>62</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 006-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>43</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 101-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>84</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 102-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>84</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 103-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>64</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 104-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>63</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 105-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>82</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 106-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>82</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 107-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>61</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 108-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>63</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 201-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>84</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 202-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>82</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 203-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>65</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 204-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>64</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 205-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>84</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 206-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>82</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 207-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>65</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 208-AULARIO 2</Name>
+      <Building>AULARIO 2</Building>
+      <Capacity>64</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 001-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>100</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 002-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>88</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 003-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>71</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 004-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>68</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 005-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>83</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 006-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>72</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 007-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>54</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 101-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>85</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 102-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>86</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 103-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>73</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 104-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>73</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 105-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>86</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 106-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>76</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 107-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>71</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 108-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>70</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 201-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>84</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 202-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>89</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA MAGNA 203-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>124</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 204-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>82</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 205-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>59</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 206-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>70</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 207-AULARIO 3</Name>
+      <Building>AULARIO 3</Building>
+      <Capacity>69</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE QUÍMICA I 001-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>18</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE QUÍMICA II 002-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 003-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 004-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE MATERIALES 005-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE BIOQUÍMICA 006-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE INGENIERÍA QUÍMICA 101-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE INGENIERÍA QUÍMICA 102-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 103-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>25</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 104-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 105-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE INGENIERÍA QUÍMICA 106-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE ELECTRÓNICA/FÍSICA 201-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>15</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE ELECTRÓNICA/FÍSICA 202-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>1</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 203-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 204-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE MATERIALES 205-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE ELECTRÓNICA/FÍSICA 206-LABORATORIOS 1</Name>
+      <Building>LABORATORIOS 1</Building>
+      <Capacity>1</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO S01-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>32</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA S09-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA S10-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>35</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO 001-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>0</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE ENERGÍA 002-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 003-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>22</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE QUÍMICA 006-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>15</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA DE INFORMÁTICA 007-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>39</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA DE INFORMÁTICA 102-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>0</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 103-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>35</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 105-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>11</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 106-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>25</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 108-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA DE INFORMÁTICA 109-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE USABILILIDAD 110-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>1</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 111-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>35</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO BIODIVERSIDAD 201-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>18</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO BIODIVERSIDAD 202-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>12</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 203-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>22</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO TÉCNICAS ANALÍTICAS 206-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>22</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO GEOLOGÍA 207-LABORATORIOS 2</Name>
+      <Building>LABORATORIOS 2</Building>
+      <Capacity>25</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO DE TRADUCCIÓN E INTERPRETACIÓN S001-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>19</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA S002-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>10</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA S010-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>0</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SALA MULTIUSOS DOCENTE 001-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>1</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO GEOLOGÍA 002-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>25</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA 003-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>15</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO BIODIVERSIDAD 006-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>18</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO QUÍMICA INORGÁNICA, ANALÍTICA Y ALIMENTOS 007-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>21</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 102-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 103-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 105-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 106-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>20</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 108-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 109-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>AULA INFORMÁTICA 111-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>40</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO 201-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>22</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO 202-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>0</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>SEMINARIO 203-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>30</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO 206-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>0</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+    <Room>
+      <Name>LABORATORIO 207-LABORATORIOS 3</Name>
+      <Building>LABORATORIOS 3</Building>
+      <Capacity>0</Capacity>
+      <Virtual>false</Virtual>
+      <Comments></Comments>
+    </Room>
+  </Rooms_List>
+  <Time_Constraints_List>
+    <ConstraintBasicCompulsoryTime>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintBasicCompulsoryTime>
+  </Time_Constraints_List>
+  <Space_Constraints_List>
+    <ConstraintBasicCompulsorySpace>
+      <Weight_Percentage>100</Weight_Percentage>
+      <Active>true</Active>
+      <Comments></Comments>
+    </ConstraintBasicCompulsorySpace>
+  </Space_Constraints_List>
+</fet>

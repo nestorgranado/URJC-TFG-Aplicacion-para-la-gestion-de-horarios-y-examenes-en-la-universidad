@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>298</width>
-    <height>158</height>
+    <height>197</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,6 +37,13 @@
     <widget class="QPushButton" name="modificar">
      <property name="text">
       <string>Modificar</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="exportar">
+     <property name="text">
+      <string>Exportar Datos</string>
      </property>
     </widget>
    </item>

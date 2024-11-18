@@ -1,5 +1,7 @@
 # Librerías externas
 import sys
+import os
+import subprocess
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, QDialog, QVBoxLayout, QLabel, QListWidget, QComboBox, QAbstractItemView
 from PySide6.QtCore import Qt
 from collections import defaultdict
@@ -24,6 +26,7 @@ from interfaces.Ui_modifyExam import Ui_ModificarExamenes
 from estructuraDatos import *
 from importar import importarInstitucion
 from exportar import exportar
+from exportarFET import exportarFET
 
 # Clase para mostrar una ventana emergente con un mensaje de error que se le pase al constructor
 class DialogoError(QDialog): 
@@ -809,9 +812,9 @@ class NuevoExamen(QWidget, Ui_Examenes):
     def guardar(self):
         tit = self.listaTitulaciones[self.titulacionText.currentText()]
         for asignatura in tit.getAsignaturas():
-            nombre = asignatura.getCodigo() + ", " + asignatura.getNombre()
-            nuevaActividad = Actividad(nombre, asignatura.getProfesor(), asignatura.getCurso(), self.duarcionText.value())
+            nuevaActividad = Actividad(asignatura.getNombre(), asignatura.getProfesor(), asignatura.getCurso(), self.duarcionText.value())
             actividades.append(nuevaActividad)
+            asignaturasElegidas.append(asignatura)
         self.close()
 
 class ModificarExamen(QWidget, Ui_ModificarExamenes):
@@ -861,7 +864,7 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
         nuevo_asignatura = self.asignaturaText.text()
         nuevo_profesor = self.profesorText.text()
         nuevo_alumnos = self.alumnosText.text()
-        nuevo_duracion = self.duracionText.getvalue()
+        nuevo_duracion = self.duracionText.value()
         
         # Agregar el nuevo texto a la lista de Campus
         nuevaActividad = Actividad(nuevo_asignatura, nuevo_profesor, nuevo_alumnos, nuevo_duracion)
@@ -895,11 +898,61 @@ class ExamenesUI(QWidget, Ui_Horario):
         self.setupUi(self)
 
         self.Title.setText(titulo)
+        self.tipo = titulo
 
         if titulo == "Nuevo Examen":
             self.add.clicked.connect(self.mostrarNuevoExamenUI)
             self.modificar.clicked.connect(self.mostrarModificarExamenUI)
 
+        self.crearHorario.clicked.connect(self.nuevoHorario)
+        self.exportar.clicked.connect(self.exportarXML)
+
+    def nuevoHorario(self):
+        # Nombre y extensión predeterminada del archivo
+        default_filename = "archivo_guardado.fet"
+
+        #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
+        file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo FET", default_filename, "Archivos FET (*.fet)")
+
+        if file_path:
+            # Asegurarse de que la extensión sea .fet (si el usuario la cambia accidentalmente)
+            if not file_path.endswith(".fet"):
+                file_path += ".fet"
+            
+            # Guardar el archivo en la ruta seleccionada
+            if self.tipo == "Nuevo Examen":
+                exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, curso, actividades, "Examen")
+            else:
+                exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, curso, actividades, "Clase")
+
+        ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet.exe"
+
+        # Verificar si el archivo existe
+        if os.path.isfile(file_path):
+            try:
+                # Ejecutar FET con el archivo .fet
+                subprocess.run([ruta_fet, file_path], check=True)
+                print("FET se ejecutó correctamente.")
+            except subprocess.CalledProcessError as e:
+                print(f"Hubo un error al ejecutar FET: {e}")
+        else:
+            print(f"El archivo {file_path} no existe.")
+
+    def exportarXML(self):
+        # Nombre y extensión predeterminada del archivo
+        default_filename = "archivo_guardado.xml"
+
+        #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
+        file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo XML", default_filename, "Archivos XML (*.xml)")
+
+        if file_path:
+            # Asegurarse de que la extensión sea .xml (si el usuario la cambia accidentalmente)
+            if not file_path.endswith(".xml"):
+                file_path += ".xml"
+            
+            # Guardar el archivo en la ruta seleccionada
+            exportar(file_path, institucion, curso, diasSemana, horasDia, actividades)
+    
     def mostrarNuevoExamenUI(self):
         self.nuevoExamenUI = NuevoExamen()
         self.nuevoExamenUI.show()
@@ -1031,6 +1084,7 @@ if __name__ == '__main__':
     diasSemana = Dias()
     horasDia = Horas()
     actividades = []
+    asignaturasElegidas = []
 
     app = QApplication(sys.argv)
     window = MainWindow()

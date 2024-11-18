@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'schedulepPzOBl.ui'
+## Form generated from reading UI file 'schedulecrzWuV.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -22,7 +22,7 @@ class Ui_Horario(object):
     def setupUi(self, Horario):
         if not Horario.objectName():
             Horario.setObjectName(u"Horario")
-        Horario.resize(298, 158)
+        Horario.resize(298, 197)
         self.verticalLayout = QVBoxLayout(Horario)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.Title = QLabel(Horario)
@@ -43,6 +43,11 @@ class Ui_Horario(object):
 
         self.verticalLayout.addWidget(self.modificar)
 
+        self.exportar = QPushButton(Horario)
+        self.exportar.setObjectName(u"exportar")
+
+        self.verticalLayout.addWidget(self.exportar)
+
         self.crearHorario = QPushButton(Horario)
         self.crearHorario.setObjectName(u"crearHorario")
 
@@ -59,6 +64,7 @@ class Ui_Horario(object):
         self.Title.setText(QCoreApplication.translate("Horario", u"TextLabel", None))
         self.add.setText(QCoreApplication.translate("Horario", u"Nuevo", None))
         self.modificar.setText(QCoreApplication.translate("Horario", u"Modificar", None))
+        self.exportar.setText(QCoreApplication.translate("Horario", u"Exportar Datos", None))
         self.crearHorario.setText(QCoreApplication.translate("Horario", u"Crear Horario", None))
     # retranslateUi
 
