@@ -89,17 +89,18 @@ class Edificio:
         return self.nombre
 
 class Aula:
-    def __init__(self, numero, capacidadClase, capacidadExamen, tipo):
-        self.numero = numero
+    def __init__(self, nombre, capacidadClase, capacidadExamen, tipo):
+        self.nombre = nombre
         self.capacidadClase = capacidadClase
         self.capacidadExamen = capacidadExamen
         self.tipo = tipo
+        self.combinacion = False
 
-    def setNumero(self, numero):
-        self.numero = numero
+    def setNumero(self, nombre):
+        self.nombre = nombre
 
     def getNumero(self):
-        return self.numero
+        return self.nombre
     
     def setCapacidadClase(self, capacidadClase):
         self.capacidadClase = capacidadClase
@@ -118,6 +119,25 @@ class Aula:
     
     def getTipo(self):
         return self.tipo
+    
+    def getCombinacion(self):
+        return self.combinacion
+
+class AulaCombinada(Aula):
+    def __init__(self, nombre, capacidadClase, capacidadExamen, listaCombinaciones):
+        super().__init__(nombre, capacidadClase, capacidadExamen, "COMBINADA")
+        self.numCombinaciones = len(listaCombinaciones)
+        self.listaAulas = listaCombinaciones
+        self.combinacion = True
+
+    def getAulasCombinadas(self):
+        return list(self.listaAulas)
+
+    def getCombinacion(self):
+        return self.combinacion
+
+    def getNumCombinaciones(self):
+        return self.numCombinaciones
 
 class Escuela:
     def __init__(self, nombre):
@@ -306,16 +326,8 @@ class Grupo:
 
 class Dias:
     def __init__(self):
-        self.numDias = "7"
-        self.dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
-
-    def añadirDia(self, dia):
-        self.dias.append(dia)
-        self.numDias = str(len(self.dias))
-    
-    def quitarUltimoDia(self):
-        self.dias.pop()
-        self.numDias -= 1
+        self.numDias = "5"
+        self.dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
 
     def getNumDias(self):
         return int(self.numDias)
@@ -329,16 +341,8 @@ class Dias:
 
 class Horas:
     def __init__(self):
-        self.numHoras = "7"
-        self.horas = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"]
-
-    def añadirHoras(self, hora):
-        self.horas.append(hora)
-        self.numHoras = str(len(self.horas))
-    
-    def quitarUltimaHora(self):
-        self.horas.pop()
-        self.numHoras -= 1
+        self.numHoras = "13"
+        self.horas = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"]
 
     def getNumHoras(self):
         return int(self.numHoras)

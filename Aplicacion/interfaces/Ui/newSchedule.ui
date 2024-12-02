@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Horario</class>
- <widget class="QWidget" name="Horario">
+ <class>crearHorario</class>
+ <widget class="QWidget" name="crearHorario">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>298</width>
-    <height>197</height>
+    <width>285</width>
+    <height>128</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>horario</string>
+   <string>CrearHorario</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -22,35 +22,21 @@
       </font>
      </property>
      <property name="text">
-      <string>TextLabel</string>
+      <string>Crear Horarios</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="add">
+    <widget class="QPushButton" name="clases">
      <property name="text">
-      <string>Nuevo</string>
+      <string>Clases</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="modificar">
+    <widget class="QPushButton" name="examenes">
      <property name="text">
-      <string>Modificar</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="exportar">
-     <property name="text">
-      <string>Exportar Datos</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="crearHorario">
-     <property name="text">
-      <string>Crear Horario</string>
+      <string>Examen</string>
      </property>
     </widget>
    </item>

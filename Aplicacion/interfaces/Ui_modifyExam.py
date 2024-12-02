@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'modifyExamAwOwHO.ui'
+## Form generated from reading UI file 'modifyExamixpiqU.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -60,23 +60,23 @@ class Ui_ModificarExamenes(object):
         self.save = QPushButton(ModificarExamenes)
         self.save.setObjectName(u"save")
         self.save.setGeometry(QRect(30, 620, 75, 24))
-        self.widget = QWidget(ModificarExamenes)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(390, 290, 239, 26))
-        self.horizontalLayout = QHBoxLayout(self.widget)
+        self.layoutWidget = QWidget(ModificarExamenes)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(390, 290, 239, 26))
+        self.horizontalLayout = QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.add = QPushButton(self.widget)
+        self.add = QPushButton(self.layoutWidget)
         self.add.setObjectName(u"add")
 
         self.horizontalLayout.addWidget(self.add)
 
-        self.modificar = QPushButton(self.widget)
+        self.modificar = QPushButton(self.layoutWidget)
         self.modificar.setObjectName(u"modificar")
 
         self.horizontalLayout.addWidget(self.modificar)
 
-        self.sup = QPushButton(self.widget)
+        self.sup = QPushButton(self.layoutWidget)
         self.sup.setObjectName(u"sup")
 
         self.horizontalLayout.addWidget(self.sup)
@@ -89,7 +89,7 @@ class Ui_ModificarExamenes(object):
 
     def retranslateUi(self, ModificarExamenes):
         ModificarExamenes.setWindowTitle(QCoreApplication.translate("ModificarExamenes", u"modificarExamenes", None))
-        self.Title.setText(QCoreApplication.translate("ModificarExamenes", u"Modificar Actividades", None))
+        self.Title.setText(QCoreApplication.translate("ModificarExamenes", u"Modificar Examenes", None))
         self.asignatura.setText(QCoreApplication.translate("ModificarExamenes", u"Asignatura", None))
         self.profesor.setText(QCoreApplication.translate("ModificarExamenes", u"Profesor", None))
         self.alumnos.setText(QCoreApplication.translate("ModificarExamenes", u"Alumnos", None))

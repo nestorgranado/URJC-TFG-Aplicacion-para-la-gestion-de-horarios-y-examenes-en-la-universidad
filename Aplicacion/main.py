@@ -5,21 +5,26 @@ import subprocess
 from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, QDialog, QVBoxLayout, QLabel, QListWidget, QComboBox, QAbstractItemView
 from PySide6.QtCore import Qt
 from collections import defaultdict
+from itertools import combinations
 
 # Imports de las interfaces
 from interfaces.MainWindow import Ui_MainWindow
 from interfaces.Ui_import import Ui_importar
+
 from interfaces.Ui_addName import Ui_AddNombre
 from interfaces.Ui_modifyName import Ui_ModificarName
 from interfaces.Ui_modifyBuilding import Ui_ModificarEdificio
 from interfaces.Ui_modifyAula import Ui_ModificarAula
+from interfaces.Ui_addVirtuaRooms import Ui_CrearAulaCombinada
 from interfaces.Ui_modifyTitulation import Ui_ModificarTitulacion
 from interfaces.Ui_modifyAsignatura import Ui_ModificarAsignatura
+
 from interfaces.Ui_days import Ui_dias
 from interfaces.Ui_hour import Ui_horas
-from interfaces.Ui_newActivity import Ui_Actividades
-from interfaces.Ui_schedule import Ui_Horario
-from interfaces.Ui_addExam import Ui_Examenes
+
+from interfaces.Ui_newSchedule import Ui_crearHorario
+from interfaces.Ui_exams import Ui_Examenes
+from interfaces.Ui_addExam import Ui_addExamen
 from interfaces.Ui_modifyExam import Ui_ModificarExamenes
 
 # Funcionalidades
@@ -56,10 +61,10 @@ class ImportarUI(QWidget, Ui_importar):
 
         # Si no hay error comprobar que se ha importado y añadirlo a la Institución
         if error == "": 
-            if not campuses:
-                institucion.sumar_escuelas(escuelas)
-            elif not escuelas:
-                institucion.sumar_campus(campuses)   
+            if campuses:
+                institucion.sumar_campus(campuses)
+            elif escuelas:
+                institucion.sumar_escuelas(escuelas)   
         else:
             dialogoError = DialogoError(error)
             dialogoError.exec()
@@ -365,9 +370,14 @@ class ModificarAula(QWidget, Ui_ModificarAula):
 
         self.campuses = institucion.getCampus() # Lista de campuses
 
-        # Inicializar el selectorer
+        # Inicializar
         self.campusBox.addItem("Seleccione una opción...")
         self.edificioBox.addItem("Seleccione una opción...")
+        self.capClaseText.setMinimum(0)
+        self.capClaseText.setMaximum(1000)
+        self.capExamenText.setMinimum(0)
+        self.capExamenText.setMaximum(1000)
+
 
         # Rellenar el selector de campus con los nombres de los diferentes campus
         for campus in self.campuses:
@@ -481,6 +491,75 @@ class ModificarAula(QWidget, Ui_ModificarAula):
         institucion.setCampus(self.campuses)
         self.close()
         
+class AulaCombinadaUI(QWidget, Ui_CrearAulaCombinada):
+    def __init__(self, tipoHorario):
+        super().__init__()
+        self.setupUi(self)
+
+        self.campuses = institucion.getCampus() # Lista de campuses
+        self.tipoHorario = tipoHorario
+
+        # Inicializar
+        self.campusText.addItem("Seleccione una opción...")
+        self.edificioText.addItem("Seleccione una opción...")
+        self.cantidadText.setMinimum(0)
+        self.cantidadText.setMaximum(1000)
+        self.capacidadText.setMinimum(0)
+        self.capacidadText.setMaximum(1000)
+
+        # Rellenar el selector de campus con los nombres de los diferentes campus
+        for campus in self.campuses:
+            self.campusText.addItem(campus.getNombre())
+        
+        self.campusText.currentIndexChanged.connect(self.actualizar_edificio) # Si se seleciona un campus obtener sus edificios
+        self.edificioText.currentIndexChanged.connect(self.actualizar_aula) # Si se seleciona un edificio obtener sus aulas
+
+        self.add.clicked.connect(self.crearAulas)
+
+    def actualizar_edificio(self):
+        self.campus_index = self.campusText.currentIndex() - 1 # Guardar Indice del campus seleccionado
+        self.edificios = self.campuses[self.campus_index].getEdificios() # Obtener los edififcios del campus seleccionado
+
+        # Rellenar el selector de edificio con los nombres de los diferentes edificios
+        for edificio in self.edificios:
+            self.edificioText.addItem(edificio.getNombre())
+    
+    def actualizar_aula(self):
+        self.edificio_index = self.edificioText.currentIndex() - 1 # Guardar Indice del edificio seleccionada
+        self.aulas = self.edificios[self.edificio_index].getAulas() # Obtener las aulas del edificio seleccionado
+
+    def crearAulas(self):
+        cantidad = self.cantidadText.value()
+        capacidad = self.capacidadText.value()
+
+        listaCombinaciones = []
+
+        for tam in range(2, 4):
+            for comb in combinations(self.aulas, tam):
+                suma_cap_clase = sum(aula.getCapacidadClase() for aula in comb)
+                suma_cap_examen = sum(aula.getCapacidadExamen() for aula in comb)
+
+            
+                tipo = comb[0].getTipo()
+                mismoTipo = all(aula.getTipo() == tipo for aula in comb)
+               
+                if mismoTipo:
+                    if (self.tipoHorario == "Clase") and (suma_cap_clase >= capacidad):
+                        listaCombinaciones.append(comb)
+                    if (self.tipoHorario == "Examen") and (suma_cap_examen >= capacidad):
+                        listaCombinaciones.append(comb)
+
+        
+        for i in range(cantidad):
+            if self.tipoHorario == "Clase":
+                newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", capacidad, 0, listaCombinaciones)
+                self.edificios[self.edificio_index].agregar_aula(newAula)
+            if self.tipoHorario == "Examen":
+                newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", 0, capacidad, listaCombinaciones)
+                self.edificios[self.edificio_index].agregar_aula(newAula)
+        
+        self.close()
+
 # Clase para Modificar Datos de las Asignaturas
 class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
     def __init__(self):
@@ -693,106 +772,8 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         institucion.setEscuelas(self.escuelas)
         self.close()
 
-# Añadir Días por Semana
-class DiasUI(QWidget, Ui_dias):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-
-        self.numero = diasSemana.getNumDias()
-        self.dias = diasSemana.getDias()
-
-        self.numDiasText.setValue(self.numero)
-        self.previousValue = self.numDiasText.value()
-        self.listaDias.addItems(self.dias)
-
-        # Hacer los elementos editables
-        for index in range(self.listaDias.count()):
-            item = self.listaDias.item(index)
-            item.setFlags(item.flags() | Qt.ItemIsEditable)
-            
-        self.listaDias.setEditTriggers(QAbstractItemView.DoubleClicked)
-
-        self.numDiasText.valueChanged.connect(self.actualizarDias)
-        self.listaDias.itemChanged.connect(self.actualizarDatos)
-        self.save.clicked.connect(self.guardar)
-
-    def actualizarDias(self, value):
-        if value > self.previousValue:
-            for i in range(self.previousValue, value):
-                self.dias.append(f"Nuevo dia {i+1}")
-        elif value < self.previousValue:
-            for i in range(self.previousValue, value, -1):
-                self.dias.pop()
-            
-        self.previousValue = value
-
-        self.listaDias.clear()
-        self.listaDias.addItems(self.dias)
-
-        # Hacer los elementos editables
-        for index in range(self.listaDias.count()):
-            item = self.listaDias.item(index)
-            item.setFlags(item.flags() | Qt.ItemIsEditable)
-
-    def actualizarDatos(self):
-        self.dias = [self.listaDias.item(i).text() for i in range(self.listaDias.count())]
-
-    def guardar(self):
-        diasSemana.setDias(self.dias)
-        self.close()
-
-# Añadir Horas por día
-class HorasUI(QWidget, Ui_horas):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-
-        self.numero = horasDia.getNumHoras()
-        self.horas = horasDia.getHoras()
-
-        self.numHorasText.setValue(self.numero)
-        self.previousValue = self.numHorasText.value()
-        self.listaHoras.addItems(self.horas)
-
-        # Hacer los elementos editables
-        for index in range(self.listaHoras.count()):
-            item = self.listaHoras.item(index)
-            item.setFlags(item.flags() | Qt.ItemIsEditable)
-            
-        self.listaHoras.setEditTriggers(QAbstractItemView.DoubleClicked)
-
-        self.numHorasText.valueChanged.connect(self.actualizarHoras)
-        self.listaHoras.itemChanged.connect(self.actualizarDatos)
-        self.save.clicked.connect(self.guardar)
-
-    def actualizarHoras(self, value):
-        if value > self.previousValue:
-            for i in range(self.previousValue, value):
-                self.horas.append(f"Nueva hora {i+1}")
-        elif value < self.previousValue:
-            for i in range(self.previousValue, value, -1):
-                self.horas.pop()
-            
-        self.previousValue = value
-
-        self.listaHoras.clear()
-        self.listaHoras.addItems(self.horas)
-
-        # Hacer los elementos editables
-        for index in range(self.listaHoras.count()):
-            item = self.listaHoras.item(index)
-            item.setFlags(item.flags() | Qt.ItemIsEditable)
-
-    def actualizarDatos(self):
-        self.horas = [self.listaHoras.item(i).text() for i in range(self.listaHoras.count())]
-
-    def guardar(self):
-        horasDia.setHoras(self.horas)
-        self.close()
-
-# Añadir actividades
-class NuevoExamen(QWidget, Ui_Examenes):
+# Añadir Examenes
+class NuevoExamen(QWidget, Ui_addExamen):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -892,24 +873,34 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
         actividades = list(self.actividades)
         self.close()        
 
-class ExamenesUI(QWidget, Ui_Horario):
-    def __init__(self, titulo):
+class ExamenesUI(QWidget, Ui_Examenes):
+    def __init__(self):
         super().__init__()
         self.setupUi(self)
 
-        self.Title.setText(titulo)
-        self.tipo = titulo
+        self.add.clicked.connect(self.mostrarNuevoExamenUI)
+        self.modificar.clicked.connect(self.mostrarModificarExamenUI)
+        
+        self.periodoExamenesText.setValue(1)
+        self.periodoExamenesText.valueChanged.connect(self.CrearDias)
 
-        if titulo == "Nuevo Examen":
-            self.add.clicked.connect(self.mostrarNuevoExamenUI)
-            self.modificar.clicked.connect(self.mostrarModificarExamenUI)
+        self.aulasCombinadas.clicked.connect(self.mostrarAulaCombinadaUI)
+
+        self.exportar.clicked.connect(self.exportarDatos)
 
         self.crearHorario.clicked.connect(self.nuevoHorario)
-        self.exportar.clicked.connect(self.exportarXML)
+
+    def CrearDias(self):
+        numSemanas = self.periodoExamenesText.value()
+        dias = []
+        for i in range(numSemanas):
+            dias += [f"Lunes{i+1}", f"Martes{i+1}", f"Miercoles{i+1}", f"Jueves{i+1}", f"Viernes{i+1}", f"Sabado{i+1}"]
+            
+        diasSemana.setDias(dias)
 
     def nuevoHorario(self):
         # Nombre y extensión predeterminada del archivo
-        default_filename = "archivo_guardado.fet"
+        default_filename = "data.fet"
 
         #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
         file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo FET", default_filename, "Archivos FET (*.fet)")
@@ -920,25 +911,36 @@ class ExamenesUI(QWidget, Ui_Horario):
                 file_path += ".fet"
             
             # Guardar el archivo en la ruta seleccionada
-            if self.tipo == "Nuevo Examen":
-                exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, curso, actividades, "Examen")
-            else:
-                exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, curso, actividades, "Clase")
+            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, curso, actividades, "Examen")
 
-        ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet.exe"
+        # Ruta FET
+        ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
+        
+        # Obtener el directorio base del archivo .fet
+        base_dir = os.path.dirname(file_path)
+
+        # Crear el directorio "Resultado" en el mismo directorio que el archivo .fet
+        resultado_dir = os.path.join(base_dir, "Resultado")
+        os.makedirs(resultado_dir, exist_ok=True)
 
         # Verificar si el archivo existe
         if os.path.isfile(file_path):
             try:
+                # Construir el comando para ejecutar FET
+                command = [ruta_fet, f"--inputfile={file_path}", f"--outputdir={resultado_dir}"]
+                print("Ejecutando comando:", " ".join(command))  # Para depuración
+                
                 # Ejecutar FET con el archivo .fet
-                subprocess.run([ruta_fet, file_path], check=True)
-                print("FET se ejecutó correctamente.")
+                subprocess.run(command, check=True)
+                print(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
             except subprocess.CalledProcessError as e:
                 print(f"Hubo un error al ejecutar FET: {e}")
+            except Exception as e:
+                print(f"Otro error ocurrió: {e}")
         else:
             print(f"El archivo {file_path} no existe.")
 
-    def exportarXML(self):
+    def exportarDatos(self):
         # Nombre y extensión predeterminada del archivo
         default_filename = "archivo_guardado.xml"
 
@@ -961,7 +963,11 @@ class ExamenesUI(QWidget, Ui_Horario):
         self.modificarExamenUI = ModificarExamen()
         self.modificarExamenUI.show()
 
-class ActividadesUI(QWidget, Ui_Actividades):
+    def mostrarAulaCombinadaUI(self):
+        self.aulaCombinadaUI = AulaCombinadaUI("Examen")
+        self.aulaCombinadaUI.show()
+
+class HorariosUI(QWidget, Ui_crearHorario):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -969,7 +975,7 @@ class ActividadesUI(QWidget, Ui_Actividades):
         self.examenes.clicked.connect(self.mostrarExamenesUI)
 
     def mostrarExamenesUI(self):
-        self.examenesUI = ExamenesUI("Nuevo Examen")
+        self.examenesUI = ExamenesUI()
         self.examenesUI.show()
 
 # Main Window
@@ -989,16 +995,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.titulacion.clicked.connect(self.mostrarModificarTitulacionUI)
         self.asignatura.clicked.connect(self.mostrarModificarAsignaturaUI)
 
-        # Dias/Horas/Descansos
-        self.dias.clicked.connect(self.mostrarDiasUI)
-        self.horas.clicked.connect(self.mostrarHorasUI)
-
         # Exportar/Importar
         self.importar.clicked.connect(self.mostrarImportUI)
         self.exportar.clicked.connect(self.exportarFunction)
 
         # Crear Horario
-        self.crearHorario.clicked.connect(self.mostrarActividadesUI)
+        self.crearHorario.clicked.connect(self.mostrarCrearHorarioUI)
 
     def crearCurso(self):
         # Variables
@@ -1018,18 +1020,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         curso.setGrupos(list(grupos_dict.values()))
         curso.calcularAulumnos()
 
-    def mostrarActividadesUI(self):
+    def mostrarCrearHorarioUI(self):
         self.crearCurso()
-        self.actividadesUI = ActividadesUI()
-        self.actividadesUI.show()
-
-    def mostrarDiasUI(self):
-        self.diasUI = DiasUI()
-        self.diasUI.show()
-
-    def mostrarHorasUI(self):
-        self.horasUI = HorasUI()
-        self.horasUI.show()
+        self.horariosUI = HorariosUI()
+        self.horariosUI.show()
         
     def exportarFunction(self):
         # Nombre y extensión predeterminada del archivo
@@ -1065,7 +1059,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def mostrarModificarAulaUI(self):
         self.modificarAulaUI = ModificarAula()
         self.modificarAulaUI.show()
-
+   
     def mostrarModificarEscuelaUI(self):
         self.modificarUI = ModificarName("Escuela")
         self.modificarUI.show()

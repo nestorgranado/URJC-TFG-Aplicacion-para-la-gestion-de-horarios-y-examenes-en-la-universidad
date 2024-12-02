@@ -36,21 +36,23 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
         etree.SubElement(horaXML, "Name").text = hora
 
     # Lista de asignaturas
-    profesores = {}
+    """profesores = {}"""
     listaAsignaturas = etree.SubElement(root, "Subjects_List")
     for asignatura in asignaturas:
         asignaturaXML = etree.SubElement(listaAsignaturas, "Subject")
         etree.SubElement(asignaturaXML, "Name").text = asignatura.getNombre()
         etree.SubElement(asignaturaXML, "Comments").text = asignatura.getNombre()
 
-        if asignatura.getProfesor() != None:
+        """if asignatura.getProfesor() != None:
             profesores.setdefault(asignatura.getProfesor(), []).append(asignatura.getNombre())
+        """
     
-    if not profesores:
+    """if not profesores:
         for asignatura in asignaturas:
             # Crear un porfesor por asignatura solucion primera
             nombreProfesor = "Profesor- " + asignatura.getNombre()
             profesores.setdefault(nombreProfesor, []).append(asignatura.getNombre())
+    """
 
     # Etiquetas de asignaturas(por ahora sin usar)
     EtiquetasAsignaturas = etree.SubElement(root, "Activity_Tags_List")
@@ -58,7 +60,8 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
 
     # Lista Profesores
     listaProfesores = etree.SubElement(root, "Teachers_List")
-    if profesores:
+    listaProfesores.text = ""
+    """if profesores:
         for profesor in profesores:
             profesorXML = etree.SubElement(listaProfesores, "Teacher")
             etree.SubElement(profesorXML, "Name").text = profesor
@@ -73,6 +76,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
             etree.SubElement(profesorXML, "Comments").text = profesor
     else:
         listaProfesores.text = ""
+    """
     
     # Estudiantes
     listaEstudiantes = etree.SubElement(root, "Students_List")
@@ -99,10 +103,11 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
     for actividad in actividades:
         actividadXML = etree.SubElement(listaActividades, "Activity")
         
-        if actividad.getProfesor() == None:
+        """if actividad.getProfesor() == None:
             etree.SubElement(actividadXML, "Teacher").text = "Profesor- " + actividad.getAsignatura()
         else:
             etree.SubElement(actividadXML, "Teacher").text = actividad.getProfesor()
+        """
 
         etree.SubElement(actividadXML, "Subject").text = actividad.getAsignatura()
         etree.SubElement(actividadXML, "Students").text = str(actividad.getCurso())
@@ -132,7 +137,17 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
                     etree.SubElement(aulaClaseXML, "Name").text = str(aula.getNumero()) + "-" + edificio.getNombre()
                     etree.SubElement(aulaClaseXML, "Building").text = edificio.getNombre()
                     etree.SubElement(aulaClaseXML, "Capacity").text = str(aula.getCapacidadClase())
-                    etree.SubElement(aulaClaseXML, "Virtual").text = "false"
+                    if aula.getCombinacion():
+                        etree.SubElement(aulaClaseXML, "Virtual").text = "true"
+                        etree.SubElement(aulaClaseXML, "Number_of_Sets_of_Real_Rooms").text = str(aula.getNumCombinaciones())
+                        for combinacion in aula.getAulasCombinadas():
+                            combinacionXML = etree.SubElement(aulaClaseXML, "Set_of_Real_Rooms")
+                            etree.SubElement(combinacionXML, "Number_of_Real_Rooms").text = str(len(combinacion))
+                            for aulaComb in combinacion:
+                                etree.SubElement(combinacionXML, "Real_Room").text = aulaComb.getNumero()
+                    else:
+                        etree.SubElement(aulaClaseXML, "Virtual").text = "false"
+
                     etree.SubElement(aulaClaseXML, "Comments").text = ""
     else: # Aula para Examen
         for campus in institucion.getCampus():
@@ -142,7 +157,17 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
                     etree.SubElement(aulaExamenXML, "Name").text = str(aula.getNumero()) + "-" + edificio.getNombre()
                     etree.SubElement(aulaExamenXML, "Building").text = edificio.getNombre()
                     etree.SubElement(aulaExamenXML, "Capacity").text = str(aula.getCapacidadExamen())
-                    etree.SubElement(aulaExamenXML, "Virtual").text = "false"
+                    if aula.getCombinacion():
+                        etree.SubElement(aulaExamenXML, "Virtual").text = "true"
+                        etree.SubElement(aulaExamenXML, "Number_of_Sets_of_Real_Rooms").text = str(aula.getNumCombinaciones())
+                        for combinacion in aula.getAulasCombinadas():
+                            combinacionXML = etree.SubElement(aulaExamenXML, "Set_of_Real_Rooms")
+                            etree.SubElement(combinacionXML, "Number_of_Real_Rooms").text = str(len(combinacion))
+                            for aulaComb in combinacion:
+                                etree.SubElement(combinacionXML, "Real_Room").text = aulaComb.getNumero() + "-" + edificio.getNombre()
+                    else:
+                        etree.SubElement(aulaExamenXML, "Virtual").text = "false"
+
                     etree.SubElement(aulaExamenXML, "Comments").text = ""
 
     # Resticciones de Tiempo

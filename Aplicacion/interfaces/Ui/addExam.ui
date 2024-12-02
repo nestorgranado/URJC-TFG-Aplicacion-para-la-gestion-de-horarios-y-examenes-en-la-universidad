@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Examenes</class>
- <widget class="QWidget" name="Examenes">
+ <class>addExamen</class>
+ <widget class="QWidget" name="addExamen">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>examenes</string>
+   <string>añadirExamen</string>
   </property>
   <widget class="QLabel" name="Title">
    <property name="geometry">

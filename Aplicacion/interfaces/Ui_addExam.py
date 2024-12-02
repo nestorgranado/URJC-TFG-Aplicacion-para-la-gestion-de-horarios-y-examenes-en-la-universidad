@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'addExamSngkCv.ui'
+## Form generated from reading UI file 'addExamNBiudb.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -18,47 +18,47 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QPushButton,
     QSizePolicy, QSpinBox, QWidget)
 
-class Ui_Examenes(object):
-    def setupUi(self, Examenes):
-        if not Examenes.objectName():
-            Examenes.setObjectName(u"Examenes")
-        Examenes.resize(402, 256)
-        self.Title = QLabel(Examenes)
+class Ui_addExamen(object):
+    def setupUi(self, addExamen):
+        if not addExamen.objectName():
+            addExamen.setObjectName(u"addExamen")
+        addExamen.resize(402, 256)
+        self.Title = QLabel(addExamen)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(9, 9, 162, 50))
         font = QFont()
         font.setPointSize(28)
         self.Title.setFont(font)
-        self.titulacion = QLabel(Examenes)
+        self.titulacion = QLabel(addExamen)
         self.titulacion.setObjectName(u"titulacion")
         self.titulacion.setGeometry(QRect(10, 90, 52, 16))
-        self.titulacionText = QComboBox(Examenes)
+        self.titulacionText = QComboBox(addExamen)
         self.titulacionText.setObjectName(u"titulacionText")
         self.titulacionText.setGeometry(QRect(80, 90, 301, 21))
-        self.duracion = QLabel(Examenes)
+        self.duracion = QLabel(addExamen)
         self.duracion.setObjectName(u"duracion")
         self.duracion.setGeometry(QRect(10, 140, 48, 16))
-        self.duarcionText = QSpinBox(Examenes)
+        self.duarcionText = QSpinBox(addExamen)
         self.duarcionText.setObjectName(u"duarcionText")
         self.duarcionText.setGeometry(QRect(80, 140, 101, 23))
-        self.save = QPushButton(Examenes)
+        self.save = QPushButton(addExamen)
         self.save.setObjectName(u"save")
         self.save.setGeometry(QRect(10, 220, 75, 24))
-        self.infoDuarcion = QLabel(Examenes)
+        self.infoDuarcion = QLabel(addExamen)
         self.infoDuarcion.setObjectName(u"infoDuarcion")
         self.infoDuarcion.setGeometry(QRect(10, 170, 371, 31))
 
-        self.retranslateUi(Examenes)
+        self.retranslateUi(addExamen)
 
-        QMetaObject.connectSlotsByName(Examenes)
+        QMetaObject.connectSlotsByName(addExamen)
     # setupUi
 
-    def retranslateUi(self, Examenes):
-        Examenes.setWindowTitle(QCoreApplication.translate("Examenes", u"examenes", None))
-        self.Title.setText(QCoreApplication.translate("Examenes", u"Examenes", None))
-        self.titulacion.setText(QCoreApplication.translate("Examenes", u"Titluaci\u00f3n", None))
-        self.duracion.setText(QCoreApplication.translate("Examenes", u"Duraci\u00f3n", None))
-        self.save.setText(QCoreApplication.translate("Examenes", u"Guardar", None))
-        self.infoDuarcion.setText(QCoreApplication.translate("Examenes", u"* En la opci\u00f3n modificar se puede cambiar la duraci\u00f3n por asignatura", None))
+    def retranslateUi(self, addExamen):
+        addExamen.setWindowTitle(QCoreApplication.translate("addExamen", u"a\u00f1adirExamen", None))
+        self.Title.setText(QCoreApplication.translate("addExamen", u"Examenes", None))
+        self.titulacion.setText(QCoreApplication.translate("addExamen", u"Titluaci\u00f3n", None))
+        self.duracion.setText(QCoreApplication.translate("addExamen", u"Duraci\u00f3n", None))
+        self.save.setText(QCoreApplication.translate("addExamen", u"Guardar", None))
+        self.infoDuarcion.setText(QCoreApplication.translate("addExamen", u"* En la opci\u00f3n modificar se puede cambiar la duraci\u00f3n por asignatura", None))
     # retranslateUi
 

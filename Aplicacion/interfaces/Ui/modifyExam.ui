@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Modificar Actividades</string>
+    <string>Modificar Examenes</string>
    </property>
   </widget>
   <widget class="QListWidget" name="actividadesList">
@@ -146,7 +146,7 @@
     <string>Guardar</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>390</x>

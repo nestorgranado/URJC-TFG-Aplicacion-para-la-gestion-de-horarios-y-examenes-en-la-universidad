@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'newActivityEcXZJb.ui'
+## Form generated from reading UI file 'newSchedulebioiZQ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -18,14 +18,14 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QLabel, QPushButton, QSizePolicy,
     QVBoxLayout, QWidget)
 
-class Ui_Actividades(object):
-    def setupUi(self, Actividades):
-        if not Actividades.objectName():
-            Actividades.setObjectName(u"Actividades")
-        Actividades.resize(285, 128)
-        self.verticalLayout = QVBoxLayout(Actividades)
+class Ui_crearHorario(object):
+    def setupUi(self, crearHorario):
+        if not crearHorario.objectName():
+            crearHorario.setObjectName(u"crearHorario")
+        crearHorario.resize(285, 128)
+        self.verticalLayout = QVBoxLayout(crearHorario)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.Title = QLabel(Actividades)
+        self.Title = QLabel(crearHorario)
         self.Title.setObjectName(u"Title")
         font = QFont()
         font.setPointSize(28)
@@ -33,26 +33,26 @@ class Ui_Actividades(object):
 
         self.verticalLayout.addWidget(self.Title)
 
-        self.clases = QPushButton(Actividades)
+        self.clases = QPushButton(crearHorario)
         self.clases.setObjectName(u"clases")
 
         self.verticalLayout.addWidget(self.clases)
 
-        self.examenes = QPushButton(Actividades)
+        self.examenes = QPushButton(crearHorario)
         self.examenes.setObjectName(u"examenes")
 
         self.verticalLayout.addWidget(self.examenes)
 
 
-        self.retranslateUi(Actividades)
+        self.retranslateUi(crearHorario)
 
-        QMetaObject.connectSlotsByName(Actividades)
+        QMetaObject.connectSlotsByName(crearHorario)
     # setupUi
 
-    def retranslateUi(self, Actividades):
-        Actividades.setWindowTitle(QCoreApplication.translate("Actividades", u"actividades", None))
-        self.Title.setText(QCoreApplication.translate("Actividades", u"Nueva Actividad", None))
-        self.clases.setText(QCoreApplication.translate("Actividades", u"Clases", None))
-        self.examenes.setText(QCoreApplication.translate("Actividades", u"Examen", None))
+    def retranslateUi(self, crearHorario):
+        crearHorario.setWindowTitle(QCoreApplication.translate("crearHorario", u"CrearHorario", None))
+        self.Title.setText(QCoreApplication.translate("crearHorario", u"Crear Horarios", None))
+        self.clases.setText(QCoreApplication.translate("crearHorario", u"Clases", None))
+        self.examenes.setText(QCoreApplication.translate("crearHorario", u"Examen", None))
     # retranslateUi
 

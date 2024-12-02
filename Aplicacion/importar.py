@@ -163,13 +163,39 @@ def importarXML(path):
         for edificioXML in campusXML.findall('Edificio'):
             edificio = Edificio(edificioXML.find('Nombre').text)
             for aulaXML in edificioXML.findall('Aula'):
-                aula = Aula(
-                    aulaXML.find('Número').text,
-                    int(aulaXML.find('CapacidadClase').text),
-                    int(aulaXML.find('CapacidadExamen').text),
-                    aulaXML.find('Tipo').text
-                )
-                edificio.agregar_aula(aula)
+                if aulaXML.find("AulaCombinada").text == "False":
+                    aula = Aula(
+                        aulaXML.find('Número').text,
+                        int(aulaXML.find('CapacidadClase').text),
+                        int(aulaXML.find('CapacidadExamen').text),
+                        aulaXML.find('Tipo').text
+                    )
+
+                    edificio.agregar_aula(aula)
+
+                else:
+                    combinaciones = []
+                    for combinacionXML in aulaXML.findall("Combinación"):
+                        aulasCombinadas = []
+                        for aulaCombinadaXML in combinacionXML.findall("Aula"):
+                            newAula = Aula(
+                                aulaCombinadaXML.find('Número').text,
+                                int(aulaCombinadaXML.find('CapacidadClase').text),
+                                int(aulaCombinadaXML.find('CapacidadExamen').text),
+                                aulaCombinadaXML.find('Tipo').text
+                            )
+                            aulasCombinadas.append(newAula)
+                        combinaciones.append(aulasCombinadas)
+                    
+                    aula = AulaCombinada(
+                        aulaXML.find('Número').text,
+                        int(aulaXML.find('CapacidadClase').text),
+                        int(aulaXML.find('CapacidadExamen').text),
+                        combinaciones
+                    )
+
+                    edificio.agregar_aula(aula)
+
             campus.agregar_edificio(edificio)
         institucion.agregar_campus(campus)
 
