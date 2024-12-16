@@ -7,7 +7,7 @@ from lxml import etree
 from xml.dom import minidom
 import platform
 
-def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades, tipo):
+def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividades, tipo):
     # Elemento Raiz
     root = etree.Element("fet")
     root.set("version", "6.18.1")
@@ -80,22 +80,28 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
     
     # Estudiantes
     listaEstudiantes = etree.SubElement(root, "Students_List")
-    cursoXML = etree.SubElement(listaEstudiantes, "Year")
-    etree.SubElement(cursoXML, "Name").text = cursos.getNombre()
-    etree.SubElement(cursoXML, "Number_of_Students").text = str(cursos.getNumAlumnos())
-    etree.SubElement(cursoXML, "Comments").text = ""
-    comentario = etree.Comment(
-    "The information regarding categories, divisions of each category, "
-    "and separator is only used in the divide year automatically by categories dialog."
-    )
-    cursoXML.append(comentario)
-    etree.SubElement(cursoXML, "Number_of_Categories").text = "0"
-    etree.SubElement(cursoXML, "Separator").text = ""
-    for grupo in cursos.getGrupos():
-        grupoXML = etree.SubElement(cursoXML, "Group")
-        etree.SubElement(grupoXML, "Name").text = str(grupo.getNombre())
-        etree.SubElement(grupoXML, "Number_of_Students").text = str(grupo.getNumAlumnos())
-        etree.SubElement(grupoXML, "Comments").text = ""
+    for alumnosTit in alumnos:
+        cursoXML = etree.SubElement(listaEstudiantes, "Year")
+        etree.SubElement(cursoXML, "Name").text = alumnosTit.getNombre()
+        etree.SubElement(cursoXML, "Number_of_Students").text = str(alumnosTit.getNumAlumnos())
+        etree.SubElement(cursoXML, "Comments").text = ""
+        comentario = etree.Comment(
+        "The information regarding categories, divisions of each category, "
+        "and separator is only used in the divide year automatically by categories dialog."
+        )
+        cursoXML.append(comentario)
+        etree.SubElement(cursoXML, "Number_of_Categories").text = "0"
+        etree.SubElement(cursoXML, "Separator").text = ""
+        for alumnosCurso in alumnosTit.getCursos():
+            grupoXML = etree.SubElement(cursoXML, "Group")
+            etree.SubElement(grupoXML, "Name").text = alumnosCurso.getNombre()
+            etree.SubElement(grupoXML, "Number_of_Students").text = str(alumnosCurso.getNumAlumnos())
+            etree.SubElement(grupoXML, "Comments").text = ""
+            for alumnosAsig in alumnosCurso.getAsignaturas():
+                subGrupoXML = etree.SubElement(cursoXML, "Subgroup")
+                etree.SubElement(subGrupoXML, "Name").text = alumnosAsig.getNombre()
+                etree.SubElement(subGrupoXML, "Number_of_Students").text = str(alumnosAsig.getNumAlumnos())
+                etree.SubElement(subGrupoXML, "Comments").text = ""
 
     # Lista Actividades
     listaActividades = etree.SubElement(root, "Activities_List")
@@ -110,7 +116,8 @@ def exportarFET(path, institucion, dias, horas, asignaturas, cursos, actividades
         """
 
         etree.SubElement(actividadXML, "Subject").text = actividad.getAsignatura()
-        etree.SubElement(actividadXML, "Students").text = str(actividad.getCurso())
+        for curso in actividad.getCurso():
+            etree.SubElement(actividadXML, "Students").text = curso
         etree.SubElement(actividadXML, "Duration").text = str(actividad.getDuracion())
         etree.SubElement(actividadXML, "Total_Duration").text = str(actividad.getDuracion())
         etree.SubElement(actividadXML, "Id").text = str(i)

@@ -45,8 +45,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>670</x>
-     <y>380</y>
+     <x>669</x>
+     <y>358</y>
      <width>239</width>
      <height>26</height>
     </rect>
@@ -78,8 +78,8 @@
   <widget class="QGroupBox" name="asignaturasHijas">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>400</y>
+     <x>369</x>
+     <y>378</y>
      <width>631</width>
      <height>451</height>
     </rect>
@@ -180,8 +180,8 @@
   <widget class="QLabel" name="curso">
    <property name="geometry">
     <rect>
-     <x>381</x>
-     <y>355</y>
+     <x>380</x>
+     <y>310</y>
      <width>31</width>
      <height>16</height>
     </rect>
@@ -193,8 +193,8 @@
   <widget class="QLineEdit" name="nombreText">
    <property name="geometry">
     <rect>
-     <x>477</x>
-     <y>272</y>
+     <x>476</x>
+     <y>250</y>
      <width>132</width>
      <height>21</height>
     </rect>
@@ -203,8 +203,8 @@
   <widget class="QLabel" name="codigo">
    <property name="geometry">
     <rect>
-     <x>381</x>
-     <y>245</y>
+     <x>380</x>
+     <y>223</y>
      <width>39</width>
      <height>16</height>
     </rect>
@@ -216,8 +216,8 @@
   <widget class="QLabel" name="numAlumnos">
    <property name="geometry">
     <rect>
-     <x>381</x>
-     <y>299</y>
+     <x>380</x>
+     <y>277</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -226,24 +226,11 @@
     <string>Número alumnos</string>
    </property>
   </widget>
-  <widget class="QLabel" name="escuela">
-   <property name="geometry">
-    <rect>
-     <x>381</x>
-     <y>191</y>
-     <width>39</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Escuela</string>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="cursoText">
    <property name="geometry">
     <rect>
-     <x>477</x>
-     <y>355</y>
+     <x>476</x>
+     <y>310</y>
      <width>132</width>
      <height>21</height>
     </rect>
@@ -252,42 +239,19 @@
   <widget class="QSpinBox" name="numAlumnosText">
    <property name="geometry">
     <rect>
-     <x>477</x>
-     <y>299</y>
-     <width>71</width>
+     <x>476</x>
+     <y>277</y>
+     <width>88</width>
      <height>23</height>
     </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="profesor">
-   <property name="geometry">
-    <rect>
-     <x>381</x>
-     <y>328</y>
-     <width>45</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Profesor</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="codigoText">
    <property name="geometry">
     <rect>
-     <x>477</x>
-     <y>245</y>
+     <x>476</x>
+     <y>223</y>
      <width>132</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="escuelaBox">
-   <property name="geometry">
-    <rect>
-     <x>477</x>
-     <y>191</y>
-     <width>141</width>
      <height>21</height>
     </rect>
    </property>
@@ -295,8 +259,8 @@
   <widget class="QLabel" name="titulacion">
    <property name="geometry">
     <rect>
-     <x>381</x>
-     <y>218</y>
+     <x>380</x>
+     <y>196</y>
      <width>52</width>
      <height>16</height>
     </rect>
@@ -308,19 +272,9 @@
   <widget class="QComboBox" name="titulacionBox">
    <property name="geometry">
     <rect>
-     <x>477</x>
-     <y>218</y>
+     <x>476</x>
+     <y>196</y>
      <width>441</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="profesorText">
-   <property name="geometry">
-    <rect>
-     <x>477</x>
-     <y>328</y>
-     <width>132</width>
      <height>21</height>
     </rect>
    </property>
@@ -328,8 +282,8 @@
   <widget class="QLabel" name="nombre">
    <property name="geometry">
     <rect>
-     <x>381</x>
-     <y>272</y>
+     <x>380</x>
+     <y>250</y>
      <width>44</width>
      <height>16</height>
     </rect>

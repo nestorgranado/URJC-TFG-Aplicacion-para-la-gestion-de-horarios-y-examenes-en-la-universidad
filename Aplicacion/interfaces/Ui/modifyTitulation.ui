@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>707</width>
-    <height>569</height>
+    <height>564</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,64 +52,54 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="3" column="0">
-     <widget class="QLabel" name="nombre">
-      <property name="text">
-       <string>Nombre</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
-     <widget class="QLabel" name="escuela">
-      <property name="text">
-       <string>Escuela</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="codigo">
-      <property name="text">
-       <string>Código</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
      <widget class="QLabel" name="campus">
       <property name="text">
        <string>Campus</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1" colspan="3">
-     <widget class="QLineEdit" name="nombreText"/>
-    </item>
-    <item row="2" column="1" colspan="2">
-     <widget class="QLineEdit" name="codigoText"/>
-    </item>
-    <item row="1" column="1" colspan="2">
-     <widget class="QLineEdit" name="campusText"/>
-    </item>
-    <item row="0" column="1" colspan="2">
-     <widget class="QComboBox" name="escuelaBox"/>
-    </item>
-    <item row="4" column="0">
-     <widget class="QPushButton" name="add">
+    <item row="3" column="2">
+     <widget class="QPushButton" name="sup">
       <property name="text">
-       <string>Añadir</string>
+       <string>Borrar</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
+    <item row="2" column="1" colspan="3">
+     <widget class="QLineEdit" name="nombreText"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="codigo">
+      <property name="text">
+       <string>Código</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="QLineEdit" name="codigoText"/>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QLineEdit" name="campusText"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="nombre">
+      <property name="text">
+       <string>Nombre</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
      <widget class="QPushButton" name="modify">
       <property name="text">
        <string>Modificar</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="2">
-     <widget class="QPushButton" name="sup">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="add">
       <property name="text">
-       <string>Borrar</string>
+       <string>Añadir</string>
       </property>
      </widget>
     </item>

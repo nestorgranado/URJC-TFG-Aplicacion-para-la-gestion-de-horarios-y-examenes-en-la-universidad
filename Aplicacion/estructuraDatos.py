@@ -4,7 +4,7 @@ class Universidad:
     def __init__(self, nombre):
         self.nombre = nombre
         self.campus = []
-        self.escuelas = []
+        self.titulaciones = []
 
     def agregar_campus(self, campus):
         self.campus.append(campus)
@@ -21,20 +21,20 @@ class Universidad:
     def getCampus(self):
         return list(self.campus)
 
-    def agregar_escuela(self, escuela):
-        self.escuelas.append(escuela)
+    def agregar_titulacion(self, titulacion):
+        self.titulaciones.append(titulacion)
 
-    def sumar_escuelas(self, escuelaList):
-        if self.escuelas == []:
-            self.setEscuelas(escuelaList)
+    def sumar_titulacion(self, titulacionList):
+        if self.titulaciones == []:
+            self.setTitulacion(titulacionList)
         else:
-            self.escuelas += escuelaList
+            self.titulaciones += titulacionList
     
-    def setEscuelas(self, escuelasList):
-        self.escuelas = escuelasList
+    def setTitulacion(self, titulacionList):
+        self.titulaciones = titulacionList
     
-    def getEscuelas(self):
-        return list(self.escuelas)
+    def getTitulacion(self):
+        return list(self.titulaciones)
     
     def setNombre(self, nombre):
         self.nombre = nombre
@@ -43,7 +43,7 @@ class Universidad:
         return self.nombre
     
     def isEmpty(self):
-        if not self.campus and not self.escuelas:
+        if not self.campus and not self.titulaciones:
             return True
         else:
             return False
@@ -139,32 +139,6 @@ class AulaCombinada(Aula):
     def getNumCombinaciones(self):
         return self.numCombinaciones
 
-class Escuela:
-    def __init__(self, nombre):
-        self.nombre = nombre            # Nombre de la Escuela
-        self.titulaciones = []          # Lista de titulaciones que pertenecen a la escuela (Inicialmente vacia)
-    
-    def agregar_titulacion(self, titulacion):
-        self.titulaciones.append(titulacion)
-    
-    def setTitulaciones(self, titulacionesList):
-        self.titulaciones = titulacionesList
-    
-    def getTitulaciones(self):
-        return list(self.titulaciones)
-
-    def getNombre(self):
-        return self.nombre
-
-    def mostrarEscuela(self):
-        print(f"Escuela: {self.nombre}")
-        titulaciones = self.titulaciones
-        for titulacion in titulaciones:
-            print(f"{titulacion.getCodigo()}, {titulacion.getNombre()}")
-            asignaturas = titulacion.getAsignaturas()
-            for asignatura in asignaturas:
-                print(f"    {asignatura.getCodigo()},  {asignatura.getNombre()}")
-
 class Titulacion:
     def __init__(self, codigo, nombre, campus=None):
         self.codigo = codigo            # Código Titulación
@@ -204,12 +178,11 @@ class Titulacion:
         return list(self.asignaturas)
     
 class Asignatura:
-    def __init__(self, codigo, nombre, titulacion, numAlumnos, profesor=None, curso=None):
+    def __init__(self, codigo, nombre, titulacion, numAlumnos, curso=None):
         self.codigo = codigo                # Código de la asignatura
         self.nombre = nombre                # Nombre de la asignatura
         self.titulacion = titulacion        # Titulación a la que pertenece
         self.numAlumnos = numAlumnos        # Número de alumnos
-        self.profesor = profesor            # Profesor responsable de la asignatura (opcional)
         self.curso = curso                  # Curso de la asignatura (opcional)
         self.asignaturas_hijas = []         # Lista de asignaturas hijas (inicialmente vacía)
 
@@ -241,13 +214,6 @@ class Asignatura:
     def setNumAlumnos(self, numAlumnos):
         self.numAlumnos = numAlumnos
 
-    # Getters y Setters para 'profesor'
-    def getProfesor(self):
-        return self.profesor
-
-    def setProfesor(self, profesor):
-        self.profesor = profesor
-
     # Getters y Setters para 'curso'
     def getCurso(self):
         return self.curso
@@ -264,65 +230,6 @@ class Asignatura:
     
     def getAsignaturas_hijas(self):
         return list(self.asignaturas_hijas)
-
-class Curso:
-    def __init__(self):
-        self.nombre = f"{datetime.now().year}-{datetime.now().year + 1}"
-        self.gurpos = []
-        self.numAlumnos = 0
-
-    def isEmpty(self):
-        empty = False
-        if not self.gurpos:
-            return True
-        return empty
-
-    def calcularAulumnos(self):
-        self.numAlumnos = 0
-        for grupo in self.gurpos:
-            self.numAlumnos += grupo.getNumAlumnos()
-
-    def getNombre(self):
-        return self.nombre
-    
-    def setNombre(self, nombre):
-        self.nombre = nombre
-    
-    def getNumAlumnos(self):
-        return self.numAlumnos
-    
-    def setNumAlumnos(self, numAlumnos):
-        self.numAlumnos = numAlumnos
-    
-    def agregar_gurpo(grupo):
-        self.gurpos.append(grupo)
-
-    def getGrupos(self):
-        return self.gurpos
-    
-    def setGrupos(self, gruposList):
-        self.gurpos = gruposList
-        self.calcularAulumnos()
-
-class Grupo:
-    def __init__(self, nombre):
-        self.nombre = nombre
-        self.numAlumnos = 0
-
-    def getNombre(self):
-        return self.nombre
-    
-    def setNombre(self, nombre):
-        self.nombre = nombre
-    
-    def getNumAlumnos(self):
-        return self.numAlumnos
-    
-    def setNumAlumnos(self, numAlumnos):
-        self.numAlumnos = numAlumnos
-    
-    def sumarAlumnos(self, numero):
-        self.numAlumnos += numero
 
 class Dias:
     def __init__(self):
@@ -355,9 +262,9 @@ class Horas:
         return list(self.horas)
 
 class Actividad:
-    def __init__(self, asignatura, profesor, curso, duracion):
+    def __init__(self, asignatura, titulacion, curso, duracion):
         self.asignatura = asignatura
-        self.profesor = profesor
+        self.titulacion = titulacion
         self.curso = curso
         self.duracion = duracion
 
@@ -367,14 +274,14 @@ class Actividad:
     def setAsignatura(self, asignatura):
         self.asignatura = asignatura
 
-    def getProfesor(self):
-        return self.profesor
+    def getTitulacion(self):
+        return list(self.titulacion)
 
-    def setProfesor(self, profesor):
-        self.profesor = profesor
+    def setTitulacion(self, titulacion):
+        self.titulacion = titulacion
 
     def getCurso(self):
-        return self.curso
+        return list(self.curso)
 
     def setCurso(self, curso):
         self.curso = curso
@@ -384,3 +291,80 @@ class Actividad:
 
     def setDuracion(self, duracion):
         self.duracion = duracion
+
+class AlumnosTitulacion:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.numAlumnos = 0
+        self.cursos = []
+    
+    def getNombre(self):
+        return self.nombre
+
+    def setNombre(self, nuevoNombre):
+        self.nombre = nuevoNombre
+
+    def getNumAlumnos(self):
+        return self.numAlumnos
+
+    def getCursos(self):
+        return list(self.cursos)
+    
+    def setCursos(self, cursosList):
+        self.cursos = cursosList
+        self.calcularAulumnos()
+    
+    def agregar_curso(self, curso):
+        self.cursos.append(curso)
+        self.calcularAulumnos()
+
+    def calcularAulumnos(self):
+        for i in self.cursos:
+            self.numAlumnos += i.getNumAlumnos()
+
+class AlumnosCurso:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.numAlumnos = 0
+        self.asignaturas = []
+    
+    def getNombre(self):
+        return self.nombre
+
+    def setNombre(self, nuevoNombre):
+        self.nombre = nuevoNombre
+
+    def getNumAlumnos(self):
+        return self.numAlumnos
+
+    def getAsignaturas(self):
+        return list(self.asignaturas)
+    
+    def setAsignaturas(self, asignaturaList):
+        self.asignaturas = asignaturaList
+        self.calcularAulumnos()
+    
+    def agregar_asignatura(self, asignatura):
+        self.asignaturas.append(asignatura)
+        self.calcularAulumnos()
+
+    def calcularAulumnos(self):
+        for i in self.asignaturas:
+            self.numAlumnos += i.getNumAlumnos()
+
+class AlumnosAsignatura:
+    def __init__(self, nombre, numAlumnos):
+        self.nombre = nombre
+        self.numAlumnos = numAlumnos
+    
+    def getNombre(self):
+        return self.nombre
+
+    def setNombre(self, nuevoNombre):
+        self.nombre = nuevoNombre
+
+    def getNumAlumnos(self):
+        return self.numAlumnos
+        
+    def setNumAlumnos(self, num):
+        self.numAlumnos = num

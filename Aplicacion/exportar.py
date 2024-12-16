@@ -7,34 +7,32 @@ from xml.dom import minidom
 import platform
 
 # Exportar las Escuelas
-def exportarEscuelas(root, universidad):
+def exportarTitulaciones(root, universidad):
     # Por cada escuela crear un elemnto "Escuela" y un atributo "Nombre" y recorrer la lista de Titulcaiones
-    for escuela in universidad.getEscuelas():
-        escuelaXML = ET.SubElement(root, "Escuela")
-        ET.SubElement(escuelaXML, "Nombre").text = escuela.getNombre()
-        for titulacion in escuela.getTitulaciones():
-            titulacionXML = ET.SubElement(escuelaXML, "Titulación")
-            ET.SubElement(titulacionXML, "Código").text = titulacion.getCodigo()
-            ET.SubElement(titulacionXML, "Nombre").text = titulacion.getNombre()
-            ET.SubElement(titulacionXML, "Campus").text = titulacion.getCampus()
-            for asignatura in titulacion.getAsignaturas():
-                asignaturaXML = ET.SubElement(titulacionXML, "Asignatura")
-                ET.SubElement(asignaturaXML, "Código").text = asignatura.getCodigo()
-                ET.SubElement(asignaturaXML, "Nombre").text = asignatura.getNombre()
-                ET.SubElement(asignaturaXML, "Titulación").text = asignatura.getTitulacion()
-                ET.SubElement(asignaturaXML, "NumAlumnos").text = str(asignatura.getNumAlumnos())
-                ET.SubElement(asignaturaXML, "Profesor").text = asignatura.getProfesor()
-                ET.SubElement(asignaturaXML, "Curso").text = str(asignatura.getCurso())
-                for hija in asignatura.getAsignaturas_hijas():
-                    hijasXML = ET.SubElement(asignaturaXML, "AsignaturaHija")
-                    ET.SubElement(hijasXML, "Código").text = hija[0]
-                    ET.SubElement(hijasXML, "Nombre").text = hija[1]
+    titulacionesListXML = ET.SubElement(root, "ListaTitulaciones")
+    for titulacion in universidad.getTitulacion():
+        titulacionXML = ET.SubElement(titulacionesListXML, "Titulación")
+        ET.SubElement(titulacionXML, "Código").text = titulacion.getCodigo()
+        ET.SubElement(titulacionXML, "Nombre").text = titulacion.getNombre()
+        ET.SubElement(titulacionXML, "Campus").text = titulacion.getCampus()
+        for asignatura in titulacion.getAsignaturas():
+            asignaturaXML = ET.SubElement(titulacionXML, "Asignatura")
+            ET.SubElement(asignaturaXML, "Código").text = asignatura.getCodigo()
+            ET.SubElement(asignaturaXML, "Nombre").text = asignatura.getNombre()
+            ET.SubElement(asignaturaXML, "Titulación").text = asignatura.getTitulacion()
+            ET.SubElement(asignaturaXML, "NumAlumnos").text = str(asignatura.getNumAlumnos())
+            ET.SubElement(asignaturaXML, "Curso").text = str(asignatura.getCurso())
+            for hija in asignatura.getAsignaturas_hijas():
+                hijasXML = ET.SubElement(asignaturaXML, "AsignaturaHija")
+                ET.SubElement(hijasXML, "Código").text = hija[0]
+                ET.SubElement(hijasXML, "Nombre").text = hija[1]
 
 # Exportar los Campus
 def exportarCampus(root, universidad):
     # Por cada campus se crear un elemento "Campus" y un atributo "Nombre" y se recorre la lista de Edificios
+    campusListXML = ET.SubElement(root, "ListaCampus")
     for campus in universidad.getCampus():
-        campusXML = ET.SubElement(root, "Campus")
+        campusXML = ET.SubElement(campusListXML, "Campus")
         ET.SubElement(campusXML, "Nombre").text = campus.getNombre()
         for edificio in campus.getEdificios():
             edificioXML = ET.SubElement(campusXML, "Edificio")
@@ -59,15 +57,21 @@ def exportarCampus(root, universidad):
                             ET.SubElement(aulasCombinadasXML, "Tipo").text = aulaCombinada.getTipo()
 
 # Exportar Cursos
-def exportarCursos(root, cursos):
+def exportarCursos(root, alumnos):
     # Crea un elemenro "Curso" y un atributo "Nombre" y "Número Alumnos" y se recorre los grupos
-    cursoXML = ET.SubElement(root, "Curso")
-    ET.SubElement(cursoXML, "Nombre").text = str(cursos.getNombre())
-    ET.SubElement(cursoXML, "NúmeroAlumnos").text = str(cursos.getNumAlumnos())
-    for grupo in cursos.getGrupos():
-        grupoXML = ET.SubElement(cursoXML, "Grupo")
-        ET.SubElement(grupoXML, "Nombre").text = str(grupo.getNombre())
-        ET.SubElement(grupoXML, "NúmeroAlumnos").text = str(grupo.getNumAlumnos())
+    cursoXML = ET.SubElement(root, "Alumnos")
+    for alumnosTit in alumnos:
+        alumnosTitXML = ET.SubElement(cursoXML, "AlumnosTitulacion")
+        ET.SubElement(alumnosTitXML, "Nombre").text = alumnosTit.getNombre()
+        ET.SubElement(alumnosTitXML, "NúmeroAlumnos").text = str(alumnosTit.getNumAlumnos())
+        for alumnosCurso in alumnosTit.getCursos():
+            alumnosCursoXML = ET.SubElement(alumnosTitXML, "AlumnosCurso")
+            ET.SubElement(alumnosCursoXML, "Nombre").text = alumnosCurso.getNombre()
+            ET.SubElement(alumnosCursoXML, "NúmeroAlumnos").text = str(alumnosCurso.getNumAlumnos())
+            for alumnosAsig in alumnosCurso.getAsignaturas():
+                alumnosAsigXML = ET.SubElement(alumnosCursoXML, "AlumnosAsignatura")
+                ET.SubElement(alumnosAsigXML, "Nombre").text = alumnosAsig.getNombre()
+                ET.SubElement(alumnosAsigXML, "NúmeroAlumnos").text = str(alumnosAsig.getNumAlumnos())
 
 # Exportar Días por Semana
 def exportarDias(root, diasSemana):
@@ -97,12 +101,12 @@ def exportarActividades(root, actividades):
     for act in actividades:
         activiadXML = ET.SubElement(actividad, "Actividad")
         ET.SubElement(activiadXML, "Asignatura").text = act.getAsignatura()
-        ET.SubElement(activiadXML, "Profesor").text = act.getProfesor()
-        ET.SubElement(activiadXML, "Curso").text = str(act.getCurso())
+        ET.SubElement(activiadXML, "Titulaciones").text = ", ".join(act.getTitulacion())
+        ET.SubElement(activiadXML, "Cursos").text = ", ".join(act.getCurso())
         ET.SubElement(activiadXML, "Duracion").text = str(act.getDuracion())
 
 # Exportar main
-def exportar(path, universidad, cursos, diasSemana, horasDia, actividades):
+def exportar(path, universidad, alumnos, diasSemana, horasDia, actividades):
      # Crear el elemento raiz
     root = ET.Element("Institución")
     # Crear el atributo "Nombre"
@@ -110,11 +114,11 @@ def exportar(path, universidad, cursos, diasSemana, horasDia, actividades):
 
     # Exportar datos de la institución
     exportarCampus(root, universidad)
-    exportarEscuelas(root, universidad)
+    exportarTitulaciones(root, universidad)
 
     curso = None
-    if not cursos.isEmpty():
-        curso = exportarCursos(root, cursos)
+    if alumnos:
+        curso = exportarCursos(root, alumnos)
 
     dias = exportarDias(root, diasSemana)
     horas = exportarHoras(root, horasDia)

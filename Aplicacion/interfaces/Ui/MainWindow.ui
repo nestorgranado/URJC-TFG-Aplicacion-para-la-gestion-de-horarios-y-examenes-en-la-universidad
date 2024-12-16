@@ -77,31 +77,24 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="escuela">
+     <item row="2" column="1">
+      <widget class="QPushButton" name="aula">
        <property name="text">
-        <string>Escuela</string>
+        <string>Aula</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="0" column="2">
       <widget class="QPushButton" name="titulacion">
        <property name="text">
         <string>Titulacion</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item row="1" column="2">
       <widget class="QPushButton" name="asignatura">
        <property name="text">
         <string>Asignatura</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="aula">
-       <property name="text">
-        <string>Aula</string>
        </property>
       </widget>
      </item>

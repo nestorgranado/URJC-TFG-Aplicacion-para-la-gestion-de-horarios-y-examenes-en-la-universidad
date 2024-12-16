@@ -4,9 +4,10 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 import os
 from estructuraDatos import *
+import re
 
 # Funciones para cargar el archivo según su tipo (CSV o Excel)
-def cargar_archivo_Escuelas(path):
+def cargar_archivo_Titulaciones(path):
     # Detectar la extensión del archivo
     _, extension = os.path.splitext(path)
     
@@ -20,7 +21,8 @@ def cargar_archivo_Escuelas(path):
             'COD_PLAN_HIJA': str,
             'PLAN_HIJA': str,
             'TOTAL': int,
-            'CURSO_PADRE': int
+            'CURSO_PADRE': int,
+            "ASIG_HIJA": str
         })
     elif extension in ['.xls', '.xlsx']:
         df = pd.read_excel(path, sheet_name="CompartenDetalleLimpio(leeme)", dtype={
@@ -63,9 +65,9 @@ def cargar_archivo_Campus(path):
     return df
 
 # Funciones para importar los datos
-def importar_Escuelas(path, nombre):
+def importar_Titulaciones(path, nombre):
     # Cargar el archivo
-    df = cargar_archivo_Escuelas(path)
+    df = cargar_archivo_Titulaciones(path)
 
     # Diccionarios para titulaciones y asignaturas
     titulaciones_dict = {}
@@ -79,11 +81,15 @@ def importar_Escuelas(path, nombre):
         codigo_asig = row['COD_ASIG_PADRE']
         cod_plan_hija = row['COD_PLAN_HIJA']
 
+        # Extraer todo el contenido que no este entre parentesis
+        nombreTitulacion =  re.sub(r'\([^)]*\)', '', nombre_plan).strip() 
+
+        # Extraer todo el contenido que este entre parentesis
+        campus_matches = re.findall(r'\((.*?)\)', nombre_plan)
+        campus = campus_matches[-1].strip() if campus_matches else None
+
         # Crear la titulación si no existe
         if codigo_plan not in titulaciones_dict:
-            nombreTitulacion = nombre_plan.split(" (")[0]  
-            campus = nombre_plan.split(" (")[1][:-1]
-
             titulacion = Titulacion(codigo=codigo_plan, nombre=nombreTitulacion, campus=campus)
             titulaciones_dict[codigo_plan] = titulacion
 
@@ -92,7 +98,7 @@ def importar_Escuelas(path, nombre):
             asignatura = Asignatura(
                 codigo=codigo_asig,
                 nombre=row['ASIG_PADRE'],
-                titulacion=nombre_plan,
+                titulacion=nombreTitulacion,
                 numAlumnos=row['TOTAL'],
                 curso=row['CURSO_PADRE']
             )
@@ -100,7 +106,8 @@ def importar_Escuelas(path, nombre):
 
         # Agregar la asignatura hija si existe
         if pd.notna(cod_plan_hija):
-            tupla_hija = (cod_plan_hija, row['PLAN_HIJA'])
+            plan_hija = re.sub(r'\([^)]*\)', '', row['PLAN_HIJA']).strip() 
+            tupla_hija = (plan_hija, row['ASIG_HIJA'])
             asignaturas_dict[codigo_asig].agregar_hija(tupla_hija)
 
         # Agregar la asignatura a la titulación si no está ya añadida
@@ -111,11 +118,7 @@ def importar_Escuelas(path, nombre):
     # Convertir diccionario a lista de titulaciones
     titulaciones = list(titulaciones_dict.values())
 
-    # Crear escuela con las titulaciones leidas
-    escuela = Escuela(nombre)
-    escuela.setTitulaciones(titulaciones)
-
-    return escuela
+    return titulaciones
 
 def importar_Campus(path):
     # Cargar el archivo
@@ -158,7 +161,8 @@ def importarXML(path):
     institucion = Universidad(root.find('Nombre').text)
 
     # Recorrer los campus
-    for campusXML in root.findall('Campus'):
+    campusListXML = root.find("ListaCampus")
+    for campusXML in campusListXML.findall('Campus'):
         campus = Campus(campusXML.find('Nombre').text)
         for edificioXML in campusXML.findall('Edificio'):
             edificio = Edificio(edificioXML.find('Nombre').text)
@@ -199,36 +203,33 @@ def importarXML(path):
             campus.agregar_edificio(edificio)
         institucion.agregar_campus(campus)
 
-    # Recorrer las escuelas
-    for escuelaXML in root.findall('Escuela'):
-        escuela = Escuela(escuelaXML.find('Nombre').text)
-        for titulacionesXML in escuelaXML.findall('Titulación'):
-            titulacion = Titulacion(
-                titulacionesXML.find('Código').text,
-                titulacionesXML.find('Nombre').text,
-                titulacionesXML.find('Campus').text
+    # Recorrer las titulaciones
+    titulacionesListXML =  root.find("ListaTitulaciones")
+    for titulacionesXML in titulacionesListXML.findall('Titulación'):
+        titulacion = Titulacion(
+            titulacionesXML.find('Código').text,
+            titulacionesXML.find('Nombre').text,
+            titulacionesXML.find('Campus').text
+        )
+        for asignaturaXML in titulacionesXML.findall('Asignatura'):
+            asignatura = Asignatura(
+                asignaturaXML.find('Código').text,
+                asignaturaXML.find('Nombre').text,
+                asignaturaXML.find('Titulación').text,
+                int(asignaturaXML.find('NumAlumnos').text),
+                int(asignaturaXML.find('Curso').text)
             )
-            for asignaturaXML in titulacionesXML.findall('Asignatura'):
-                asignatura = Asignatura(
-                    asignaturaXML.find('Código').text,
-                    asignaturaXML.find('Nombre').text,
-                    asignaturaXML.find('Titulación').text,
-                    int(asignaturaXML.find('NumAlumnos').text),
-                    asignaturaXML.find('Profesor').text,
-                    int(asignaturaXML.find('Curso').text)
-                )
-                for hijaXML in asignaturaXML.findall('AsignaturaHija'):
-                    asignatura.agregar_hija((hijaXML.find('Código'), hijaXML.find('Nombre')))
-                titulacion.agregar_asignatura(asignatura)
-            escuela.agregar_titulacion(titulacion)
-        institucion.agregar_escuela(escuela)
+            for hijaXML in asignaturaXML.findall('AsignaturaHija'):
+                asignatura.agregar_hija((hijaXML.find('Código'), hijaXML.find('Nombre')))
+            titulacion.agregar_asignatura(asignatura)
+        institucion.agregar_titulacion(titulacion)
 
-    return institucion.getCampus(), institucion.getEscuelas()
+    return institucion.getCampus(), institucion.getTitulacion()
 
 def importarInstitucion(path):
     error = ""
     campuses = []
-    escuelas = []
+    titulaciones = []
 
     # Comprobar si la rura existe
     if os.path.exists(path):
@@ -238,10 +239,9 @@ def importarInstitucion(path):
 
         # Dividir funcionalida si el archivo es xml o no
         if extension in ['.xls', '.xlsx', '.csv']:
-            # Depende del nombre del archivo se importaran las escuelas o los campus
+            # Depende del nombre del archivo se importaran las titulaciones o los campus
             if nombre_archivo == 'uxxi':
-                escuela = importar_Escuelas(path, "ETSII")
-                escuelas.append(escuela)
+                titulaciones = importar_Titulaciones(path, "ETSII")
 
             elif nombre_archivo == 'mostoles2324.v1':
                 campuses = importar_Campus(path)
@@ -250,7 +250,7 @@ def importarInstitucion(path):
                 error = (f"Error: el archivo '{path}' no contiene los datos necesarios para la aplicación")
 
         elif extension == '.xml':
-            campuses, escuelas = importarXML(path)
+            campuses, titulaciones = importarXML(path)
 
         else:
             error = (f"Error: el formato '{extension}' no es soportado")
@@ -258,4 +258,4 @@ def importarInstitucion(path):
     else:
         error = (f"Error: El archivo '{path}' no existe.")
     
-    return escuelas, campuses, error
+    return titulaciones, campuses, error

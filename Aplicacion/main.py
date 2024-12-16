@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, Q
 from PySide6.QtCore import Qt
 from collections import defaultdict
 from itertools import combinations
+import unicodedata
 
 # Imports de las interfaces
 from interfaces.MainWindow import Ui_MainWindow
@@ -33,6 +34,13 @@ from importar import importarInstitucion
 from exportar import exportar
 from exportarFET import exportarFET
 
+def quitar_acentos(texto):
+    # Normalizamos el texto para separar los caracteres base de sus acentos
+    texto_normalizado = unicodedata.normalize('NFD', texto)
+    # Filtramos los caracteres que no sean marcas diacríticas
+    texto_sin_acentos = ''.join(char for char in texto_normalizado if unicodedata.category(char) != 'Mn')
+    return texto_sin_acentos
+
 # Clase para mostrar una ventana emergente con un mensaje de error que se le pase al constructor
 class DialogoError(QDialog): 
     def __init__(self, mensaje):
@@ -57,14 +65,14 @@ class ImportarUI(QWidget, Ui_importar):
         self.examinarBtn.clicked.connect(self.seleccionarArchivo) # Funcionalidad botón selecionar archivo
 
     def guardar(self):
-        escuelas, campuses, error = importarInstitucion(self.rutaText.text()) # Importación de datos
+        titulaciones, campuses, error = importarInstitucion(self.rutaText.text()) # Importación de datos
 
         # Si no hay error comprobar que se ha importado y añadirlo a la Institución
         if error == "": 
             if campuses:
                 institucion.sumar_campus(campuses)
-            elif escuelas:
-                institucion.sumar_escuelas(escuelas)   
+            elif titulaciones:
+                institucion.sumar_titulacion(titulaciones)   
         else:
             dialogoError = DialogoError(error)
             dialogoError.exec()
@@ -94,33 +102,22 @@ class ModificarInstitucion(QWidget, Ui_AddNombre):
         institucion.setNombre(self.nombreText.text())
         self.close()
 
-# Clase para Modificar Datos de Escuelas y Campuses
+# Clase para Modificar Datos Campuses
 class ModificarName(QWidget, Ui_ModificarName):
-    def __init__(self, name):
+    def __init__(self):
         super().__init__()
         self.setupUi(self)
 
-        self.Title.setText(name) # Titulo de la pantalla
+        self.Title.setText("Campus") # Titulo de la pantalla
 
-        # Diferentes funcionalidades si se trata de una Escuela o un Campus
-        if name == "Campus":
-            self.nameList = institucion.getCampus() # Lista de campus
+        self.nameList = institucion.getCampus() # Lista de campus
 
-            # Rellenar el QListWidget con los nombres de los campus
-            self.list.clear()
-            for campus in self.nameList:
-                self.list.addItem(campus.getNombre())
+        # Rellenar el QListWidget con los nombres de los campus
+        self.list.clear()
+        for campus in self.nameList:
+            self.list.addItem(campus.getNombre())
 
-            self.save.clicked.connect(self.guardarCampus) # guardar
-        elif name == "Escuela":
-            self.nameList = institucion.getEscuelas() # Lista de escuelas
-
-            # Rellenar el QListWidget con los nombres de las escuelas
-            self.list.clear()
-            for escuela in self.nameList:
-                self.list.addItem(escuela.getNombre())
-
-            self.save.clicked.connect(self.guardarEscuela) # guardar
+        self.save.clicked.connect(self.guardarCampus) # guardar
 
         self.list.itemClicked.connect(self.updateLineEditText) # Actualizar el lineEdit con el nombre del elemento selecionado del QListWidget
         self.modify.clicked.connect(self.modificar_elemento) # Modificar valor del elemento seleccionado de la QListWidget
@@ -169,10 +166,6 @@ class ModificarName(QWidget, Ui_ModificarName):
 
     def guardarCampus(self):
         institucion.sumar_campus(self.nameList)
-        self.close()
-
-    def guardarEscuela(self):
-        institucion.sumar_escuelas(self.nameList)
         self.close()
 
 # Clase para Modificar Datos de los Edififcios
@@ -266,15 +259,13 @@ class ModificarTitulacion(QWidget, Ui_ModificarTitulacion):
         super().__init__()
         self.setupUi(self)
 
-        self.escuelas = institucion.getEscuelas() # Obtenre la lista de escuelas de la institución
+        self.titulaciones = institucion.getTitulacion() # Obtenre la lista de titulaciones de la institución
 
-        self.escuelaBox.addItem("Seleccione una opción...") # Inicializar el selector de escuela
+        # Rellenar el QListWidget con los nombres de las titulaciones
+        for titulacion in self.titulaciones:
+            item = "(" + str(titulacion.getCodigo()) + ") " + str(titulacion.getNombre())
+            self.list.addItem(item)
 
-        # Rellenar el selector de escuelas con los nombres de las diferentes escuelas
-        for escuela in self.escuelas:
-            self.escuelaBox.addItem(escuela.getNombre())
-
-        self.escuelaBox.currentIndexChanged.connect(self.actualizar_titulacion) # Si se seleciona una escuela obtener sus titulaciones
         self.list.itemClicked.connect(self.updateLineEditText) # Actualizar el lineEdit con el nombre del elemento selecionado del QListWidget
         self.modify.clicked.connect(self.modificar_elemento) # Modificar valor del elemento seleccionado de la QListWidget
         self.add.clicked.connect(self.agregar_elemento) # Crear un nuevo elemento
@@ -282,21 +273,6 @@ class ModificarTitulacion(QWidget, Ui_ModificarTitulacion):
         self.save.clicked.connect(self.guardar) # guardar
         
         self.titulaciones_index = None  # Variable para guardar el índice del elemento seleccionado
-
-    def actualizar_titulacion(self):
-        self.escuela_index = self.escuelaBox.currentIndex() - 1 # Guardar Indice de la escuela seleccionada
-        self.titulaciones = self.escuelas[self.escuela_index].getTitulaciones() # Obtener las titulaciones de la escuela seleccionada
-
-        # Rellenar el QListWidget con los nombres de las titulaciones
-        self.list.clear()
-        for titulacion in self.titulaciones:
-            item = "(" + str(titulacion.getCodigo()) + ") " + str(titulacion.getNombre())
-            self.list.addItem(item)
-
-        # Limpiar Datos
-        self.nombreText.clear()
-        self.codigoText.clear()
-        self.campusText.clear()
 
     def updateLineEditText(self, item):
         self.titulaciones_index = self.list.row(item)  # Guardar índice del elemento seleccionado
@@ -320,9 +296,6 @@ class ModificarTitulacion(QWidget, Ui_ModificarTitulacion):
             # Actualizar el elemento visualmente en el QListWidget
             nuevo_item = "(" + str(nuevo_codigo) + ") " + str(nuevo_nombre)
             self.list.item(self.titulaciones_index).setText(nuevo_item)
-
-            # Actualizar campus
-            self.escuelas[self.escuela_index].setTitulaciones(self.titulaciones)
     
     def agregar_elemento(self):
         # Obtener el nuevo texto del QLineEdit
@@ -338,9 +311,6 @@ class ModificarTitulacion(QWidget, Ui_ModificarTitulacion):
         nuevo_item = "(" + str(nuevo_codigo) + ") " + str(nuevo_nombre)
         self.list.addItem(nuevo_item)
 
-        # Actualizar campus
-        self.escuelas[self.escuela_index].setTitulaciones(self.titulaciones)
-
     def borrar_elemento(self):
         if self.titulaciones_index is not None:  # Verificar si hay un elemento seleccionado
             # Eliminar el elemento de la lista de Campus
@@ -355,11 +325,8 @@ class ModificarTitulacion(QWidget, Ui_ModificarTitulacion):
             self.campusText.clear()
             self.titulaciones_index = None
 
-            # Actualizar campus
-            self.escuelas[self.escuela_index].setTitulaciones(self.titulaciones)
-
     def guardar(self):
-        institucion.setEscuelas(self.escuelas)
+        institucion.setTitulacion(self.titulaciones)
         self.close()
 
 # Clase para Modificar Datos de las Aulas
@@ -566,17 +533,15 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         super().__init__()
         self.setupUi(self)
 
-        self.escuelas = institucion.getEscuelas() # Lista de escuelas
+        self.titulaciones = institucion.getTitulacion() # Lista de titulaciones
 
         # Inicializar el selectorer
-        self.escuelaBox.addItem("Seleccione una opción...")
         self.titulacionBox.addItem("Seleccione una opción...")
 
-        # Rellenar selector escuelas
-        for escuela in self.escuelas:
-            self.escuelaBox.addItem(escuela.getNombre())
+        # Rellenar el selector de titulaciones
+        for titulacion in self.titulaciones:
+            self.titulacionBox.addItem(titulacion.getNombre())
 
-        self.escuelaBox.currentIndexChanged.connect(self.actualizar_titulacion) # Si se seleciona una escuela obtener sus titulaciones
         self.titulacionBox.currentIndexChanged.connect(self.actualizar_asignatura) # Si se seleciona una titulación obtener sus asignaturas
         # Actualizar el lineEdit con el nombre del elemento selecionado del QListWidget
         self.list.itemClicked.connect(self.updateLineEditText) 
@@ -596,23 +561,6 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         self.asignatura_index = None  # Variable para guardar el índice del elemento seleccionado
         self.hija_index = None
 
-    def actualizar_titulacion(self):
-        self.escuela_index = self.escuelaBox.currentIndex() - 1 # Guardar Indice
-        self.titulaciones = self.escuelas[self.escuela_index].getTitulaciones() # Obtener las titulaciones del elemento seleccionado
-
-        # Rellenar el selector de titulaciones
-        for titulacion in self.titulaciones:
-            self.titulacionBox.addItem(titulacion.getNombre())
-
-        # Limpiar Datos
-        self.codigoText.clear()
-        self.nombreText.clear()
-        self.numAlumnosText.clear()
-        self.profesorText.clear()
-        self.cursoText.clear()
-        self.codigoHijaText.clear()
-        self.nombreHijaText.clear()
-
     def actualizar_asignatura(self):
         self.titulacion_index = self.titulacionBox.currentIndex() - 1 # Guardar Indice
         self.asignaturas = self.titulaciones[self.titulacion_index].getAsignaturas() # Obtener las asignaturas
@@ -628,7 +576,6 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         self.codigoText.clear()
         self.nombreText.clear()
         self.numAlumnosText.clear()
-        self.profesorText.clear()
         self.cursoText.clear()
         self.codigoHijaText.clear()
         self.nombreHijaText.clear()
@@ -640,7 +587,6 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         self.codigoText.setText(self.asignaturas[self.asignatura_index].getCodigo())
         self.nombreText.setText(self.asignaturas[self.asignatura_index].getNombre())
         self.numAlumnosText.setValue(int(self.asignaturas[self.asignatura_index].getNumAlumnos()))
-        self.profesorText.setText(self.asignaturas[self.asignatura_index].getProfesor())
         self.cursoText.setText(str(self.asignaturas[self.asignatura_index].getCurso()))
 
         # Rellenar ListaHijas
@@ -649,6 +595,10 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         for hija in self.hijas:
             item = "(" + str(hija[0]) + ") " + str(hija[1])
             self.listHijas.addItem(item)
+        
+        # Limpiar Datos
+        self.codigoHijaText.clear()
+        self.nombreHijaText.clear()
 
     def updateLineEditHijas(self, item):
         self.hija_index = self.list.row(item)  # Guardar índice del elemento seleccionado
@@ -663,14 +613,12 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
             nuevo_codigo = self.codigoText.text()
             nuevo_nombre = self.nombreText.text()
             nuevo_numAlumnos = str(self.numAlumnosText.value())
-            nuevo_profesor = self.profesorText.text()
             nuevo_curso = int(self.cursoText.text())
             
             # Actualizar el elemento
             self.asignaturas[self.asignatura_index].setCodigo(nuevo_codigo)
             self.asignaturas[self.asignatura_index].setNombre(nuevo_nombre)
             self.asignaturas[self.asignatura_index].setNumAlumnos(nuevo_numAlumnos)
-            self.asignaturas[self.asignatura_index].setProfesor(nuevo_profesor)
             self.asignaturas[self.asignatura_index].setCurso(nuevo_curso)
 
          
@@ -680,26 +628,21 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
 
             # Actualizar datos
             self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
-            self.escuelas[self.escuela_index].setTitulaciones(self.titulaciones)
     
     def agregar_elemento(self):
         # Obtener el nuevo texto del QLineEdit
         nuevo_codigo = self.codigoText.text()
         nuevo_nombre = self.nombreText.text()
         nuevo_numAlumnos = str(self.numAlumnosText.value())
-        nuevo_profesor = self.profesorText.text()
         nuevo_curso = int(self.cursoText.text())
         
         # Agregar el nuevo texto a la lista de Campus
-        nueva_asignatura = Asignatura(nuevo_codigo, nuevo_nombre, nuevo_numAlumnos, self.titulaciones[self.titulacion_index].getNombre(), nuevo_profesor, nuevo_curso)
+        nueva_asignatura = Asignatura(nuevo_codigo, nuevo_nombre, nuevo_numAlumnos, self.titulaciones[self.titulacion_index].getNombre(), nuevo_curso)
         self.titulaciones[self.titulacion_index].agregar_asignatura(nueva_asignatura)
         
         # Agregar el nuevo texto como un nuevo item en el QListWidget
         nuevo_item = "(" + str(nuevo_codigo) + ") " + str(nuevo_nombre)
         self.list.addItem(nuevo_item)
-
-        # Actualizar datos
-        self.escuelas[self.escuela_index].setTitulaciones(self.titulaciones)
 
     def borrar_elemento(self):
         if self.asignatura_index is not None:  # Verificar si hay un elemento seleccionado
@@ -713,7 +656,6 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
             self.codigoText.clear()
             self.nombreText.clear()
             self.numAlumnosText.clear()
-            self.profesorText.clear()
             self.cursoText.clear()
             self.codigoHijaText.clear()
             self.nombreHijaText.clear()
@@ -721,7 +663,6 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
 
             # Actualizar datos
             self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
-            self.escuelas[self.escuela_index].setTitulaciones(self.titulaciones)
 
     def modificar_hija(self):
         if self.hija_index is not None:  # Verificar si hay un elemento seleccionado
@@ -737,6 +678,7 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
 
             # Actualizar datos
             self.asignaturas[self.asignatura_index].setAsignaturas_hijas(self.hijas)
+            self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
 
     def agregar_hija(self):
         # Obtener el nuevo texto del QLineEdit
@@ -751,6 +693,7 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
 
         # Actualizar datos
         self.asignaturas[self.asignatura_index].setAsignaturas_hijas(self.hijas)
+        self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
 
     def borrar_hija(self):
         if self.hija_index is not None:  # Verificar si hay un elemento seleccionado
@@ -767,92 +710,62 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
 
             # Actualizar datos
             self.asignaturas[self.asignatura_index].setAsignaturas_hijas(self.hijas)
+            self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
     
     def guardar(self):
-        institucion.setEscuelas(self.escuelas)
+        institucion.setTitulacion(self.titulaciones)
         self.close()
 
-# Añadir Examenes
-class NuevoExamen(QWidget, Ui_addExamen):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-
-        self.escuelas = institucion.getEscuelas()
-
-        self.listaTitulaciones = {}
-        for escuela in self.escuelas:
-            for titulaciones in escuela.getTitulaciones():
-                self.listaTitulaciones[titulaciones.getNombre()] = titulaciones
-
-        self.titulacionText.addItem("Seleccione una opción...")
-        self.titulacionText.addItems(list(self.listaTitulaciones.keys()))
-
-        self.save.clicked.connect(self.guardar)
-
-    def guardar(self):
-        tit = self.listaTitulaciones[self.titulacionText.currentText()]
-        for asignatura in tit.getAsignaturas():
-            nuevaActividad = Actividad(asignatura.getNombre(), asignatura.getProfesor(), asignatura.getCurso(), self.duarcionText.value())
-            actividades.append(nuevaActividad)
-            asignaturasElegidas.append(asignatura)
-        self.close()
-
+# Examenes
 class ModificarExamen(QWidget, Ui_ModificarExamenes):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
-        self.actividades = list(actividades)
-        for actividad in self.actividades:
-            self.actividadesList.addItem(actividad.getAsignatura())
+        self.titulaciones = institucion.getTitulacion()
 
+        # Inicializar el selectorer
+        self.titulacionText.addItem("Seleccione una opción...")
+
+        # Rellenar el selector de titulaciones
+        for titulacion in self.titulaciones:
+            self.titulacionText.addItem(titulacion.getNombre())
+        
+        self.actividades = list(actividades)
+
+        self.titulacionText.currentIndexChanged.connect(self.actualizar_examenes)
         self.actividadesList.itemClicked.connect(self.updateLineEditText)
         self.modificar.clicked.connect(self.modificar_elemento)
-        self.add.clicked.connect(self.agregar_elemento)
         self.sup.clicked.connect(self.borrar_elemento)
         self.save.clicked.connect(self.guardar)
 
         self.index = None
 
+    def actualizar_examenes(self):
+        self.titulacion_index = self.titulacionText.currentIndex() - 1
+        titName = self.titulaciones[self.titulacion_index].getNombre()
+
+        for actividad in self.actividades:
+            if titName in actividad.getTitulacion():
+                self.actividadesList.addItem(actividad.getAsignatura())
+    
     def updateLineEditText(self, item):
         self.index = self.actividadesList.row(item)  # Guardar índice del elemento seleccionado
         # Rellenar los datos del elemneto selecionado
         self.asignaturaText.setText(self.actividades[self.index].getAsignatura())
-        self.profesorText.setText(self.actividades[self.index].getProfesor())
-        self.alumnosText.setText(str(self.actividades[self.index].getCurso()))
+        self.alumnosText.setText(", ".join(self.actividades[self.index].getCurso()))
         self.duracionText.setValue(self.actividades[self.index].getDuracion())
 
     def modificar_elemento(self):
         if self.index is not None:  # Verificar si hay un elemento seleccionado
             # Obtener el nuevo texto del QLineEdit
-            nuevo_asignatura = self.asignaturaText.text()
-            nuevo_profesor = self.profesorText.text()
-            nuevo_alumnos = int(self.alumnosText.text())
             nuevo_duracion = self.duracionText.value()
             
             # Actualizar el elemento
-            self.actividades[self.index].setAsignatura(nuevo_asignatura)
-            self.actividades[self.index].setProfesor(nuevo_profesor)
-            self.actividades[self.index].setCurso(nuevo_alumnos)
             self.actividades[self.index].setDuracion(nuevo_duracion)
          
             # Actualizar el elemento visualmente en el QListWidget
             self.actividadesList.item(self.index).setText(nuevo_asignatura)
-    
-    def agregar_elemento(self):
-        # Obtener el nuevo texto del QLineEdit
-        nuevo_asignatura = self.asignaturaText.text()
-        nuevo_profesor = self.profesorText.text()
-        nuevo_alumnos = self.alumnosText.text()
-        nuevo_duracion = self.duracionText.value()
-        
-        # Agregar el nuevo texto a la lista de Campus
-        nuevaActividad = Actividad(nuevo_asignatura, nuevo_profesor, nuevo_alumnos, nuevo_duracion)
-        self.actividades[self.index].append(nuevaActividad)
-        
-        # Agregar el nuevo texto como un nuevo item en el QListWidget
-        self.actividadesList.addItem(nuevo_asignatura)
 
     def borrar_elemento(self):
         if self.index is not None:  # Verificar si hay un elemento seleccionado
@@ -864,7 +777,6 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
             
             # Limpiar el QLineEdit y reiniciar el índice seleccionado
             self.asignaturaText.clear()
-            self.profesorText.clear()
             self.alumnosText.clear()
             self.duracionText.clear()
             self.index = None
@@ -878,11 +790,22 @@ class ExamenesUI(QWidget, Ui_Examenes):
         super().__init__()
         self.setupUi(self)
 
-        self.add.clicked.connect(self.mostrarNuevoExamenUI)
+        self.campuses = institucion.getCampus()
+        self.titulaciones = institucion.getTitulacion()
+
+        # Inicializar el selectorer
+        self.campusText.addItem("Seleccione una opción...")
+
+        # Rellenar el selector de titulaciones
+        for campus in self.campuses:
+            self.campusText.addItem(campus.getNombre())
+
+        self.campusText.currentIndexChanged.connect(self.crearCurso)
+
         self.modificar.clicked.connect(self.mostrarModificarExamenUI)
         
         self.periodoExamenesText.setValue(1)
-        self.periodoExamenesText.valueChanged.connect(self.CrearDias)
+        self.periodoExamenesText.valueChanged.connect(self.crearDias)
 
         self.aulasCombinadas.clicked.connect(self.mostrarAulaCombinadaUI)
 
@@ -890,14 +813,79 @@ class ExamenesUI(QWidget, Ui_Examenes):
 
         self.crearHorario.clicked.connect(self.nuevoHorario)
 
-    def CrearDias(self):
-        numSemanas = self.periodoExamenesText.value()
+    def crearExamenes(self):
+        asignaturasUsadas = set()
+        for tit in self.titulaciones:
+            if quitar_acentos(tit.getCampus().upper()) == quitar_acentos(self.selectedCampus.upper()):
+                for asignatura in tit.getAsignaturas():
+                    if asignatura.getNombre() not in asignaturasUsadas:
+                        asignaturasElegidas.append(asignatura)
+                        asignaturasUsadas.add(asignatura.getNombre())
+                        estudiantes = []
+                        titulaciones = []
+                        curso = tit.getNombre() + "-" + asignatura.getNombre()
+                        estudiantes.append(curso)
+                        titulaciones.append(asignatura.getTitulacion())
+                        for hija in asignatura.getAsignaturas_hijas():
+                            cursoHija = hija[0] + "-" + hija[1]
+                            estudiantes.append(cursoHija)
+                            titulaciones.append(hija[0])
+                            asignaturasUsadas.add(hija[1])
+
+                        nuevaActividad = Actividad(asignatura.getNombre(), titulaciones, estudiantes, 2)
+                        actividades.append(nuevaActividad)
+    
+    def crearCurso(self):
+        self.campusIndex = self.campusText.currentIndex() - 1
+        self.selectedCampus = self.campuses[self.campusIndex].getNombre()
+
+        for tit in self.titulaciones:
+            if quitar_acentos(tit.getCampus().upper()) == quitar_acentos(self.selectedCampus.upper()):
+                cursos_dict = {}
+                alumnosTit = AlumnosTitulacion(tit.getNombre())
+                for asignatura in tit.getAsignaturas():
+                    numCurso = asignatura.getCurso()
+                    nombreCurso = tit.getNombre() + "-" + str(numCurso)
+                    cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
+
+                    nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
+                    alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
+                    cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
+
+                alumnosTit.setCursos(list(cursos_dict.values()))
+                alumnos.append(alumnosTit)
+
+        self.crearExamenes()
+    
+    def crearDias(self):
+        numDias = self.periodoExamenesText.value()
+        dia = 1
+        semana = 1
         dias = []
-        for i in range(numSemanas):
-            dias += [f"Lunes{i+1}", f"Martes{i+1}", f"Miercoles{i+1}", f"Jueves{i+1}", f"Viernes{i+1}", f"Sabado{i+1}"]
+        for i in range(numDias):
+            match dia:
+                case 1: 
+                    dias.append(f"Lunes{semana}")
+                    dia+=1
+                case 2:
+                    dias.append(f"Martes{semana}")
+                    dia+=1
+                case 3:
+                    dias.append(f"Miercoles{semana}")
+                    dia+=1
+                case 4:
+                    dias.append(f"Jueves{semana}")
+                    dia+=1
+                case 5:
+                    dias.append(f"Viernes{semana}")
+                    dia+=1
+                case 6:
+                    dias.append(f"Sabados{semana}")
+                    dia = 1
+                    semana+=1
             
         diasSemana.setDias(dias)
-
+    
     def nuevoHorario(self):
         # Nombre y extensión predeterminada del archivo
         default_filename = "data.fet"
@@ -911,7 +899,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".fet"
             
             # Guardar el archivo en la ruta seleccionada
-            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, curso, actividades, "Examen")
+            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, "Examen")
 
         # Ruta FET
         ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
@@ -953,7 +941,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, curso, diasSemana, horasDia, actividades)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
     
     def mostrarNuevoExamenUI(self):
         self.nuevoExamenUI = NuevoExamen()
@@ -991,7 +979,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.edificio.clicked.connect(self.mostrarModificarEdificioUI)
         self.aula.clicked.connect(self.mostrarModificarAulaUI)
 
-        self.escuela.clicked.connect(self.mostrarModificarEscuelaUI)
         self.titulacion.clicked.connect(self.mostrarModificarTitulacionUI)
         self.asignatura.clicked.connect(self.mostrarModificarAsignaturaUI)
 
@@ -1002,26 +989,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Crear Horario
         self.crearHorario.clicked.connect(self.mostrarCrearHorarioUI)
 
-    def crearCurso(self):
-        # Variables
-        alumnosTotales = 0
-        grupos_dict = {}
-
-        # Obtener escuelas
-        escuelas = institucion.getEscuelas()
-
-        for escuela in escuelas:
-            for titulacion in escuela.getTitulaciones():
-                for asignatura in titulacion.getAsignaturas():
-                    numero_grupo = asignatura.getCurso()
-                    grupos_dict.setdefault(numero_grupo, Grupo(numero_grupo))
-                    grupos_dict[numero_grupo].sumarAlumnos(asignatura.getNumAlumnos())
-        
-        curso.setGrupos(list(grupos_dict.values()))
-        curso.calcularAulumnos()
-
     def mostrarCrearHorarioUI(self):
-        self.crearCurso()
         self.horariosUI = HorariosUI()
         self.horariosUI.show()
         
@@ -1038,7 +1006,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, curso, diasSemana, horasDia, actividades)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
 
     def mostrarImportUI(self):
         self.importUI = ImportarUI()
@@ -1049,7 +1017,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modificarInstitucionUI.show()
 
     def mostrarModificarCampusUI(self):
-        self.modificarUI = ModificarName("Campus")
+        self.modificarUI = ModificarName()
         self.modificarUI.show()
 
     def mostrarModificarEdificioUI(self):
@@ -1059,10 +1027,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def mostrarModificarAulaUI(self):
         self.modificarAulaUI = ModificarAula()
         self.modificarAulaUI.show()
-   
-    def mostrarModificarEscuelaUI(self):
-        self.modificarUI = ModificarName("Escuela")
-        self.modificarUI.show()
 
     def mostrarModificarTitulacionUI(self):
         self.modificarTitulacionUI = ModificarTitulacion()
@@ -1074,7 +1038,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 if __name__ == '__main__':
     institucion = Universidad("URJC")
-    curso = Curso()
+    alumnos = []
     diasSemana = Dias()
     horasDia = Horas()
     actividades = []
