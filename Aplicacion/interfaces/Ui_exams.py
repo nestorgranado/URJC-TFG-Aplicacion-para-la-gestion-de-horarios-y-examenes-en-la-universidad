@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'examskHqbZc.ui'
+## Form generated from reading UI file 'examsyTBMpT.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QGroupBox,
-    QHBoxLayout, QLabel, QPushButton, QSizePolicy,
-    QSpinBox, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QLabel,
+    QPushButton, QSizePolicy, QSpinBox, QVBoxLayout,
+    QWidget)
 
 class Ui_Examenes(object):
     def setupUi(self, Examenes):
@@ -33,47 +33,32 @@ class Ui_Examenes(object):
         self.Datos = QGroupBox(Examenes)
         self.Datos.setObjectName(u"Datos")
         self.Datos.setGeometry(QRect(90, 80, 221, 281))
-        self.widget = QWidget(self.Datos)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(11, 30, 201, 241))
-        self.verticalLayout_2 = QVBoxLayout(self.widget)
+        self.layoutWidget = QWidget(self.Datos)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(11, 30, 201, 241))
+        self.verticalLayout_2 = QVBoxLayout(self.layoutWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.formLayout = QFormLayout()
-        self.formLayout.setObjectName(u"formLayout")
-        self.campus = QLabel(self.widget)
-        self.campus.setObjectName(u"campus")
-
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.campus)
-
-        self.campusText = QComboBox(self.widget)
-        self.campusText.setObjectName(u"campusText")
-
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.campusText)
-
-
-        self.verticalLayout_2.addLayout(self.formLayout)
-
-        self.modificar = QPushButton(self.widget)
+        self.modificar = QPushButton(self.layoutWidget)
         self.modificar.setObjectName(u"modificar")
 
         self.verticalLayout_2.addWidget(self.modificar)
 
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label = QLabel(self.widget)
+        self.label = QLabel(self.layoutWidget)
         self.label.setObjectName(u"label")
 
         self.verticalLayout.addWidget(self.label)
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.periodoExamenesText = QSpinBox(self.widget)
+        self.periodoExamenesText = QSpinBox(self.layoutWidget)
         self.periodoExamenesText.setObjectName(u"periodoExamenesText")
 
         self.horizontalLayout.addWidget(self.periodoExamenesText)
 
-        self.dias = QLabel(self.widget)
+        self.dias = QLabel(self.layoutWidget)
         self.dias.setObjectName(u"dias")
 
         self.horizontalLayout.addWidget(self.dias)
@@ -84,28 +69,28 @@ class Ui_Examenes(object):
 
         self.verticalLayout_2.addLayout(self.verticalLayout)
 
-        self.aulasCombinadas = QPushButton(self.widget)
+        self.aulasCombinadas = QPushButton(self.layoutWidget)
         self.aulasCombinadas.setObjectName(u"aulasCombinadas")
 
         self.verticalLayout_2.addWidget(self.aulasCombinadas)
 
-        self.exportar = QPushButton(self.widget)
+        self.exportar = QPushButton(self.layoutWidget)
         self.exportar.setObjectName(u"exportar")
 
         self.verticalLayout_2.addWidget(self.exportar)
 
-        self.layoutWidget = QWidget(Examenes)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(50, 380, 301, 26))
-        self.horizontalLayout_3 = QHBoxLayout(self.layoutWidget)
+        self.layoutWidget1 = QWidget(Examenes)
+        self.layoutWidget1.setObjectName(u"layoutWidget1")
+        self.layoutWidget1.setGeometry(QRect(50, 380, 301, 26))
+        self.horizontalLayout_3 = QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.restricciones = QPushButton(self.layoutWidget)
+        self.restricciones = QPushButton(self.layoutWidget1)
         self.restricciones.setObjectName(u"restricciones")
 
         self.horizontalLayout_3.addWidget(self.restricciones)
 
-        self.crearHorario = QPushButton(self.layoutWidget)
+        self.crearHorario = QPushButton(self.layoutWidget1)
         self.crearHorario.setObjectName(u"crearHorario")
 
         self.horizontalLayout_3.addWidget(self.crearHorario)
@@ -120,7 +105,6 @@ class Ui_Examenes(object):
         Examenes.setWindowTitle(QCoreApplication.translate("Examenes", u"horarioEx", None))
         self.Title.setText(QCoreApplication.translate("Examenes", u"Examenes", None))
         self.Datos.setTitle(QCoreApplication.translate("Examenes", u"Datos", None))
-        self.campus.setText(QCoreApplication.translate("Examenes", u"Campus", None))
         self.modificar.setText(QCoreApplication.translate("Examenes", u"ModificarExamenes", None))
         self.label.setText(QCoreApplication.translate("Examenes", u"Periodo de examenes", None))
         self.dias.setText(QCoreApplication.translate("Examenes", u"D\u00edas", None))

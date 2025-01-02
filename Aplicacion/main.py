@@ -790,17 +790,9 @@ class ExamenesUI(QWidget, Ui_Examenes):
         super().__init__()
         self.setupUi(self)
 
-        self.campuses = institucion.getCampus()
         self.titulaciones = institucion.getTitulacion()
 
-        # Inicializar el selectorer
-        self.campusText.addItem("Seleccione una opción...")
-
-        # Rellenar el selector de titulaciones
-        for campus in self.campuses:
-            self.campusText.addItem(campus.getNombre())
-
-        self.campusText.currentIndexChanged.connect(self.crearCurso)
+        self.crearCurso()
 
         self.modificar.clicked.connect(self.mostrarModificarExamenUI)
         
@@ -816,44 +808,41 @@ class ExamenesUI(QWidget, Ui_Examenes):
     def crearExamenes(self):
         asignaturasUsadas = set()
         for tit in self.titulaciones:
-            if quitar_acentos(tit.getCampus().upper()) == quitar_acentos(self.selectedCampus.upper()):
-                for asignatura in tit.getAsignaturas():
-                    if asignatura.getNombre() not in asignaturasUsadas:
-                        asignaturasElegidas.append(asignatura)
-                        asignaturasUsadas.add(asignatura.getNombre())
-                        estudiantes = []
-                        titulaciones = []
-                        curso = tit.getNombre() + "-" + asignatura.getNombre()
+            for asignatura in tit.getAsignaturas():
+                if asignatura.getNombre() not in asignaturasUsadas:
+                    asignaturasElegidas.append(asignatura)
+                    asignaturasUsadas.add(asignatura.getNombre())
+                    estudiantes = []
+                    titulaciones = []
+                    curso = tit.getNombre() + "-" + asignatura.getNombre()
+                    if tit.getNombre() not in listaNegraAsignaturas:
                         estudiantes.append(curso)
-                        titulaciones.append(asignatura.getTitulacion())
-                        for hija in asignatura.getAsignaturas_hijas():
-                            cursoHija = hija[0] + "-" + hija[1]
+                    titulaciones.append(asignatura.getTitulacion())
+                    for hija in asignatura.getAsignaturas_hijas():
+                        cursoHija = hija[0] + "-" + hija[1]
+                        if hija[0] not in listaNegraAsignaturas:
                             estudiantes.append(cursoHija)
-                            titulaciones.append(hija[0])
-                            asignaturasUsadas.add(hija[1])
+                        titulaciones.append(hija[0])
+                        asignaturasUsadas.add(hija[1])
 
-                        nuevaActividad = Actividad(asignatura.getNombre(), titulaciones, estudiantes, 2)
-                        actividades.append(nuevaActividad)
+                    nuevaActividad = Actividad(asignatura.getNombre(), titulaciones, estudiantes, 2)
+                    actividades.append(nuevaActividad)
     
     def crearCurso(self):
-        self.campusIndex = self.campusText.currentIndex() - 1
-        self.selectedCampus = self.campuses[self.campusIndex].getNombre()
-
         for tit in self.titulaciones:
-            if quitar_acentos(tit.getCampus().upper()) == quitar_acentos(self.selectedCampus.upper()):
-                cursos_dict = {}
-                alumnosTit = AlumnosTitulacion(tit.getNombre())
-                for asignatura in tit.getAsignaturas():
-                    numCurso = asignatura.getCurso()
-                    nombreCurso = tit.getNombre() + "-" + str(numCurso)
-                    cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
+            cursos_dict = {}
+            alumnosTit = AlumnosTitulacion(tit.getNombre())
+            for asignatura in tit.getAsignaturas():
+                numCurso = asignatura.getCurso()
+                nombreCurso = tit.getNombre() + "-" + str(numCurso)
+                cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
 
-                    nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
-                    alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
-                    cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
+                nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
+                alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
+                cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
 
-                alumnosTit.setCursos(list(cursos_dict.values()))
-                alumnos.append(alumnosTit)
+            alumnosTit.setCursos(list(cursos_dict.values()))
+            alumnos.append(alumnosTit)
 
         self.crearExamenes()
     
@@ -1043,6 +1032,8 @@ if __name__ == '__main__':
     horasDia = Horas()
     actividades = []
     asignaturasElegidas = []
+    # Asignaturas de las que no se pueden hacer examenes
+    listaNegraAsignaturas = ["DOBLE GRADO EN ECONOMIA Y MATEMATICAS (MOSTOLES)", "DOBLE GRADO EN EDUCACION PRIMARIA Y MATEMATICAS (MOSTOLES)"]
 
     app = QApplication(sys.argv)
     window = MainWindow()

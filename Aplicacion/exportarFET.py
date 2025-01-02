@@ -98,7 +98,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
             etree.SubElement(grupoXML, "Number_of_Students").text = str(alumnosCurso.getNumAlumnos())
             etree.SubElement(grupoXML, "Comments").text = ""
             for alumnosAsig in alumnosCurso.getAsignaturas():
-                subGrupoXML = etree.SubElement(cursoXML, "Subgroup")
+                subGrupoXML = etree.SubElement(grupoXML, "Subgroup")
                 etree.SubElement(subGrupoXML, "Name").text = alumnosAsig.getNombre()
                 etree.SubElement(subGrupoXML, "Number_of_Students").text = str(alumnosAsig.getNumAlumnos())
                 etree.SubElement(subGrupoXML, "Comments").text = ""
