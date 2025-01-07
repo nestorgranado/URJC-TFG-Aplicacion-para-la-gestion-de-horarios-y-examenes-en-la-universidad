@@ -65,7 +65,8 @@ class ImportarUI(QWidget, Ui_importar):
         self.examinarBtn.clicked.connect(self.seleccionarArchivo) # Funcionalidad botón selecionar archivo
 
     def guardar(self):
-        titulaciones, campuses, error = importarInstitucion(self.rutaText.text()) # Importación de datos
+        global aulasPorCampus
+        titulaciones, campuses, aulaCampus, error = importarInstitucion(self.rutaText.text()) # Importación de datos
 
         # Si no hay error comprobar que se ha importado y añadirlo a la Institución
         if error == "": 
@@ -73,6 +74,8 @@ class ImportarUI(QWidget, Ui_importar):
                 institucion.sumar_campus(campuses)
             elif titulaciones:
                 institucion.sumar_titulacion(titulaciones)   
+            if aulaCampus:
+                aulasPorCampus = aulaCampus
         else:
             dialogoError = DialogoError(error)
             dialogoError.exec()
@@ -807,7 +810,10 @@ class ExamenesUI(QWidget, Ui_Examenes):
 
     def crearExamenes(self):
         asignaturasUsadas = set()
+        idActividad = 1
+        cursos_dict = defaultdict(list)
         for tit in self.titulaciones:
+            campus = tit.getCampus()
             for asignatura in tit.getAsignaturas():
                 if asignatura.getNombre() not in asignaturasUsadas:
                     asignaturasElegidas.append(asignatura)
@@ -825,8 +831,13 @@ class ExamenesUI(QWidget, Ui_Examenes):
                         titulaciones.append(hija[0])
                         asignaturasUsadas.add(hija[1])
 
-                    nuevaActividad = Actividad(asignatura.getNombre(), titulaciones, estudiantes, 2)
+                    nuevaActividad = Actividad(idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2)
+                    cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
+                    idActividad += 1
                     actividades.append(nuevaActividad)
+        
+        global examenesPorCuros
+        examenesPorCuros = cursos_dict
     
     def crearCurso(self):
         for tit in self.titulaciones:
@@ -888,7 +899,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".fet"
             
             # Guardar el archivo en la ruta seleccionada
-            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, "Examen")
+            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, examenesPorCuros, "Examen")
 
         # Ruta FET
         ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
@@ -1026,12 +1037,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modificarAsignaturaUI.show()
 
 if __name__ == '__main__':
-    institucion = Universidad("URJC")
-    alumnos = []
-    diasSemana = Dias()
-    horasDia = Horas()
-    actividades = []
-    asignaturasElegidas = []
+    institucion = Universidad("URJC")   #ED Universidad
+    alumnos = []                        # Titulaciones-Cursos-Asignaturas
+    diasSemana = Dias()                 # Dias por semana que va ha tener el horario
+    horasDia = Horas()                  # Horas por dia del horario
+    actividades = []                    # Actividades (Examenes, Clases)
+    asignaturasElegidas = []            # Asignaturas que se han usado para las Actividades
+    aulasPorCampus = {}                 # Aulas separadas por campus
+    examenesPorCuros = {}               # Examenes separados por Curso
+
     # Asignaturas de las que no se pueden hacer examenes
     listaNegraAsignaturas = ["DOBLE GRADO EN ECONOMIA Y MATEMATICAS (MOSTOLES)", "DOBLE GRADO EN EDUCACION PRIMARIA Y MATEMATICAS (MOSTOLES)"]
 

@@ -5,6 +5,14 @@ import xml.etree.ElementTree as ET
 import os
 from estructuraDatos import *
 import re
+import unicodedata
+
+def quitar_acentos(texto):
+    # Normalizamos el texto para separar los caracteres base de sus acentos
+    texto_normalizado = unicodedata.normalize('NFD', texto)
+    # Filtramos los caracteres que no sean marcas diacríticas
+    texto_sin_acentos = ''.join(char for char in texto_normalizado if unicodedata.category(char) != 'Mn')
+    return texto_sin_acentos
 
 # Funciones para cargar el archivo según su tipo (CSV o Excel)
 def cargar_archivo_Titulaciones(path):
@@ -132,6 +140,7 @@ def importar_Campus(path):
     # Crear diccionarios para campus y edificios
     campus_dict = {}
     edificios_dict = {}
+    aulasCampus_dict = defaultdict(list)
 
     # Iterar sobre cada fila del archivo
     for _, row in df.iterrows():
@@ -145,16 +154,18 @@ def importar_Campus(path):
 
         # Crear edificios
         if (campus_nombre, edificio_nombre) not in edificios_dict:
-            edificio = Edificio(edificio_nombre)
+            nombre_edififcio_final = edificio_nombre + "("+ campus_nombre + ")"
+            edificio = Edificio(nombre_edififcio_final)
             campus_dict[campus_nombre].agregar_edificio(edificio)
             edificios_dict[(campus_nombre, edificio_nombre)] = edificio
         
-        aula = Aula(row['ESPACIO'].split('(')[0].strip(), row['CAPACIDAD DOCENTE'], row['CAPACIDAD EXAMEN'], row['ESPACIO'].split()[0])
+        aula = Aula(quitar_acentos(row['ESPACIO'].split('(')[0].strip()), row['CAPACIDAD DOCENTE'], row['CAPACIDAD EXAMEN'], row['ESPACIO'].split()[0])
         edificios_dict[(campus_nombre, edificio_nombre)].agregar_aula(aula)
+        aulasCampus_dict[quitar_acentos(campus_nombre)].append((edificio.getNombre(), aula))
 
     campuses = list(campus_dict.values())
 
-    return campuses
+    return campuses, aulasCampus_dict
 
 def importarXML(path):
     # cargar XML
@@ -165,10 +176,13 @@ def importarXML(path):
     # Crear una universidad
     institucion = Universidad(root.find('Nombre').text)
 
+    aulasCampus_dict = defaultdict(list)
+
     # Recorrer los campus
     campusListXML = root.find("ListaCampus")
     for campusXML in campusListXML.findall('Campus'):
-        campus = Campus(campusXML.find('Nombre').text)
+        nombreCampus = campusXML.find('Nombre').text
+        campus = Campus(nombreCampus)
         for edificioXML in campusXML.findall('Edificio'):
             edificio = Edificio(edificioXML.find('Nombre').text)
             for aulaXML in edificioXML.findall('Aula'):
@@ -204,6 +218,7 @@ def importarXML(path):
                     )
 
                     edificio.agregar_aula(aula)
+                    aulasCampus_dict[quitar_acentos(nombreCampus)].append((edificio.getNombre(), aula))
 
             campus.agregar_edificio(edificio)
         institucion.agregar_campus(campus)
@@ -229,12 +244,13 @@ def importarXML(path):
             titulacion.agregar_asignatura(asignatura)
         institucion.agregar_titulacion(titulacion)
 
-    return institucion.getCampus(), institucion.getTitulacion()
+    return institucion.getCampus(), institucion.getTitulacion(), aulasCampus_dict
 
 def importarInstitucion(path):
     error = ""
     campuses = []
     titulaciones = []
+    aulasCampus = defaultdict(list)
 
     # Comprobar si la rura existe
     if os.path.exists(path):
@@ -249,13 +265,13 @@ def importarInstitucion(path):
                 titulaciones = importar_Titulaciones(path, "ETSII")
 
             elif nombre_archivo == 'mostoles2324.v1':
-                campuses = importar_Campus(path)
+                campuses, aulasCampus = importar_Campus(path)
 
             else:
                 error = (f"Error: el archivo '{path}' no contiene los datos necesarios para la aplicación")
 
         elif extension == '.xml':
-            campuses, titulaciones = importarXML(path)
+            campuses, titulaciones, aulasCampus = importarXML(path)
 
         else:
             error = (f"Error: el formato '{extension}' no es soportado")
@@ -263,4 +279,4 @@ def importarInstitucion(path):
     else:
         error = (f"Error: El archivo '{path}' no existe.")
     
-    return titulaciones, campuses, error
+    return titulaciones, campuses, aulasCampus, error
