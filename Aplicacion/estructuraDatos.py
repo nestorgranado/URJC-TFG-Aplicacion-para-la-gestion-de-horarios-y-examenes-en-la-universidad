@@ -89,8 +89,9 @@ class Edificio:
         return self.nombre
 
 class Aula:
-    def __init__(self, nombre, capacidadClase, capacidadExamen, tipo):
+    def __init__(self, nombre, edififcio, capacidadClase, capacidadExamen, tipo):
         self.nombre = nombre
+        self.edificio = edififcio
         self.capacidadClase = capacidadClase
         self.capacidadExamen = capacidadExamen
         self.tipo = tipo
@@ -101,6 +102,12 @@ class Aula:
 
     def getNumero(self):
         return self.nombre
+
+    def setEdificio(self, edificio):
+        self.edificio = edificio
+
+    def getEdificio(self):
+        return self.edificio
     
     def setCapacidadClase(self, capacidadClase):
         self.capacidadClase = capacidadClase
@@ -382,3 +389,14 @@ class AlumnosAsignatura:
         
     def setNumAlumnos(self, num):
         self.numAlumnos = num
+
+class Restriccion:
+    def __init__(self, nombre, datos):
+        self.nombre = nombre
+        self.datos = datos
+
+    def getNombre(self):
+        return self.nombre
+
+    def getDatos(self):
+        return dict(self.datos)

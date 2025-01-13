@@ -28,6 +28,12 @@ from interfaces.Ui_exams import Ui_Examenes
 from interfaces.Ui_addExam import Ui_addExamen
 from interfaces.Ui_modifyExam import Ui_ModificarExamenes
 
+from interfaces.Ui_restrictionsEx import Ui_RestriccionesEx
+from interfaces.Ui_allRestrictionEx import Ui_ListaRestriccionesEx
+from interfaces.Ui_daysBetweenExams import Ui_res_separacionDias
+from interfaces.Ui_startSameDay import Ui_res_mismoDia
+from interfaces.Ui_roomType import Ui_res_tipoAula
+
 # Funcionalidades
 from estructuraDatos import *
 from importar import importarInstitucion
@@ -429,7 +435,7 @@ class ModificarAula(QWidget, Ui_ModificarAula):
         nuevo_tipo = self.tipoText.text()
         
         # Agregar el nuevo texto a la lista de Campus
-        nueva_aula = Aula(nuevo_numero, nuevo_capClase, nuevo_capExamen, nuevo_tipo)
+        nueva_aula = Aula(nuevo_numero, self.edificios[self.edificio_index].getNombre(), nuevo_capClase, nuevo_capExamen, nuevo_tipo)
         self.edificios[self.edificio_index].agregar_aula(nueva_aula)
         
         # Agregar el nuevo texto como un nuevo item en el QListWidget
@@ -719,6 +725,243 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         institucion.setTitulacion(self.titulaciones)
         self.close()
 
+# Restricciones Examenes
+class ListaRestricionesEx(QWidget, Ui_ListaRestriccionesEx):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self) 
+
+        self.restriccionesT = list(restriccionesTiempo)
+        self.restriccionesL = list(restriccionesLugar)
+
+        for restriccion in self.restriccionesT:
+            self.listaRest.addItem(str(restriccion.getNombre() + "-" + restriccion.getDatos()["Examen"].getAsignatura()))
+        for restriccion in self.restriccionesL:
+            self.listaRest.addItem(str(restriccion.getNombre() + "-" + restriccion.getDatos()["Examen"].getAsignatura()))
+
+        self.listaRest.itemClicked.connect(self.irRestriccion)
+
+        self.rest_index = None
+
+    def irRestriccion(self, item):
+        self.rest_index = self.listaRest.row(item)
+        tipo = ""
+        
+        if self.rest_index >= len(self.restriccionesT):
+            self.rest_index -= len(self.restriccionesT)
+            restricicon_selecionada = self.restriccionesL[self.rest_index]
+            tipo = restricicon_selecionada.getNombre()
+        else:
+            restricicon_selecionada = self.restriccionesT[self.rest_index]
+            tipo = restricicon_selecionada.getNombre()
+
+        match tipo:
+            case "RestriccionAulaPreferida": 
+                self.restriccionUI = Res_TipoAula(restricicon_selecionada, self.rest_index)
+                self.restriccionUI.show()
+            case "RestriccionExamenesMismoDia":
+                self.restriccionUI = Res_MismoDia(restricicon_selecionada, self.rest_index)
+                self.restriccionUI.show()
+            case "RestriccionXDiasEntreExamenes":
+                self.restriccionUI = Res_SeparacionDias(restricicon_selecionada, self.rest_index)
+                self.restriccionUI.show()
+
+class Res_TipoAula(QWidget, Ui_res_tipoAula):
+    def __init__(self, restriccion, restIndex):
+        super().__init__()
+        self.setupUi(self) 
+
+        self.examenes = list(actividades)
+        self.campus = institucion.getCampus()
+        self.restriccion = restriccion
+        self.restIndex = restIndex
+
+        # Inicializar Selectores
+        self.examenText.addItem("Seleccione una opción...")
+        self.tipoAulaText.addItem("Seleccione una opción...")
+
+        # Rellenar Selectores
+        for examen in self.examenes:
+            self.examenText.addItem(examen.getAsignatura())
+
+        self.tipoAulaText.addItem("AULA")
+        self.tipoAulaText.addItem("SEMINARIO")
+        self.tipoAulaText.addItem("LABORATORIO")
+
+        if restriccion != None:
+            self.examenText.setCurrentText(restriccion.getDatos()["Examen"].getAsignatura())
+            self.tipoAulaText.setCurrentText(restriccion.getDatos()["Aulas"][0].getTipo())
+
+        # Recoger dato del selector
+        self.examenText.currentIndexChanged.connect(self.recogerDatoExamen)
+        self.tipoAulaText.currentIndexChanged.connect(self.recogerDatoTipo)
+
+        # Guardar
+        self.save.clicked.connect(self.guardar)
+
+    
+    def recogerDatoExamen(self):
+        self.examen_index = self.examenText.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.examenDato = self.examenes[self.examen_index]
+        self.currentCampus = self.examenDato.getCampus()
+
+    def recogerDatoTipo(self):
+        tipo = self.tipoAulaText.currentText
+        self.aulas = []
+        for campus in self.campus:
+            if campus.getNombre() == self.currentCampus:
+                for edificio in campus.getEdificios():
+                    for aula in edificio.getAulas():
+                        if aula.getTipo() == tipo:
+                            self.aulas.append(aula)
+
+    def guardar(self):
+        datos = {}
+        datos["Examen"] = self.examenDato
+        datos["Aulas"] = self.aulas
+
+        nueva_restriccion = Restriccion("RestriccionAulaPreferida", datos)
+
+        global restriccionesLugar
+        if self.restriccion != None:
+            restriccionesLugar[self.restIndex] = nueva_restriccion
+        else:
+            restriccionesLugar.append(nueva_restriccion)
+
+        self.close()
+
+class Res_MismoDia(QWidget, Ui_res_mismoDia):
+    def __init__(self, restriccion, restIndex):
+        super().__init__()
+        self.setupUi(self) 
+
+        self.examenes = list(actividades)
+        self.restriccion = restriccion
+        self.restIndex = restIndex
+
+        # Inicializar Selectores
+        self.examen1Text.addItem("Seleccione una opción...")
+        self.examen2Text.addItem("Seleccione una opción...")
+
+        # Rellenar Selectores
+        for examen in self.examenes:
+            self.examen1Text.addItem(examen.getAsignatura())
+            self.examen2Text.addItem(examen.getAsignatura())
+
+        if restriccion != None:
+            self.examen1Text.setCurrentText(restriccion.getDatos()["Examen"].getAsignatura())
+            self.examen2Text.setCurrentText(restriccion.getDatos()["Examen2"].getAsignatura())
+
+        # Borrar del selector contrario el elemento seleccionado y guardarlo
+        self.examen1Text.currentIndexChanged.connect(self.actualizarSelector2)
+        self.examen2Text.currentIndexChanged.connect(self.actualizarSelector1)
+
+        # Guardar
+        self.save.clicked.connect(self.guardar)
+
+    def actualizarSelector2(self):
+        self.examen1_index = self.examen1Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.examen1Dato = self.examenes[self.examen1_index]
+
+    def actualizarSelector1(self):
+        self.examen2_index = self.examen2Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.examen2Dato = self.examenes[self.examen2_index]
+
+    def guardar(self):
+        datos = {}
+        datos["Examen"] = self.examen1Dato
+        datos["Examen2"] = self.examen2Dato
+
+        nueva_restriccion = Restriccion("RestriccionExamenesMismoDia", datos)
+
+        global restriccionesTiempo
+        if self.restriccion != None:
+            restriccionesTiempo[self.restIndex] = nueva_restriccion
+        else:
+            restriccionesTiempo.append(nueva_restriccion)
+        self.close()
+
+class Res_SeparacionDias(QWidget, Ui_res_separacionDias):
+    def __init__(self, restriccion, restIndex):
+        super().__init__()
+        self.setupUi(self) 
+
+        self.examenes = list(actividades)
+        self.restriccion = restriccion
+        self.restIndex = restIndex
+
+        # Inicializar Selectores
+        self.examen1Text.addItem("Seleccione una opción...")
+        self.examen2Text.addItem("Seleccione una opción...")
+
+        # Rellenar Selectores
+        for examen in self.examenes:
+            self.examen1Text.addItem(examen.getAsignatura())
+            self.examen2Text.addItem(examen.getAsignatura())
+
+        if restriccion != None:
+            self.examen1Text.setCurrentText(restriccion.getDatos()["Examen"].getAsignatura())
+            self.examen2Text.setCurrentText(restriccion.getDatos()["Examen2"].getAsignatura())
+            self.separacionText.setValue(restriccion.getDatos()["Separacion"].getAsignatura())
+
+        # Borrar del selector contrario el elemento seleccionado
+        self.examen1Text.currentIndexChanged.connect(self.actualizarSelector2)
+        self.examen2Text.currentIndexChanged.connect(self.actualizarSelector1)
+
+        # Guardar
+        self.save.clicked.connect(self.guardar)
+
+    def actualizarSelector2(self):
+        self.examen1_index = self.examen1Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.examen1Dato = self.examenes[self.examen1_index]
+
+    def actualizarSelector1(self):
+        self.examen2_index = self.examen2Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.examen2Dato = self.examenes[self.examen2_index]
+
+    def guardar(self):
+        datos = {}
+        datos["Examen"] = self.examen1Dato
+        datos["Examen2"] = self.examen2Dato
+        datos["Separacion"] = self.separacionText.value()
+
+        nueva_restriccion = Restriccion("RestriccionXDiasEntreExamenes", datos)
+
+        global restriccionesTiempo
+        if self.restriccion != None:
+            restriccionesTiempo[self.restIndex] = nueva_restriccion
+        else:
+            restriccionesTiempo.append(nueva_restriccion)
+
+        self.close()
+
+class RestriccionesExamenes(QWidget, Ui_RestriccionesEx):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self) 
+
+        self.separacion.clicked.connect(self.mostrarSeparacionUI)
+        self.mismoDia.clicked.connect(self.mostrarMismoDiaUI)
+        self.tipoAula.clicked.connect(self.mostrarTipoAulaUI)
+        self.todas.clicked.connect(self.mostrarListaRestriccionesUI)
+
+    def mostrarSeparacionUI(self):
+        self.separacionUI = Res_SeparacionDias(None, 0)
+        self.separacionUI.show()
+
+    def mostrarMismoDiaUI(self):
+        self.mismoDiaUI = Res_MismoDia(None, 0)
+        self.mismoDiaUI.show()
+    
+    def mostrarTipoAulaUI(self):
+        self.tipoAulaUI = Res_TipoAula(None, 0)
+        self.tipoAulaUI.show()
+
+    def mostrarListaRestriccionesUI(self):
+        self.listaRestriccionesUI = ListaRestricionesEx()
+        self.listaRestriccionesUI.show()
+
+
 # Examenes
 class ModificarExamen(QWidget, Ui_ModificarExamenes):
     def __init__(self):
@@ -806,6 +1049,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
 
         self.exportar.clicked.connect(self.exportarDatos)
 
+        self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
         self.crearHorario.clicked.connect(self.nuevoHorario)
 
     def crearExamenes(self):
@@ -886,6 +1130,10 @@ class ExamenesUI(QWidget, Ui_Examenes):
             
         diasSemana.setDias(dias)
     
+    def mostrarRestriccionesUI(self):
+        self.restriccionesUI = RestriccionesExamenes()
+        self.restriccionesUI.show()
+    
     def nuevoHorario(self):
         # Nombre y extensión predeterminada del archivo
         default_filename = "data.fet"
@@ -899,7 +1147,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".fet"
             
             # Guardar el archivo en la ruta seleccionada
-            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, examenesPorCuros, "Examen")
+            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, examenesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
 
         # Ruta FET
         ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
@@ -1045,6 +1293,8 @@ if __name__ == '__main__':
     asignaturasElegidas = []            # Asignaturas que se han usado para las Actividades
     aulasPorCampus = {}                 # Aulas separadas por campus
     examenesPorCuros = {}               # Examenes separados por Curso
+    restriccionesTiempo = []            # Lista restricciones de tiempo no automaticas
+    restriccionesLugar = []             # Lista restricciones de lugar no automaticas
 
     # Asignaturas de las que no se pueden hacer examenes
     listaNegraAsignaturas = ["DOBLE GRADO EN ECONOMIA Y MATEMATICAS (MOSTOLES)", "DOBLE GRADO EN EDUCACION PRIMARIA Y MATEMATICAS (MOSTOLES)"]

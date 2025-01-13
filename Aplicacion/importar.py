@@ -159,9 +159,9 @@ def importar_Campus(path):
             campus_dict[campus_nombre].agregar_edificio(edificio)
             edificios_dict[(campus_nombre, edificio_nombre)] = edificio
         
-        aula = Aula(quitar_acentos(row['ESPACIO'].split('(')[0].strip()), row['CAPACIDAD DOCENTE'], row['CAPACIDAD EXAMEN'], row['ESPACIO'].split()[0])
+        aula = Aula(quitar_acentos(row['ESPACIO'].split('(')[0].strip()), edificio.getNombre(), row['CAPACIDAD DOCENTE'], row['CAPACIDAD EXAMEN'], row['ESPACIO'].split()[0])
         edificios_dict[(campus_nombre, edificio_nombre)].agregar_aula(aula)
-        aulasCampus_dict[quitar_acentos(campus_nombre)].append((edificio.getNombre(), aula))
+        aulasCampus_dict[quitar_acentos(campus_nombre)].append(aula)
 
     campuses = list(campus_dict.values())
 
@@ -189,6 +189,7 @@ def importarXML(path):
                 if aulaXML.find("AulaCombinada").text == "False":
                     aula = Aula(
                         aulaXML.find('Número').text,
+                        edificioXML.find('Nombre').text,
                         int(aulaXML.find('CapacidadClase').text),
                         int(aulaXML.find('CapacidadExamen').text),
                         aulaXML.find('Tipo').text
@@ -203,6 +204,7 @@ def importarXML(path):
                         for aulaCombinadaXML in combinacionXML.findall("Aula"):
                             newAula = Aula(
                                 aulaCombinadaXML.find('Número').text,
+                                edificioXML.find('Nombre').text,
                                 int(aulaCombinadaXML.find('CapacidadClase').text),
                                 int(aulaCombinadaXML.find('CapacidadExamen').text),
                                 aulaCombinadaXML.find('Tipo').text
