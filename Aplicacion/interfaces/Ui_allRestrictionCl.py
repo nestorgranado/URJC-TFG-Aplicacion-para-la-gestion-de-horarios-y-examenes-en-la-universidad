@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'allRestrictionExZiyrry.ui'
+## Form generated from reading UI file 'allRestrictionClvioNGK.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -18,21 +18,21 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QLabel, QListWidget, QListWidgetItem,
     QPushButton, QSizePolicy, QSplitter, QWidget)
 
-class Ui_ListaRestriccionesEx(object):
-    def setupUi(self, ListaRestriccionesEx):
-        if not ListaRestriccionesEx.objectName():
-            ListaRestriccionesEx.setObjectName(u"ListaRestriccionesEx")
-        ListaRestriccionesEx.resize(646, 476)
-        self.Title = QLabel(ListaRestriccionesEx)
+class Ui_ListaRestriccionesCl(object):
+    def setupUi(self, ListaRestriccionesCl):
+        if not ListaRestriccionesCl.objectName():
+            ListaRestriccionesCl.setObjectName(u"ListaRestriccionesCl")
+        ListaRestriccionesCl.resize(646, 476)
+        self.Title = QLabel(ListaRestriccionesCl)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(40, 40, 391, 41))
         font = QFont()
         font.setPointSize(28)
         self.Title.setFont(font)
-        self.listaRest = QListWidget(ListaRestriccionesEx)
+        self.listaRest = QListWidget(ListaRestriccionesCl)
         self.listaRest.setObjectName(u"listaRest")
         self.listaRest.setGeometry(QRect(30, 110, 491, 341))
-        self.splitter = QSplitter(ListaRestriccionesEx)
+        self.splitter = QSplitter(ListaRestriccionesCl)
         self.splitter.setObjectName(u"splitter")
         self.splitter.setGeometry(QRect(540, 110, 75, 82))
         self.splitter.setOrientation(Qt.Orientation.Vertical)
@@ -46,16 +46,16 @@ class Ui_ListaRestriccionesEx(object):
         self.modificar.setObjectName(u"modificar")
         self.splitter.addWidget(self.modificar)
 
-        self.retranslateUi(ListaRestriccionesEx)
+        self.retranslateUi(ListaRestriccionesCl)
 
-        QMetaObject.connectSlotsByName(ListaRestriccionesEx)
+        QMetaObject.connectSlotsByName(ListaRestriccionesCl)
     # setupUi
 
-    def retranslateUi(self, ListaRestriccionesEx):
-        ListaRestriccionesEx.setWindowTitle(QCoreApplication.translate("ListaRestriccionesEx", u"ListaRestriccionesEx", None))
-        self.Title.setText(QCoreApplication.translate("ListaRestriccionesEx", u"Todas las restricciones", None))
-        self.activar.setText(QCoreApplication.translate("ListaRestriccionesEx", u"Activar", None))
-        self.desactivar.setText(QCoreApplication.translate("ListaRestriccionesEx", u"Desactivar", None))
-        self.modificar.setText(QCoreApplication.translate("ListaRestriccionesEx", u"Modificar", None))
+    def retranslateUi(self, ListaRestriccionesCl):
+        ListaRestriccionesCl.setWindowTitle(QCoreApplication.translate("ListaRestriccionesCl", u"ListaRestriccionesCl", None))
+        self.Title.setText(QCoreApplication.translate("ListaRestriccionesCl", u"Todas las restricciones", None))
+        self.activar.setText(QCoreApplication.translate("ListaRestriccionesCl", u"Activar", None))
+        self.desactivar.setText(QCoreApplication.translate("ListaRestriccionesCl", u"Desactivar", None))
+        self.modificar.setText(QCoreApplication.translate("ListaRestriccionesCl", u"Modificar", None))
     # retranslateUi
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'startSameDayozqpYT.ui'
+## Form generated from reading UI file 'startSameDayIvvImY.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -23,28 +23,28 @@ class Ui_res_mismoDia(object):
         if not res_mismoDia.objectName():
             res_mismoDia.setObjectName(u"res_mismoDia")
         res_mismoDia.resize(491, 258)
-        self.examen1 = QLabel(res_mismoDia)
-        self.examen1.setObjectName(u"examen1")
-        self.examen1.setGeometry(QRect(30, 150, 49, 16))
-        self.examen2 = QLabel(res_mismoDia)
-        self.examen2.setObjectName(u"examen2")
-        self.examen2.setGeometry(QRect(30, 180, 61, 16))
-        self.examen1Text = QComboBox(res_mismoDia)
-        self.examen1Text.setObjectName(u"examen1Text")
-        self.examen1Text.setGeometry(QRect(130, 150, 311, 22))
-        self.examen2Text = QComboBox(res_mismoDia)
-        self.examen2Text.setObjectName(u"examen2Text")
-        self.examen2Text.setGeometry(QRect(130, 180, 311, 22))
+        self.actividad1 = QLabel(res_mismoDia)
+        self.actividad1.setObjectName(u"actividad1")
+        self.actividad1.setGeometry(QRect(30, 150, 71, 16))
+        self.actividad2 = QLabel(res_mismoDia)
+        self.actividad2.setObjectName(u"actividad2")
+        self.actividad2.setGeometry(QRect(30, 180, 61, 16))
+        self.actividad1Text = QComboBox(res_mismoDia)
+        self.actividad1Text.setObjectName(u"actividad1Text")
+        self.actividad1Text.setGeometry(QRect(130, 150, 311, 22))
+        self.actividad2Text = QComboBox(res_mismoDia)
+        self.actividad2Text.setObjectName(u"actividad2Text")
+        self.actividad2Text.setGeometry(QRect(130, 180, 311, 22))
         self.save = QPushButton(res_mismoDia)
         self.save.setObjectName(u"save")
         self.save.setGeometry(QRect(30, 220, 75, 24))
-        self.widget = QWidget(res_mismoDia)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(20, 20, 464, 108))
-        self.verticalLayout = QVBoxLayout(self.widget)
+        self.layoutWidget = QWidget(res_mismoDia)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(20, 20, 464, 108))
+        self.verticalLayout = QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.Title = QLabel(self.widget)
+        self.Title = QLabel(self.layoutWidget)
         self.Title.setObjectName(u"Title")
         font = QFont()
         font.setPointSize(28)
@@ -52,7 +52,7 @@ class Ui_res_mismoDia(object):
 
         self.verticalLayout.addWidget(self.Title)
 
-        self.Title2 = QLabel(self.widget)
+        self.Title2 = QLabel(self.layoutWidget)
         self.Title2.setObjectName(u"Title2")
         self.Title2.setFont(font)
 
@@ -66,10 +66,10 @@ class Ui_res_mismoDia(object):
 
     def retranslateUi(self, res_mismoDia):
         res_mismoDia.setWindowTitle(QCoreApplication.translate("res_mismoDia", u"res_mismoDia", None))
-        self.examen1.setText(QCoreApplication.translate("res_mismoDia", u"Examen 1", None))
-        self.examen2.setText(QCoreApplication.translate("res_mismoDia", u"Examen 2", None))
+        self.actividad1.setText(QCoreApplication.translate("res_mismoDia", u"Actividad 1", None))
+        self.actividad2.setText(QCoreApplication.translate("res_mismoDia", u"Actividad 2", None))
         self.save.setText(QCoreApplication.translate("res_mismoDia", u"Guardar", None))
-        self.Title.setText(QCoreApplication.translate("res_mismoDia", u"Dos Examenes ", None))
+        self.Title.setText(QCoreApplication.translate("res_mismoDia", u"Dos Actividades ", None))
         self.Title2.setText(QCoreApplication.translate("res_mismoDia", u"se realizan simultaneamente", None))
     # retranslateUi
 

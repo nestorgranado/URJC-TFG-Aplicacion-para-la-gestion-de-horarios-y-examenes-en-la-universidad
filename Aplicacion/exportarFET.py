@@ -7,7 +7,7 @@ from lxml import etree
 from xml.dom import minidom
 import platform
 
-def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividades, aulaPorCampus, examenesPorCuros, restriccionesTiempo, restriccionesLugar, tipo):
+def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividades, aulaPorCampus, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipo):
     # Elemento Raiz
     root = etree.Element("fet")
     root.set("version", "6.18.1")
@@ -108,24 +108,39 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
     i = 1 
     for actividad in actividades:
         actividadXML = etree.SubElement(listaActividades, "Activity")
-        
-        """if actividad.getProfesor() == None:
-            etree.SubElement(actividadXML, "Teacher").text = "Profesor- " + actividad.getAsignatura()
+        if tipo == "Examen":
+            etree.SubElement(actividadXML, "Subject").text = actividad.getAsignatura()
+            for curso in actividad.getCurso():
+                etree.SubElement(actividadXML, "Students").text = curso
+            etree.SubElement(actividadXML, "Duration").text = str(actividad.getDuracion())
+            etree.SubElement(actividadXML, "Total_Duration").text = str(actividad.getDuracion())
+            etree.SubElement(actividadXML, "Id").text = str(i)
+            etree.SubElement(actividadXML, "Activity_Group_Id").text = "0"
+            etree.SubElement(actividadXML, "Active").text = "true"
+            etree.SubElement(actividadXML, "Comments").text = ""
+            i += 1
         else:
-            etree.SubElement(actividadXML, "Teacher").text = actividad.getProfesor()
-        """
-
-        etree.SubElement(actividadXML, "Subject").text = actividad.getAsignatura()
-        for curso in actividad.getCurso():
-            etree.SubElement(actividadXML, "Students").text = curso
-        etree.SubElement(actividadXML, "Duration").text = str(actividad.getDuracion())
-        etree.SubElement(actividadXML, "Total_Duration").text = str(actividad.getDuracion())
-        etree.SubElement(actividadXML, "Id").text = str(i)
-        etree.SubElement(actividadXML, "Activity_Group_Id").text = "0"
-        etree.SubElement(actividadXML, "Active").text = "true"
-        etree.SubElement(actividadXML, "Comments").text = ""
-        i += 1
-
+            etree.SubElement(actividadXML, "Subject").text = actividad.getAsignatura()
+            for curso in actividad.getCurso():
+                etree.SubElement(actividadXML, "Students").text = curso
+            etree.SubElement(actividadXML, "Duration").text = str(actividad.getDuracion())
+            etree.SubElement(actividadXML, "Total_Duration").text = str(actividad.getDuracionTotal())
+            etree.SubElement(actividadXML, "Id").text = str(actividad.getIdActividad())
+            etree.SubElement(actividadXML, "Activity_Group_Id").text = str(actividad.getIdGrupo())
+            etree.SubElement(actividadXML, "Active").text = "true"
+            etree.SubElement(actividadXML, "Comments").text = ""
+            for hija in actividad.getActividadesHija():
+                actividadHijaXML = etree.SubElement(listaActividades, "Activity")
+                etree.SubElement(actividadHijaXML, "Subject").text = hija.getAsignatura()
+                for curso in actividad.getCurso():
+                    etree.SubElement(actividadHijaXML, "Students").text = curso
+                etree.SubElement(actividadHijaXML, "Duration").text = str(hija.getDuracion())
+                etree.SubElement(actividadHijaXML, "Total_Duration").text = str(hija.getDuracionTotal())
+                etree.SubElement(actividadHijaXML, "Id").text = str(hija.getIdActividad())
+                etree.SubElement(actividadHijaXML, "Activity_Group_Id").text = str(hija.getIdGrupo())
+                etree.SubElement(actividadHijaXML, "Active").text = "true"
+                etree.SubElement(actividadHijaXML, "Comments").text = ""
+            
     # Lista Edificios
     listaEdificios = etree.SubElement(root, "Buildings_List")
     for campus in institucion.getCampus():
@@ -151,7 +166,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                             combinacionXML = etree.SubElement(aulaClaseXML, "Set_of_Real_Rooms")
                             etree.SubElement(combinacionXML, "Number_of_Real_Rooms").text = str(len(combinacion))
                             for aulaComb in combinacion:
-                                etree.SubElement(combinacionXML, "Real_Room").text = aulaComb.getNumero()
+                                etree.SubElement(combinacionXML, "Real_Room").text = aulaComb.getNumero() + "-" + aulaComb.getEdificio()
                     else:
                         etree.SubElement(aulaClaseXML, "Virtual").text = "false"
 
@@ -186,68 +201,103 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
     etree.SubElement(constraint_time, "Comments").text = ""
 
     if tipo == "Examen":
-        # Restricciones Automáticas
-        # Restriccion asignaturas mismo curso separadas 24h
-        for curso in examenesPorCuros:
-            constraint_mismoCuros = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-            etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = "100"
-            etree.SubElement(constraint_mismoCuros, "Consecutive_If_Same_Day").text = "false"
-            etree.SubElement(constraint_mismoCuros, "Number_of_Activities").text = str(len(examenesPorCuros[curso]))
-
-            for actividad in examenesPorCuros[curso]:
-                etree.SubElement(constraint_mismoCuros, "Activity_Id").text = str(actividad.getIdActividad())
-
-            etree.SubElement(constraint_mismoCuros, "MinDays").text = "2"
-            etree.SubElement(constraint_mismoCuros, "Active").text = "true"
-            etree.SubElement(constraint_mismoCuros, "Comments").text = ""
-
-        #Restriccion asignaturas cursos consecutivos separadas 48h
-        for curso in examenesPorCuros:
-            # Dividir el curso en dos partes: el texto y el número final
-            grado, numcurso = curso.rsplit("-", 1)
-            # Crear el nuevo string con el número consecutivo
-            cursoConsecutivo = f"{grado}-{str(int(numcurso) + 1)}"
-
-            if cursoConsecutivo in examenesPorCuros:
-                for actividadInicial in examenesPorCuros[curso]:
-                    for actividadConsecutiva in examenesPorCuros[cursoConsecutivo]:
-                        constraint_mismoCuros = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-                        etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = "100"
-                        etree.SubElement(constraint_mismoCuros, "Consecutive_If_Same_Day").text = "false"
-                        etree.SubElement(constraint_mismoCuros, "Number_of_Activities").text = "2"
-                        etree.SubElement(constraint_mismoCuros, "Activity_Id").text = str(actividadInicial.getIdActividad())
-                        etree.SubElement(constraint_mismoCuros, "Activity_Id").text = str(actividadConsecutiva.getIdActividad())
-                        etree.SubElement(constraint_mismoCuros, "MinDays").text = "1"
-                        etree.SubElement(constraint_mismoCuros, "Active").text = "true"
-                        etree.SubElement(constraint_mismoCuros, "Comments").text = ""
-
-        # Restricciones Manuales
         for restriccion in restriccionesTiempo:
-            match restriccion.getNombre():
-                # Restriccion dos examenes son el mismo dia y hora
-                case "RestriccionExamenesMismoDia": 
-                    constraint_mismoDia = etree.SubElement(time_constraints, "ConstraintActivitiesSameStartingTime")
-                    etree.SubElement(constraint_mismoDia, "Weight_Percentage").text = "100"
-                    etree.SubElement(constraint_mismoDia, "Number_of_Activities").text = "2"
-                    etree.SubElement(constraint_mismoDia, "Activity_Id").text = str(restriccion.getDatos()["Examen"].getIdActividad())
-                    etree.SubElement(constraint_mismoDia, "Activity_Id").text = str(restriccion.getDatos()["Examen2"].getIdActividad())
-                    etree.SubElement(constraint_mismoDia, "Active").text = "true"
-                    etree.SubElement(constraint_mismoDia, "Comments").text = ""
-                
-                # Restriccion separacion entre dos asignaturas
-                case "RestriccionXDiasEntreExamenes":
-                    constraint_separacionExamenes = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-                    etree.SubElement(constraint_separacionExamenes, "Weight_Percentage").text = "100"
-                    etree.SubElement(constraint_separacionExamenes, "Consecutive_If_Same_Day").text = "false"
-                    etree.SubElement(constraint_separacionExamenes, "Number_of_Activities").text = "2"
-                    etree.SubElement(constraint_separacionExamenes, "Activity_Id").text = str(restriccion.getDatos()["Examen"].getIdActividad())
-                    etree.SubElement(constraint_separacionExamenes, "Activity_Id").text = str(restriccion.getDatos()["Examen2"].getIdActividad())
-                    etree.SubElement(constraint_separacionExamenes, "MinDays").text = str(restriccion.getDatos()["Separacion"])
-                    etree.SubElement(constraint_separacionExamenes, "Active").text = "true"
-                    etree.SubElement(constraint_separacionExamenes, "Comments").text = ""
+            if restriccion.getEstado():
+                match restriccion.getNombre():
+                    #Restriccion asignaturas cursos consecutivos separadas 48h
+                    case "MismoCursoSeparado48h":
+                        for curso in actividadesPorCuros:
+                            # Dividir el curso en dos partes: el texto y el número final
+                            grado, numcurso = curso.rsplit("-", 1)
+                            # Crear el nuevo string con el número consecutivo
+                            cursoConsecutivo = f"{grado}-{str(int(numcurso) + 1)}"
 
+                            if cursoConsecutivo in actividadesPorCuros:
+                                for actividadInicial in actividadesPorCuros[curso]:
+                                    for actividadConsecutiva in actividadesPorCuros[cursoConsecutivo]:
+                                        constraint_mismoCuros = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
+                                        etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = "100"
+                                        etree.SubElement(constraint_mismoCuros, "Consecutive_If_Same_Day").text = "false"
+                                        etree.SubElement(constraint_mismoCuros, "Number_of_Activities").text = "2"
+                                        etree.SubElement(constraint_mismoCuros, "Activity_Id").text = str(actividadInicial.getIdActividad())
+                                        etree.SubElement(constraint_mismoCuros, "Activity_Id").text = str(actividadConsecutiva.getIdActividad())
+                                        etree.SubElement(constraint_mismoCuros, "MinDays").text = "1"
+                                        etree.SubElement(constraint_mismoCuros, "Active").text = "true"
+                                        etree.SubElement(constraint_mismoCuros, "Comments").text = ""
 
+                    # Restriccion asignaturas mismo curso separadas 24h
+                    case "CursosConsecutivosSeparado24h":
+                        for curso in actividadesPorCuros:
+                            constraint_mismoCuros = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
+                            etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = "100"
+                            etree.SubElement(constraint_mismoCuros, "Consecutive_If_Same_Day").text = "false"
+                            etree.SubElement(constraint_mismoCuros, "Number_of_Activities").text = str(len(actividadesPorCuros[curso]))
 
+                            for actividad in actividadesPorCuros[curso]:
+                                etree.SubElement(constraint_mismoCuros, "Activity_Id").text = str(actividad.getIdActividad())
+
+                            etree.SubElement(constraint_mismoCuros, "MinDays").text = "2"
+                            etree.SubElement(constraint_mismoCuros, "Active").text = "true"
+                            etree.SubElement(constraint_mismoCuros, "Comments").text = ""
+
+                    # Restriccion dos examenes son el mismo dia y hora
+                    case "RestriccionExamenesMismoDia": 
+                        constraint_mismoDia = etree.SubElement(time_constraints, "ConstraintActivitiesSameStartingTime")
+                        etree.SubElement(constraint_mismoDia, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_mismoDia, "Number_of_Activities").text = "2"
+                        etree.SubElement(constraint_mismoDia, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
+                        etree.SubElement(constraint_mismoDia, "Activity_Id").text = str(restriccion.getDatos()["Actividad2"].getIdActividad())
+                        etree.SubElement(constraint_mismoDia, "Active").text = "true"
+                        etree.SubElement(constraint_mismoDia, "Comments").text = ""
+                    
+                    # Restriccion separacion entre dos asignaturas
+                    case "RestriccionXDiasEntreActividades":
+                        constraint_separacionExamenes = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
+                        etree.SubElement(constraint_separacionExamenes, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_separacionExamenes, "Consecutive_If_Same_Day").text = "false"
+                        etree.SubElement(constraint_separacionExamenes, "Number_of_Activities").text = "2"
+                        etree.SubElement(constraint_separacionExamenes, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
+                        etree.SubElement(constraint_separacionExamenes, "Activity_Id").text = str(restriccion.getDatos()["Actividad2"].getIdActividad())
+                        etree.SubElement(constraint_separacionExamenes, "MinDays").text = str(restriccion.getDatos()["Separacion"])
+                        etree.SubElement(constraint_separacionExamenes, "Active").text = "true"
+                        etree.SubElement(constraint_separacionExamenes, "Comments").text = ""
+    else:
+        for restriccion in restriccionesTiempo:
+            if restriccion.getEstado():
+                match restriccion.getNombre():
+                    # Restriccion separacion entre dos asignaturas
+                    case "RestriccionXDiasEntreActividades" | "SeparacionClasesMismaAsignatura":
+                        constraint_separacionclases = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
+                        etree.SubElement(constraint_separacionclases, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_separacionclases, "Consecutive_If_Same_Day").text = "false"
+                        etree.SubElement(constraint_separacionclases, "Number_of_Activities").text = "2"
+                        etree.SubElement(constraint_separacionclases, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
+                        etree.SubElement(constraint_separacionclases, "Activity_Id").text = str(restriccion.getDatos()["Actividad2"].getIdActividad())
+                        etree.SubElement(constraint_separacionclases, "MinDays").text = str(restriccion.getDatos()["Separacion"])
+                        etree.SubElement(constraint_separacionclases, "Active").text = "true"
+                        etree.SubElement(constraint_separacionclases, "Comments").text = ""
+
+                    # Turno de la asignatura
+                    case "RestriccionTurnoActividad":
+                        turno = []
+                        if restriccion.datos["Turno"] == "Mañana":
+                            turno = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"]
+                        else:
+                            turno = ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"]
+
+                        constraint_turnoActividad= etree.SubElement(time_constraints, "ConstraintActivityPreferredTimeSlots")
+                        etree.SubElement(constraint_turnoActividad, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_turnoActividad, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
+                        etree.SubElement(constraint_turnoActividad, "Number_of_Preferred_Time_Slots").text = str(dias.getNumDias() * 7)
+
+                        for dia in dias.getDias():
+                            for hora in turno:
+                                horaElegida = etree.SubElement(constraint_turnoActividad, "Preferred_Time_Slot")
+                                etree.SubElement(horaElegida, "Preferred_Day").text = str(dia)
+                                etree.SubElement(horaElegida, "Preferred_Hour").text = hora
+
+                        etree.SubElement(constraint_turnoActividad, "Active").text = "true"
+                        etree.SubElement(constraint_turnoActividad, "Comments").text = ""
 
     # Restricciones de Lugar
     space_constraints = etree.SubElement(root, "Space_Constraints_List")
@@ -257,41 +307,55 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
     etree.SubElement(constraint_space, "Active").text = "true"
     etree.SubElement(constraint_space, "Comments").text = ""
 
-    # Restricciones automáticas
-    # Restriccion de Examens por Campus
     if tipo == "Examen":
-        if len(aulaPorCampus) > 1:
-            i = 1
-            for actividad in actividades:
-                campus = actividad.getCampus()
-                aulas = aulaPorCampus[campus]
-
-                constraint_examenCampus = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
-                etree.SubElement(constraint_examenCampus, "Weight_Percentage").text = "100"
-                etree.SubElement(constraint_examenCampus, "Activity_Id").text = str(i)
-                etree.SubElement(constraint_examenCampus, "Number_of_Preferred_Rooms").text = str(len(aulas))
-                for aula in aulas:
-                    etree.SubElement(constraint_examenCampus, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
-
-                etree.SubElement(constraint_examenCampus, "Active").text = "true"
-                etree.SubElement(constraint_examenCampus, "Comments").text = ""
-                i += 1
-
-
-    # Restricciones Manuales
         for restriccion in restriccionesLugar:
-            match restriccion.getNombre():
-                # Restriccion dos examenes son el mismo dia y hora
-                case "RestriccionAulaPreferida": 
-                    constraint_tipoAulas = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
-                    etree.SubElement(constraint_tipoAulas, "Weight_Percentage").text = "100"
-                    etree.SubElement(constraint_tipoAulas, "Activity_Id").text = str(restriccion.getDatos()["Examen"].getIdActividad())
-                    etree.SubElement(constraint_tipoAulas, "Number_of_Preferred_Rooms").text = str(len(restriccion.getDatos()["Aulas"]))
-                    for aula in restriccion.getDatos()["Aulas"]:
-                        etree.SubElement(constraint_tipoAulas, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
+            if restriccion.getEstado():
+                match restriccion.getNombre():
+                    # Restriccion de Examens por Campus
+                    case "MismoCampusDondeSeImparte":
+                        if len(aulaPorCampus) > 1:
+                            i = 1
+                            for actividad in actividades:
+                                campus = actividad.getCampus()
+                                aulas = aulaPorCampus[campus]
 
-                    etree.SubElement(constraint_tipoAulas, "Active").text = "true"
-                    etree.SubElement(constraint_tipoAulas, "Comments").text = ""
+                                constraint_examenCampus = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
+                                etree.SubElement(constraint_examenCampus, "Weight_Percentage").text = "100"
+                                etree.SubElement(constraint_examenCampus, "Activity_Id").text = str(i)
+                                etree.SubElement(constraint_examenCampus, "Number_of_Preferred_Rooms").text = str(len(aulas))
+                                for aula in aulas:
+                                    etree.SubElement(constraint_examenCampus, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
+
+                                etree.SubElement(constraint_examenCampus, "Active").text = "true"
+                                etree.SubElement(constraint_examenCampus, "Comments").text = ""
+                                i += 1
+                    
+                    # Restriccion dos examenes son el mismo dia y hora
+                    case "RestriccionAulaPreferida": 
+                        constraint_tipoAulas = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
+                        etree.SubElement(constraint_tipoAulas, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_tipoAulas, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
+                        etree.SubElement(constraint_tipoAulas, "Number_of_Preferred_Rooms").text = str(len(restriccion.getDatos()["Aulas"]))
+                        for aula in restriccion.getDatos()["Aulas"]:
+                            etree.SubElement(constraint_tipoAulas, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
+
+                        etree.SubElement(constraint_tipoAulas, "Active").text = "true"
+                        etree.SubElement(constraint_tipoAulas, "Comments").text = ""
+    else:
+        for restriccion in restriccionesLugar:
+            if restriccion.getEstado():
+                match restriccion.getNombre():
+                    # Restriccion dos examenes son el mismo dia y hora
+                    case "RestriccionAulaPreferida": 
+                        constraint_tipoAulas = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
+                        etree.SubElement(constraint_tipoAulas, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_tipoAulas, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
+                        etree.SubElement(constraint_tipoAulas, "Number_of_Preferred_Rooms").text = str(len(restriccion.getDatos()["Aulas"]))
+                        for aula in restriccion.getDatos()["Aulas"]:
+                            etree.SubElement(constraint_tipoAulas, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
+
+                        etree.SubElement(constraint_tipoAulas, "Active").text = "true"
+                        etree.SubElement(constraint_tipoAulas, "Comments").text = ""
 
     with open(path, "wb") as file:
         file.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding="UTF-8"))

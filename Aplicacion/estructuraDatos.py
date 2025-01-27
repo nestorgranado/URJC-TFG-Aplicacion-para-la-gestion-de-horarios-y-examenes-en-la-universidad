@@ -131,8 +131,8 @@ class Aula:
         return self.combinacion
 
 class AulaCombinada(Aula):
-    def __init__(self, nombre, capacidadClase, capacidadExamen, listaCombinaciones):
-        super().__init__(nombre, capacidadClase, capacidadExamen, "COMBINADA")
+    def __init__(self, nombre, edificio, capacidadClase, capacidadExamen, listaCombinaciones):
+        super().__init__(nombre, edificio, capacidadClase, capacidadExamen, "COMBINADA")
         self.numCombinaciones = len(listaCombinaciones)
         self.listaAulas = listaCombinaciones
         self.combinacion = True
@@ -269,19 +269,28 @@ class Horas:
         return list(self.horas)
 
 class Actividad:
-    def __init__(self, idActividad, asignatura, titulacion, campus, curso, duracion):
+    def __init__(self, idActividad, idGrupo, asignatura, titulacion, campus, curso, duracion, duracionTotal):
         self.idActividad = idActividad
+        self.idGrupo = idGrupo
         self.asignatura = asignatura
         self.titulacion = titulacion
         self.campus = campus
         self.curso = curso
         self.duracion = duracion
+        self.duracionTotal = duracionTotal
+        self.actividadesHija = []
 
     def getIdActividad(self):
         return self.idActividad
     
     def setIdActividad(self, idActividad):
         self.idActividad = idActividad
+
+    def getIdGrupo(self):
+        return self.idGrupo
+    
+    def setIdGrupo(self, idGrupo):
+        self.idGrupo = idGrupo
 
     def getAsignatura(self):
         return self.asignatura
@@ -312,6 +321,21 @@ class Actividad:
 
     def setDuracion(self, duracion):
         self.duracion = duracion
+
+    def getDuracionTotal(self):
+        return self.duracionTotal
+
+    def setDuracionTotal(self, duracionTotal):
+        self.duracionTotal = duracionTotal
+
+    def getActividadesHija(self):
+        return self.actividadesHija
+    
+    def setActividadesHija(self, actividadesHija):
+        self.actividadesHija = list(actividadesHija)
+
+    def addActividadesHija(self, actividad):
+        self.actividadesHija.append(actividad)
 
 class AlumnosTitulacion:
     def __init__(self, nombre):
@@ -391,12 +415,22 @@ class AlumnosAsignatura:
         self.numAlumnos = num
 
 class Restriccion:
-    def __init__(self, nombre, datos):
+    def __init__(self, nombre, datos, activo):
         self.nombre = nombre
         self.datos = datos
+        self.activo = activo
 
     def getNombre(self):
         return self.nombre
 
     def getDatos(self):
         return dict(self.datos)
+
+    def getEstado(self):
+        return self.activo
+
+    def activar(self):
+        self.activo = True
+    
+    def desactivar(self):
+        self.activo = False

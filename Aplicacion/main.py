@@ -2,7 +2,7 @@
 import sys
 import os
 import subprocess
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, QDialog, QVBoxLayout, QLabel, QListWidget, QComboBox, QAbstractItemView
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QFileDialog, QDialog, QVBoxLayout, QLabel, QListWidget, QListWidgetItem, QComboBox, QAbstractItemView, QTabWidget, QHBoxLayout, QSpinBox, QPushButton
 from PySide6.QtCore import Qt
 from collections import defaultdict
 from itertools import combinations
@@ -24,9 +24,17 @@ from interfaces.Ui_days import Ui_dias
 from interfaces.Ui_hour import Ui_horas
 
 from interfaces.Ui_newSchedule import Ui_crearHorario
+
 from interfaces.Ui_exams import Ui_Examenes
 from interfaces.Ui_addExam import Ui_addExamen
 from interfaces.Ui_modifyExam import Ui_ModificarExamenes
+
+from interfaces.Ui_classes import Ui_Clases
+from interfaces.Ui_modifyClass import Ui_ModificarClases
+from interfaces.Ui_others import Ui_otrosHorarios
+from interfaces.Ui_restrictionsCl import Ui_RestriccionesCl
+from interfaces.Ui_allRestrictionCl import Ui_ListaRestriccionesCl
+from interfaces.Ui_activityTurn import Ui_res_turno
 
 from interfaces.Ui_restrictionsEx import Ui_RestriccionesEx
 from interfaces.Ui_allRestrictionEx import Ui_ListaRestriccionesEx
@@ -528,10 +536,10 @@ class AulaCombinadaUI(QWidget, Ui_CrearAulaCombinada):
         
         for i in range(cantidad):
             if self.tipoHorario == "Clase":
-                newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", capacidad, 0, listaCombinaciones)
+                newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", self.edificios[self.edificio_index].getNombre(), capacidad, 0, listaCombinaciones)
                 self.edificios[self.edificio_index].agregar_aula(newAula)
             if self.tipoHorario == "Examen":
-                newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", 0, capacidad, listaCombinaciones)
+                newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", self.edificios[self.edificio_index].getNombre(), 0, capacidad, listaCombinaciones)
                 self.edificios[self.edificio_index].agregar_aula(newAula)
         
         self.close()
@@ -735,81 +743,126 @@ class ListaRestricionesEx(QWidget, Ui_ListaRestriccionesEx):
         self.restriccionesL = list(restriccionesLugar)
 
         for restriccion in self.restriccionesT:
-            self.listaRest.addItem(str(restriccion.getNombre() + "-" + restriccion.getDatos()["Examen"].getAsignatura()))
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
         for restriccion in self.restriccionesL:
-            self.listaRest.addItem(str(restriccion.getNombre() + "-" + restriccion.getDatos()["Examen"].getAsignatura()))
-
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
         self.listaRest.itemClicked.connect(self.irRestriccion)
+        self.modificar.clicked.connect(self.modificarRestriccion)
+        self.desactivar.clicked.connect(self.desactivarRestriccion)
+        self.activar.clicked.connect(self.activarRestriccion)
 
         self.rest_index = None
 
+    def recargarLista(self):
+        self.listaRest.clear()
+        for restriccion in self.restriccionesT:
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+        for restriccion in self.restriccionesL:
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+
     def irRestriccion(self, item):
         self.rest_index = self.listaRest.row(item)
-        tipo = ""
+        self.tipo = ""
         
         if self.rest_index >= len(self.restriccionesT):
             self.rest_index -= len(self.restriccionesT)
-            restricicon_selecionada = self.restriccionesL[self.rest_index]
-            tipo = restricicon_selecionada.getNombre()
+            self.restricicon_selecionada = self.restriccionesL[self.rest_index]
+            self.tipo = self.restricicon_selecionada.getNombre()
         else:
-            restricicon_selecionada = self.restriccionesT[self.rest_index]
-            tipo = restricicon_selecionada.getNombre()
+            self.restricicon_selecionada = self.restriccionesT[self.rest_index]
+            self.tipo = self.restricicon_selecionada.getNombre()
 
-        match tipo:
-            case "RestriccionAulaPreferida": 
-                self.restriccionUI = Res_TipoAula(restricicon_selecionada, self.rest_index)
-                self.restriccionUI.show()
-            case "RestriccionExamenesMismoDia":
-                self.restriccionUI = Res_MismoDia(restricicon_selecionada, self.rest_index)
-                self.restriccionUI.show()
-            case "RestriccionXDiasEntreExamenes":
-                self.restriccionUI = Res_SeparacionDias(restricicon_selecionada, self.rest_index)
-                self.restriccionUI.show()
+    def modificarRestriccion(self):
+        if self.restricicon_selecionada not in self.restriccionesDesactivadas:
+            match self.tipo:
+                case "RestriccionAulaPreferida": 
+                    self.restriccionUI = Res_TipoAula(self.restricicon_selecionada, self.rest_index)
+                    self.restriccionUI.show()
+                case "RestriccionExamenesMismoDia":
+                    self.restriccionUI = Res_MismoDia(self.restricicon_selecionada, self.rest_index)
+                    self.restriccionUI.show()
+                case "RestriccionXDiasEntreActividades":
+                    self.restriccionUI = Res_SeparacionDias(self.restricicon_selecionada, self.rest_index, "Asignaturas")
+                    self.restriccionUI.show()
+
+    def activarRestriccion(self):
+        if self.restricicon_selecionada in self.restriccionesL:
+            self.restriccionesL[self.rest_index].activar()
+        else:
+            self.restriccionesT[self.rest_index].activar()
+
+        self.recargarLista()
+
+    def desactivarRestriccion(self):
+        if self.restricicon_selecionada in self.restriccionesL:
+            self.restriccionesL[self.rest_index].desactivar()
+        else:
+            self.restriccionesT[self.rest_index].desactivar()
+
+        self.recargarLista()
 
 class Res_TipoAula(QWidget, Ui_res_tipoAula):
     def __init__(self, restriccion, restIndex):
         super().__init__()
         self.setupUi(self) 
 
-        self.examenes = list(actividades)
+        self.actividades = list(actividades)
         self.campus = institucion.getCampus()
         self.restriccion = restriccion
         self.restIndex = restIndex
 
         # Inicializar Selectores
-        self.examenText.addItem("Seleccione una opción...")
+        self.actividadText.addItem("Seleccione una opción...")
         self.tipoAulaText.addItem("Seleccione una opción...")
 
         # Rellenar Selectores
-        for examen in self.examenes:
-            self.examenText.addItem(examen.getAsignatura())
+        for actividad in self.actividades:
+            self.actividadText.addItem(actividad.getAsignatura())
 
         self.tipoAulaText.addItem("AULA")
         self.tipoAulaText.addItem("SEMINARIO")
         self.tipoAulaText.addItem("LABORATORIO")
 
         if restriccion != None:
-            self.examenText.setCurrentText(restriccion.getDatos()["Examen"].getAsignatura())
+            self.actividadText.setCurrentText(restriccion.getDatos()["Actividad"].getAsignatura())
             self.tipoAulaText.setCurrentText(restriccion.getDatos()["Aulas"][0].getTipo())
 
         # Recoger dato del selector
-        self.examenText.currentIndexChanged.connect(self.recogerDatoExamen)
+        self.actividadText.currentIndexChanged.connect(self.recogerDatoExamen)
         self.tipoAulaText.currentIndexChanged.connect(self.recogerDatoTipo)
 
         # Guardar
         self.save.clicked.connect(self.guardar)
 
+        self.actividad_index = None
+
     
     def recogerDatoExamen(self):
-        self.examen_index = self.examenText.currentIndex() - 1 # Guardar Indice del elemento seleccionado
-        self.examenDato = self.examenes[self.examen_index]
-        self.currentCampus = self.examenDato.getCampus()
+        self.actividad_index = self.actividadText.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.actividadDato = self.actividades[self.actividad_index]
+        self.currentCampus = self.actividadDato.getCampus()
 
     def recogerDatoTipo(self):
-        tipo = self.tipoAulaText.currentText
+        tipo = self.tipoAulaText.currentText()
         self.aulas = []
         for campus in self.campus:
-            if campus.getNombre() == self.currentCampus:
+            if quitar_acentos(campus.getNombre()) == self.currentCampus:
                 for edificio in campus.getEdificios():
                     for aula in edificio.getAulas():
                         if aula.getTipo() == tipo:
@@ -817,10 +870,10 @@ class Res_TipoAula(QWidget, Ui_res_tipoAula):
 
     def guardar(self):
         datos = {}
-        datos["Examen"] = self.examenDato
+        datos["Actividad"] = self.actividadDato
         datos["Aulas"] = self.aulas
 
-        nueva_restriccion = Restriccion("RestriccionAulaPreferida", datos)
+        nueva_restriccion = Restriccion("RestriccionAulaPreferida", datos, True)
 
         global restriccionesLugar
         if self.restriccion != None:
@@ -835,44 +888,46 @@ class Res_MismoDia(QWidget, Ui_res_mismoDia):
         super().__init__()
         self.setupUi(self) 
 
-        self.examenes = list(actividades)
+        self.actividades = list(actividades)
         self.restriccion = restriccion
         self.restIndex = restIndex
 
         # Inicializar Selectores
-        self.examen1Text.addItem("Seleccione una opción...")
-        self.examen2Text.addItem("Seleccione una opción...")
+        self.actividad1Text.addItem("Seleccione una opción...")
+        self.actividad2Text.addItem("Seleccione una opción...")
 
         # Rellenar Selectores
-        for examen in self.examenes:
-            self.examen1Text.addItem(examen.getAsignatura())
-            self.examen2Text.addItem(examen.getAsignatura())
+        for actividad in self.actividades:
+            self.actividad1Text.addItem(actividad.getAsignatura())
+            self.actividad2Text.addItem(actividad.getAsignatura())
 
         if restriccion != None:
-            self.examen1Text.setCurrentText(restriccion.getDatos()["Examen"].getAsignatura())
-            self.examen2Text.setCurrentText(restriccion.getDatos()["Examen2"].getAsignatura())
+            self.actividad1Text.setCurrentText(restriccion.getDatos()["Actividad"].getAsignatura())
+            self.actividad2Text.setCurrentText(restriccion.getDatos()["Actividad2"].getAsignatura())
 
-        # Borrar del selector contrario el elemento seleccionado y guardarlo
-        self.examen1Text.currentIndexChanged.connect(self.actualizarSelector2)
-        self.examen2Text.currentIndexChanged.connect(self.actualizarSelector1)
+        self.actividad1Text.currentIndexChanged.connect(self.actualizarSelector2)
+        self.actividad2Text.currentIndexChanged.connect(self.actualizarSelector1)
 
         # Guardar
         self.save.clicked.connect(self.guardar)
 
+        self.actividad1_index = None
+        self.actividad2_index = None
+
     def actualizarSelector2(self):
-        self.examen1_index = self.examen1Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
-        self.examen1Dato = self.examenes[self.examen1_index]
+        self.actividad1_index = self.actividad1Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.actividad1Dato = self.actividades[self.actividad1_index]
 
     def actualizarSelector1(self):
-        self.examen2_index = self.examen2Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
-        self.examen2Dato = self.examenes[self.examen2_index]
+        self.actividad2_index = self.actividad2Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.actividad2Dato = self.actividades[self.actividad2_index]
 
     def guardar(self):
         datos = {}
-        datos["Examen"] = self.examen1Dato
-        datos["Examen2"] = self.examen2Dato
+        datos["Actividad"] = self.actividad1Dato
+        datos["Actividad2"] = self.actividad2Dato
 
-        nueva_restriccion = Restriccion("RestriccionExamenesMismoDia", datos)
+        nueva_restriccion = Restriccion("RestriccionExamenesMismoDia", datos, True)
 
         global restriccionesTiempo
         if self.restriccion != None:
@@ -882,50 +937,57 @@ class Res_MismoDia(QWidget, Ui_res_mismoDia):
         self.close()
 
 class Res_SeparacionDias(QWidget, Ui_res_separacionDias):
-    def __init__(self, restriccion, restIndex):
+    def __init__(self, restriccion, restIndex, tipo):
         super().__init__()
         self.setupUi(self) 
 
-        self.examenes = list(actividades)
+        self.actividades = list(actividades)
         self.restriccion = restriccion
         self.restIndex = restIndex
 
         # Inicializar Selectores
-        self.examen1Text.addItem("Seleccione una opción...")
-        self.examen2Text.addItem("Seleccione una opción...")
+        self.actividad1Text.addItem("Seleccione una opción...")
+        self.actividad2Text.addItem("Seleccione una opción...")
 
         # Rellenar Selectores
-        for examen in self.examenes:
-            self.examen1Text.addItem(examen.getAsignatura())
-            self.examen2Text.addItem(examen.getAsignatura())
+        for actividad in self.actividades:
+            self.actividad1Text.addItem(actividad.getAsignatura())
+            self.actividad2Text.addItem(actividad.getAsignatura())
 
         if restriccion != None:
-            self.examen1Text.setCurrentText(restriccion.getDatos()["Examen"].getAsignatura())
-            self.examen2Text.setCurrentText(restriccion.getDatos()["Examen2"].getAsignatura())
+            self.actividad1Text.setCurrentText(restriccion.getDatos()["Actividad"].getAsignatura())
+            self.actividad2Text.setCurrentText(restriccion.getDatos()["Actividad2"].getAsignatura())
             self.separacionText.setValue(restriccion.getDatos()["Separacion"].getAsignatura())
 
         # Borrar del selector contrario el elemento seleccionado
-        self.examen1Text.currentIndexChanged.connect(self.actualizarSelector2)
-        self.examen2Text.currentIndexChanged.connect(self.actualizarSelector1)
+        self.actividad1Text.currentIndexChanged.connect(self.actualizarSelector2)
+        self.actividad2Text.currentIndexChanged.connect(self.actualizarSelector1)
 
         # Guardar
         self.save.clicked.connect(self.guardar)
 
+        self.actividad1_index = None
+        self.actividad2_index = None
+
     def actualizarSelector2(self):
-        self.examen1_index = self.examen1Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
-        self.examen1Dato = self.examenes[self.examen1_index]
+        self.actividad1_index = self.actividad1Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.actividad1Dato = self.actividades[self.actividad1_index]
 
     def actualizarSelector1(self):
-        self.examen2_index = self.examen2Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
-        self.examen2Dato = self.examenes[self.examen2_index]
+        self.actividad2_index = self.actividad2Text.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.actividad2Dato = self.actividades[self.actividad2_index]
 
     def guardar(self):
         datos = {}
-        datos["Examen"] = self.examen1Dato
-        datos["Examen2"] = self.examen2Dato
+        datos["Actividad"] = self.actividad1Dato
+        datos["Actividad2"] = self.actividad2Dato
         datos["Separacion"] = self.separacionText.value()
 
-        nueva_restriccion = Restriccion("RestriccionXDiasEntreExamenes", datos)
+        nueva_restriccion = None
+        if tipo == "Asignaturas":
+            nueva_restriccion = Restriccion("RestriccionXDiasEntreActividades", datos, True)
+        elif tipo == "Clases":
+            nueva_restriccion = Restriccion("SeparacionClasesMismaAsignatura", datos, True)
 
         global restriccionesTiempo
         if self.restriccion != None:
@@ -946,7 +1008,7 @@ class RestriccionesExamenes(QWidget, Ui_RestriccionesEx):
         self.todas.clicked.connect(self.mostrarListaRestriccionesUI)
 
     def mostrarSeparacionUI(self):
-        self.separacionUI = Res_SeparacionDias(None, 0)
+        self.separacionUI = Res_SeparacionDias(None, 0, "Asignaturas")
         self.separacionUI.show()
 
     def mostrarMismoDiaUI(self):
@@ -960,7 +1022,6 @@ class RestriccionesExamenes(QWidget, Ui_RestriccionesEx):
     def mostrarListaRestriccionesUI(self):
         self.listaRestriccionesUI = ListaRestricionesEx()
         self.listaRestriccionesUI.show()
-
 
 # Examenes
 class ModificarExamen(QWidget, Ui_ModificarExamenes):
@@ -1040,6 +1101,15 @@ class ExamenesUI(QWidget, Ui_Examenes):
 
         self.crearCurso()
 
+        # Activar Restricciones automáticas
+        restriccion48h = Restriccion("MismoCursoSeparado48h", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0)}, True)
+        restriccionesTiempo.append(restriccion48h)
+        restricion24h = Restriccion("CursosConsecutivosSeparado24h", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0)}, True)
+        restriccionesTiempo.append(restricion24h)
+
+        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0)}, True)
+        restriccionesLugar.append(restriccionCampus)
+
         self.modificar.clicked.connect(self.mostrarModificarExamenUI)
         
         self.periodoExamenesText.setValue(1)
@@ -1075,13 +1145,13 @@ class ExamenesUI(QWidget, Ui_Examenes):
                         titulaciones.append(hija[0])
                         asignaturasUsadas.add(hija[1])
 
-                    nuevaActividad = Actividad(idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2)
+                    nuevaActividad = Actividad(idActividad, 0, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 2)
                     cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
                     idActividad += 1
                     actividades.append(nuevaActividad)
         
-        global examenesPorCuros
-        examenesPorCuros = cursos_dict
+        global actividadesPorCuros
+        actividadesPorCuros = cursos_dict
     
     def crearCurso(self):
         for tit in self.titulaciones:
@@ -1147,7 +1217,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".fet"
             
             # Guardar el archivo en la ruta seleccionada
-            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, examenesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
+            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
 
         # Ruta FET
         ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
@@ -1203,16 +1273,550 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.aulaCombinadaUI = AulaCombinadaUI("Examen")
         self.aulaCombinadaUI.show()
 
+# Restricciones Clases
+class ListaRestricionesCl(QWidget, Ui_ListaRestriccionesCl):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self) 
+
+        self.restriccionesT = list(restriccionesTiempo)
+        self.restriccionesL = list(restriccionesLugar)
+
+        for restriccion in self.restriccionesT:
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+        for restriccion in self.restriccionesL:
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+
+        self.listaRest.itemClicked.connect(self.irRestriccion)
+        self.modificar.clicked.connect(self.modificarRestriccion)
+        self.desactivar.clicked.connect(self.desactivarRestriccion)
+        self.activar.clicked.connect(self.activarRestriccion)
+
+        self.rest_index = None
+
+    def recargarLista(self):
+        self.listaRest.clear()
+        for restriccion in self.restriccionesT:
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+        for restriccion in self.restriccionesL:
+            if restriccion.getEstado():
+                estado = "Activa"
+            else:
+                estado = "Desactivada"
+            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+
+    def irRestriccion(self, item):
+        self.rest_index = self.listaRest.row(item)
+        self.tipo = ""
+        
+        if self.rest_index >= len(self.restriccionesT):
+            self.rest_index -= len(self.restriccionesT)
+            self.restricicon_selecionada = self.restriccionesL[self.rest_index]
+            self.tipo = self.restricicon_selecionada.getNombre()
+        else:
+            self.restricicon_selecionada = self.restriccionesT[self.rest_index]
+            self.tipo = self.restricicon_selecionada.getNombre()
+
+    def modificarRestriccion(self):
+        if self.restricicon_selecionada not in self.restriccionesDesactivadas:
+            match self.tipo:
+                case "RestriccionAulaPreferida": 
+                    self.restriccionUI = Res_TipoAula(self.restricicon_selecionada, self.rest_index)
+                    self.restriccionUI.show()
+                case "RestriccionTurno":
+                    self.restriccionUI = Res_Turno(self.restricicon_selecionada, self.rest_index)
+                    self.restriccionUI.show()
+                case "RestriccionXDiasEntreActividades":
+                    self.restriccionUI = Res_SeparacionDias(self.restricicon_selecionada, self.rest_index, "Asignaturas")
+                    self.restriccionUI.show()
+
+                case "SeparacionClasesMismaAsignatura":
+                    self.restriccionUI = Res_SeparacionDias(self.restricicon_selecionada, self.rest_index, "Clases")
+                    self.restriccionUI.show()
+
+    def activarRestriccion(self):
+        if self.restricicon_selecionada in self.restriccionesL:
+            self.restriccionesL[self.rest_index].activar()
+        else:
+            self.restriccionesT[self.rest_index].activar()
+        
+        self.recargarLista()
+
+    def desactivarRestriccion(self):
+        if self.restricicon_selecionada in self.restriccionesL:
+            self.restriccionesL[self.rest_index].desactivar()
+        else:
+            self.restriccionesT[self.rest_index].desactivar()
+
+        self.recargarLista()
+
+class Res_Turno(QWidget, Ui_res_turno):
+    def __init__(self, restriccion, restIndex):
+        super().__init__()
+        self.setupUi(self)
+
+        self.actividades = list(actividades)
+        self.restriccion = restriccion
+        self.restIndex = restIndex
+
+        # Inicializar Selectores
+        self.actividadText.addItem("Seleccione una opción...")
+
+        # Rellenar Selectores
+        for actividad in self.actividades:
+            self.actividadText.addItem(actividad.getAsignatura())
+
+        self.am.setChecked(False)
+        self.pm.setChecked(False)
+
+        if restriccion != None:
+            self.actividadText.setCurrentText(restriccion.getDatos()["Actividad"].getAsignatura())
+        
+            if restriccion.datos["Turno"] == "Mañana":
+                self.am.setChecked(True)
+            elif restriccion.datos["Turno"] == "Tarde":
+                self.pm.setChecked(True)
+
+        self.actividadText.currentIndexChanged.connect(self.actualizarSelector)
+        
+        # Guardar
+        self.save.clicked.connect(self.guardar)
+
+        self.actividad_index = None
+
+    def actualizarSelector(self):
+        self.actividad_index = self.actividadText.currentIndex() - 1 # Guardar Indice del elemento seleccionado
+        self.actividadDato = self.actividades[self.actividad_index]
+    
+    def guardar(self):
+        datos = {}
+        datos["Actividad"] = self.actividadDato
+        if self.am.isChecked():
+            datos["Turno"] = "Mañana"
+        elif self.pm.isChecked():
+            datos["Turno"] = "Tarde"
+
+        nueva_restriccion = Restriccion("RestriccionTurnoActividad", datos, True)
+
+        global restriccionesTiempo
+        if self.restriccion != None:
+            restriccionesTiempo[self.restIndex] = nueva_restriccion
+        else:
+            restriccionesTiempo.append(nueva_restriccion)
+        self.close()
+
+class RestriccionesClases(QWidget, Ui_RestriccionesCl):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self) 
+
+        self.separacion.clicked.connect(self.mostrarSeparacionUI)
+        self.turno.clicked.connect(self.mostrarTurnoUI)
+        self.tipoAula.clicked.connect(self.mostrarTipoAulaUI)
+        self.todas.clicked.connect(self.mostrarListaRestriccionesUI)
+
+    def mostrarSeparacionUI(self):
+        self.separacionUI = Res_SeparacionDias(None, 0, "Asignaturas")
+        self.separacionUI.show()
+
+    def mostrarTurnoUI(self):
+        self.turnoUI = Res_Turno(None, 0)
+        self.turnoUI.show()
+    
+    def mostrarTipoAulaUI(self):
+        self.tipoAulaUI = Res_TipoAula(None, 0)
+        self.tipoAulaUI.show()
+
+    def mostrarListaRestriccionesUI(self):
+        self.listaRestriccionesUI = ListaRestricionesEx()
+        self.listaRestriccionesUI.show()
+
+# Clases
+class ModificarClase(QWidget, Ui_ModificarClases):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.clases = list(actividades)
+        self.duraciones = []
+        self.duracionTotal = 0
+
+        # Crear un QWidget para la pestaña
+        tab = QWidget()
+        
+        # Crear los elementos
+        label_duracion = QLabel("Duración")
+        spin_box = QSpinBox()
+        spin_box.setSuffix("h")  # Añadir "h" como sufijo opcional en el QSpinBox
+        spin_box.setRange(0, 24)  # Rango de valores: 0 a 24 horas
+        
+        # Crear un layout horizontal y agregar los elementos
+        layout = QHBoxLayout()
+        layout.addWidget(label_duracion)
+        layout.addWidget(spin_box)
+        
+        # Establecer el layout al QWidget de la pestaña
+        tab.setLayout(layout)
+        
+        # Agregar la pestaña al QTabWidget
+        nombre = "Clase" + str(1)
+        self.sesionesList.addTab(tab, nombre)
+
+        # Inicializar el selectorer
+        self.asignaturaText.addItem("Seleccione una opción...")
+
+        for clase in self.clases:
+            self.asignaturaText.addItem(clase.getAsignatura())
+
+        self.sesionesText.setValue(1)
+        self.asignaturaText.currentIndexChanged.connect(self.actualizarClases)
+        self.sesionesText.valueChanged.connect(self.actualizarSesiones)
+        self.save.clicked.connect(self.guardar)
+
+        self.index = None
+
+    def actualizarClases(self):
+        self.index = self.asignaturaText.currentIndex() - 1
+        self.clase = self.clases[self.index]
+
+        self.sesionesIniciales = len(self.clase.getActividadesHija()) + 1
+        self.sesionesText.setValue(self.sesionesIniciales)
+
+    def borrarPestañas(self):
+        while self.sesionesList.count() > 0:
+            self.sesionesList.removeTab(0)
+
+    def actualizarSesiones(self):
+        self.borrarPestañas()
+        self.sesionesAñadidas = self.sesionesText.value() - self.sesionesIniciales
+        for i in range(0, self.sesionesText.value()):
+            # Crear un QWidget para la pestaña
+            tab = QWidget()
+            
+            # Crear los elementos
+            label_duracion = QLabel("Duración")
+            spin_box = QSpinBox()
+            spin_box.setSuffix("h")  # Añadir "h" como sufijo opcional en el QSpinBox
+            spin_box.setRange(0, 24)  # Rango de valores: 0 a 24 horas
+
+            if i == 0:
+                spin_box.setValue(self.clase.getDuracion())
+            elif i <= len(self.clase.getActividadesHija()):
+                spin_box.setValue(self.clase.getActividadesHija()[i-1].getDuracion())
+            else:
+                spin_box.setValue(0)
+            
+            # Crear un layout horizontal y agregar los elementos
+            layout = QHBoxLayout()
+            layout.addWidget(label_duracion)
+            layout.addWidget(spin_box)
+            
+            # Establecer el layout al QWidget de la pestaña
+            tab.setLayout(layout)
+            
+            # Agregar la pestaña al QTabWidget
+            nombre = "Clase" + str(i+1)
+            self.sesionesList.addTab(tab, nombre)
+
+    def calcularDuraciones(self):
+        # Recorrer cada pestaña
+        for i in range(self.sesionesList.count()):
+            # Obtener el widget de la pestaña
+            tab = self.sesionesList.widget(i)
+            
+            # Acceder al layout de la pestaña
+            layout = tab.layout()
+            
+            # Buscar el QSpinBox en el layout y obtener su valor
+            for j in range(layout.count()):
+                widget = layout.itemAt(j).widget()
+                if isinstance(widget, QSpinBox):
+                    self.duraciones.append(widget.value())
+                    self.duracionTotal += widget.value()
+
+    def actualizarIdActividad(self):
+        elementoSiguiente = self.index+1
+        for actividad in self.clases[elementoSiguiente:]:
+            idAntiguo = actividad.getIdActividad()
+            idNuevo = idAntiguo + self.sesionesAñadidas
+            actividad.setIdActividad(idNuevo)
+            for hija in actividad.getActividadesHija():
+                idAntiguoH = hija.getIdActividad()
+                idNuevoH = idAntiguoH + self.sesionesAñadidas
+                hija.setIdActividad(idNuevoH)
+
+    
+    def guardar(self):
+        self.calcularDuraciones()
+
+        self.clase.setDuracion(self.duraciones[0])
+        self.clase.setDuracionTotal(self.duracionTotal)
+        self.hijas = self.clase.getActividadesHija()
+        self.nuevasHijas = []
+        for i in range(1, len(self.duraciones)):
+            try: 
+                actividadHija = self.hijas[i-1]
+                self.hijas[i-1].setDuracion(self.duraciones[i])
+                self.hijas[i-1].setDuracionTotal(self.duracionTotal)
+                self.nuevasHijas.append(self.hijas[i-1])
+            except IndexError:
+                nuevaID = self.clase.getIdActividad() + len(self.hijas)
+                nuevaSesion = Actividad(nuevaID, self.clase.getIdGrupo(), self.clase.getAsignatura(), self.clase.getTitulacion(), self.clase.getCampus(), self.clase.getCurso(), self.duraciones[i], self.duracionTotal)
+                self.nuevasHijas.append(nuevaSesion)
+            
+        self.clase.setActividadesHija(self.nuevasHijas)
+        self.clases[self.index] = self.clase
+        self.actualizarIdActividad()
+        actividades = self.clases
+
+        self.close()
+
+class OtrosHorariosUI(QWidget, Ui_otrosHorarios):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.totalDias = diasSemana.getDias()
+        self.totalHoras = horasDia.getHoras()
+
+        self.numDiasText.setValue(5)
+        self.numHorasText.setValue(13)
+
+        for dia in self.totalDias:
+            item = QListWidgetItem(dia)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)  # Hacer el elemento editable
+            self.listaDias.addItem(item)
+        
+        for hora in self.totalHoras:
+            item = QListWidgetItem(hora)
+            item.setFlags(item.flags() | Qt.ItemIsEditable)  # Hacer el elemento editable
+            self.listaHoras.addItem(item)
+
+        
+        self.numDiasText.valueChanged.connect(self.modificarDias)
+        self.numHorasText.valueChanged.connect(self.modificarHoras)
+        self.save.clicked.connect(self.guardar)
+            
+    
+    def modificarDias(self):
+        numTotalDias = self.numDiasText.value()
+        diferencia = self.listaDias.count() - numTotalDias
+
+        if diferencia > 0:
+            while numTotalDias != self.listaDias.count():
+                self.listaDias.takeItem(self.listaDias.count() - 1)
+        elif diferencia < 0:
+            i = 0
+            while numTotalDias != self.listaDias.count():
+                item = QListWidgetItem("NuevoDia" + str(i))
+                item.setFlags(item.flags() | Qt.ItemIsEditable)
+                self.listaDias.addItem(item)
+                i+=1
+
+    def modificarHoras(self):
+        numTotalHoras = self.numHorasText.value()
+        diferencia = self.listaHoras.count() - numTotalHoras
+
+        if diferencia > 0:
+            while numTotalHoras != self.listaHoras.count():
+                self.listaHoras.takeItem(self.listaHoras.count() - 1)
+        elif diferencia < 0:
+            i = 0
+            while numTotalHoras != self.listaHoras.count():
+                item = QListWidgetItem("NuevaHora" + str(i))
+                item.setFlags(item.flags() | Qt.ItemIsEditable)  # Hacer el elemento editable
+                self.listaHoras.addItem(item)
+                i+=1
+
+    def guardar(self):
+        global diasSemana, horasDia
+        diasSemana.setDias([self.listaDias.item(i).text() for i in range(self.listaDias.count())])
+        horasDia.setHoras([self.listaHoras.item(i).text() for i in range(self.listaHoras.count())])
+        self.close()
+
+class ClasesUI(QWidget, Ui_Clases):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.semanal.setChecked(True)
+        self.titulaciones = institucion.getTitulacion()
+        self.crearCurso()
+
+        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0)}, True)
+        restriccionesLugar.append(restriccionCampus)
+
+        self.modificar.clicked.connect(self.mostrarModificarClasesUI)
+        self.otros.clicked.connect(self.mostrarOtrosHorariosUI)
+        self.aulasCombinadas.clicked.connect(self.mostrarAulaCombinadaUI)
+        self.exportar.clicked.connect(self.exportarDatos)
+        self.crearHorario.clicked.connect(self.nuevoHorario)
+        self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
+
+    def crearClases(self):
+        asignaturasUsadas = set()
+        idActividad = 1
+        cursos_dict = defaultdict(list)
+        for tit in self.titulaciones:
+            campus = tit.getCampus()
+            for asignatura in tit.getAsignaturas():
+                if asignatura.getNombre() not in asignaturasUsadas:
+                    asignaturasElegidas.append(asignatura)
+                    asignaturasUsadas.add(asignatura.getNombre())
+                    estudiantes = []
+                    titulaciones = []
+                    curso = tit.getNombre() + "-" + asignatura.getNombre()
+                    if tit.getNombre() not in listaNegraAsignaturas:
+                        estudiantes.append(curso)
+                    titulaciones.append(asignatura.getTitulacion())
+                    for hija in asignatura.getAsignaturas_hijas():
+                        cursoHija = hija[0] + "-" + hija[1]
+                        if hija[0] not in listaNegraAsignaturas:
+                            estudiantes.append(cursoHija)
+                        titulaciones.append(hija[0])
+                        asignaturasUsadas.add(hija[1])
+
+                    nuevaActividad1 = Actividad(idActividad, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4)
+                    nuevaActividad2 = Actividad(idActividad + 1, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4)
+                    nuevaActividad1.addActividadesHija(nuevaActividad2)
+
+                    separacionClases = Restriccion("SeparacionClasesMismaAsignatura", {"Actividad": nuevaActividad1, "Actividad2": nuevaActividad2, "Separacion": 1}, True)
+
+                    cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad1)
+                    #cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad2)
+                    idActividad += 2
+                    actividades.append(nuevaActividad1)
+                    #actividades.append(nuevaActividad2)
+        
+        global actividadesPorCuros, restriccionesTiempo
+        actividadesPorCuros = cursos_dict
+        restriccionesTiempo.append(separacionClases)
+
+    def crearCurso(self):
+        for tit in self.titulaciones:
+            cursos_dict = {}
+            alumnosTit = AlumnosTitulacion(tit.getNombre())
+            for asignatura in tit.getAsignaturas():
+                numCurso = asignatura.getCurso()
+                nombreCurso = tit.getNombre() + "-" + str(numCurso)
+                cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
+
+                nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
+                alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
+                cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
+
+            alumnosTit.setCursos(list(cursos_dict.values()))
+            alumnos.append(alumnosTit)
+
+        self.crearClases()
+
+    def exportarDatos(self):
+        # Nombre y extensión predeterminada del archivo
+        default_filename = "archivo_guardado.xml"
+
+        #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
+        file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo XML", default_filename, "Archivos XML (*.xml)")
+
+        if file_path:
+            # Asegurarse de que la extensión sea .xml (si el usuario la cambia accidentalmente)
+            if not file_path.endswith(".xml"):
+                file_path += ".xml"
+            
+            # Guardar el archivo en la ruta seleccionada
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
+
+    def nuevoHorario(self):
+        if self.semanal.isChecked():
+            global diasSemana, horasDia
+            diasSemana = Dias()
+            horasDia = Horas()
+
+        # Nombre y extensión predeterminada del archivo
+        default_filename = "data.fet"
+
+        #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
+        file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo FET", default_filename, "Archivos FET (*.fet)")
+
+        if file_path:
+            # Asegurarse de que la extensión sea .fet (si el usuario la cambia accidentalmente)
+            if not file_path.endswith(".fet"):
+                file_path += ".fet"
+            
+            # Guardar el archivo en la ruta seleccionada
+            exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Clase")
+
+        # Ruta FET
+        ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
+        
+        # Obtener el directorio base del archivo .fet
+        base_dir = os.path.dirname(file_path)
+
+        # Crear el directorio "Resultado" en el mismo directorio que el archivo .fet
+        resultado_dir = os.path.join(base_dir, "Resultado")
+        os.makedirs(resultado_dir, exist_ok=True)
+
+        # Verificar si el archivo existe
+        if os.path.isfile(file_path):
+            try:
+                # Construir el comando para ejecutar FET
+                command = [ruta_fet, f"--inputfile={file_path}", f"--outputdir={resultado_dir}"]
+                print("Ejecutando comando:", " ".join(command))  # Para depuración
+                
+                # Ejecutar FET con el archivo .fet
+                subprocess.run(command, check=True)
+                print(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
+            except subprocess.CalledProcessError as e:
+                print(f"Hubo un error al ejecutar FET: {e}")
+            except Exception as e:
+                print(f"Otro error ocurrió: {e}")
+        else:
+            print(f"El archivo {file_path} no existe.")
+
+    def mostrarAulaCombinadaUI(self):
+        self.aulaCombinadaUI = AulaCombinadaUI("Clase")
+        self.aulaCombinadaUI.show()
+
+    def mostrarOtrosHorariosUI(self):
+        self.semanal.setChecked(False)
+        self.otrosHorariosUI = OtrosHorariosUI()
+        self.otrosHorariosUI.show()
+    
+    def mostrarRestriccionesUI(self):
+        self.restriccionesUI = RestriccionesClases()
+        self.restriccionesUI.show()
+    
+    def mostrarModificarClasesUI(self):
+        self.modificarClaseUI = ModificarClase()
+        self.modificarClaseUI.show()
+
+# Horarios
 class HorariosUI(QWidget, Ui_crearHorario):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
 
         self.examenes.clicked.connect(self.mostrarExamenesUI)
+        self.clases.clicked.connect(self.mostrarClasesUI)
 
     def mostrarExamenesUI(self):
         self.examenesUI = ExamenesUI()
         self.examenesUI.show()
+
+    def mostrarClasesUI(self):
+        self.clasesUI = ClasesUI()
+        self.clasesUI.show()
 
 # Main Window
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -1292,7 +1896,7 @@ if __name__ == '__main__':
     actividades = []                    # Actividades (Examenes, Clases)
     asignaturasElegidas = []            # Asignaturas que se han usado para las Actividades
     aulasPorCampus = {}                 # Aulas separadas por campus
-    examenesPorCuros = {}               # Examenes separados por Curso
+    actividadesPorCuros = {}               # Examenes separados por Curso
     restriccionesTiempo = []            # Lista restricciones de tiempo no automaticas
     restriccionesLugar = []             # Lista restricciones de lugar no automaticas
 

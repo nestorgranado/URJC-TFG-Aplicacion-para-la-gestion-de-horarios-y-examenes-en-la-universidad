@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>res_tipoAula</class>
- <widget class="QWidget" name="res_tipoAula">
+ <class>res_turno</class>
+ <widget class="QWidget" name="res_turno">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>230</height>
+    <width>402</width>
+    <height>309</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>res_tipoAula</string>
+   <string>res_turno</string>
   </property>
   <widget class="QLabel" name="Title">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>521</width>
-     <height>41</height>
+     <x>10</x>
+     <y>10</y>
+     <width>661</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="font">
@@ -28,14 +28,40 @@
     </font>
    </property>
    <property name="text">
-    <string>Tipo de aula para una Actividad</string>
+    <string>Turno de una actividad</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="am">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>140</y>
+     <width>92</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Mañana</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="pm">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>170</y>
+     <width>92</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Tarde</string>
    </property>
   </widget>
   <widget class="QPushButton" name="save">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>180</y>
+     <x>20</x>
+     <y>210</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -47,8 +73,8 @@
   <widget class="QLabel" name="actividad">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>100</y>
+     <x>20</x>
+     <y>90</y>
      <width>49</width>
      <height>16</height>
     </rect>
@@ -60,32 +86,9 @@
   <widget class="QComboBox" name="actividadText">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>100</y>
-     <width>401</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="tipoAula">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>140</y>
-     <width>49</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Tipo Aula</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="tipoAulaText">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>140</y>
-     <width>171</width>
+     <x>80</x>
+     <y>90</y>
+     <width>301</width>
      <height>22</height>
     </rect>
    </property>
