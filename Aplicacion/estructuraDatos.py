@@ -131,8 +131,8 @@ class Aula:
         return self.combinacion
 
 class AulaCombinada(Aula):
-    def __init__(self, nombre, edificio, capacidadClase, capacidadExamen, listaCombinaciones):
-        super().__init__(nombre, edificio, capacidadClase, capacidadExamen, "COMBINADA")
+    def __init__(self, nombre, edificio, capacidadClase, capacidadExamen, tipo, listaCombinaciones):
+        super().__init__(nombre, edificio, capacidadClase, capacidadExamen, tipo)
         self.numCombinaciones = len(listaCombinaciones)
         self.listaAulas = listaCombinaciones
         self.combinacion = True
@@ -269,7 +269,7 @@ class Horas:
         return list(self.horas)
 
 class Actividad:
-    def __init__(self, idActividad, idGrupo, asignatura, titulacion, campus, curso, duracion, duracionTotal):
+    def __init__(self, idActividad, idGrupo, asignatura, titulacion, campus, curso, duracion, duracionTotal, tipoAula):
         self.idActividad = idActividad
         self.idGrupo = idGrupo
         self.asignatura = asignatura
@@ -279,6 +279,7 @@ class Actividad:
         self.duracion = duracion
         self.duracionTotal = duracionTotal
         self.actividadesHija = []
+        self.tipoAula = tipoAula
 
     def getIdActividad(self):
         return self.idActividad
@@ -336,6 +337,12 @@ class Actividad:
 
     def addActividadesHija(self, actividad):
         self.actividadesHija.append(actividad)
+
+    def getTipoAula(self):
+        return self.tipoAula
+
+    def setTipoAula(self, tipo):
+        self.tipoAula = tipo
 
 class AlumnosTitulacion:
     def __init__(self, nombre):
@@ -415,9 +422,13 @@ class AlumnosAsignatura:
         self.numAlumnos = num
 
 class Restriccion:
-    def __init__(self, nombre, datos, activo):
+    def __init__(self, nombre, datos, obligatoria, activo):
         self.nombre = nombre
         self.datos = datos
+        if obligatoria:
+            self.obligatoria = 100
+        else:
+            self.obligatoria = 60
         self.activo = activo
 
     def getNombre(self):
@@ -428,6 +439,21 @@ class Restriccion:
 
     def getEstado(self):
         return self.activo
+
+    def getObligatoria(self):
+        return self.obligatoria
+    
+    def isObligatoria(self):
+        if self.obligatoria == 100:
+            return True
+        else:
+            return False
+
+    def setObligatoria(self, obligatoria):
+        if obligatoria:
+            self.obligatoria = 100
+        else:
+            self.obligatoria = 60
 
     def activar(self):
         self.activo = True

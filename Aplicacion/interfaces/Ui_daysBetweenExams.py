@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'daysBetweenExamsKWdMKe.ui'
+## Form generated from reading UI file 'daysBetweenExamsNhtBvg.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -16,13 +16,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QPushButton,
-    QSizePolicy, QSpinBox, QWidget)
+    QRadioButton, QSizePolicy, QSpinBox, QWidget)
 
 class Ui_res_separacionDias(object):
     def setupUi(self, res_separacionDias):
         if not res_separacionDias.objectName():
             res_separacionDias.setObjectName(u"res_separacionDias")
-        res_separacionDias.resize(517, 231)
+        res_separacionDias.resize(517, 281)
         self.Title = QLabel(res_separacionDias)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(20, 20, 501, 61))
@@ -49,7 +49,10 @@ class Ui_res_separacionDias(object):
         self.separacionText.setGeometry(QRect(130, 160, 88, 23))
         self.save = QPushButton(res_separacionDias)
         self.save.setObjectName(u"save")
-        self.save.setGeometry(QRect(30, 200, 75, 24))
+        self.save.setGeometry(QRect(30, 230, 75, 24))
+        self.obligatoria = QRadioButton(res_separacionDias)
+        self.obligatoria.setObjectName(u"obligatoria")
+        self.obligatoria.setGeometry(QRect(30, 190, 92, 20))
 
         self.retranslateUi(res_separacionDias)
 
@@ -63,5 +66,6 @@ class Ui_res_separacionDias(object):
         self.actividad2.setText(QCoreApplication.translate("res_separacionDias", u"Actividad 2", None))
         self.separacion.setText(QCoreApplication.translate("res_separacionDias", u"D\u00edas separaci\u00f3n", None))
         self.save.setText(QCoreApplication.translate("res_separacionDias", u"Guardar", None))
+        self.obligatoria.setText(QCoreApplication.translate("res_separacionDias", u"Obligatoria", None))
     # retranslateUi
 

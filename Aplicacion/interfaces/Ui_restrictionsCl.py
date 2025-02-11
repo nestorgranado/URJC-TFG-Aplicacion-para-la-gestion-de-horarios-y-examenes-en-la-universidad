@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'restrictionsClYyOhuX.ui'
+## Form generated from reading UI file 'restrictionsClGhmNhn.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -22,7 +22,7 @@ class Ui_RestriccionesCl(object):
     def setupUi(self, RestriccionesCl):
         if not RestriccionesCl.objectName():
             RestriccionesCl.setObjectName(u"RestriccionesCl")
-        RestriccionesCl.resize(236, 188)
+        RestriccionesCl.resize(236, 231)
         self.formLayout = QFormLayout(RestriccionesCl)
         self.formLayout.setObjectName(u"formLayout")
         self.Title = QLabel(RestriccionesCl)
@@ -41,17 +41,22 @@ class Ui_RestriccionesCl(object):
         self.separacion = QPushButton(RestriccionesCl)
         self.separacion.setObjectName(u"separacion")
 
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.separacion)
+        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.separacion)
 
         self.tipoAula = QPushButton(RestriccionesCl)
         self.tipoAula.setObjectName(u"tipoAula")
 
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.tipoAula)
+        self.formLayout.setWidget(5, QFormLayout.LabelRole, self.tipoAula)
 
         self.todas = QPushButton(RestriccionesCl)
         self.todas.setObjectName(u"todas")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.todas)
+
+        self.horasDia = QPushButton(RestriccionesCl)
+        self.horasDia.setObjectName(u"horasDia")
+
+        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.horasDia)
 
 
         self.retranslateUi(RestriccionesCl)
@@ -66,5 +71,6 @@ class Ui_RestriccionesCl(object):
         self.separacion.setText(QCoreApplication.translate("RestriccionesCl", u"Separaci\u00f3n entre clases", None))
         self.tipoAula.setText(QCoreApplication.translate("RestriccionesCl", u"Tipo aula para clase", None))
         self.todas.setText(QCoreApplication.translate("RestriccionesCl", u"Todas las restricciones", None))
+        self.horasDia.setText(QCoreApplication.translate("RestriccionesCl", u"Max. Horas por d\u00eda", None))
     # retranslateUi
 

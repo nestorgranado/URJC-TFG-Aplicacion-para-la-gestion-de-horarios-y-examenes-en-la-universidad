@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'startSameDayIvvImY.ui'
+## Form generated from reading UI file 'startSameDaydZlhct.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -16,13 +16,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QPushButton,
-    QSizePolicy, QVBoxLayout, QWidget)
+    QRadioButton, QSizePolicy, QVBoxLayout, QWidget)
 
 class Ui_res_mismoDia(object):
     def setupUi(self, res_mismoDia):
         if not res_mismoDia.objectName():
             res_mismoDia.setObjectName(u"res_mismoDia")
-        res_mismoDia.resize(491, 258)
+        res_mismoDia.resize(491, 284)
         self.actividad1 = QLabel(res_mismoDia)
         self.actividad1.setObjectName(u"actividad1")
         self.actividad1.setGeometry(QRect(30, 150, 71, 16))
@@ -37,7 +37,7 @@ class Ui_res_mismoDia(object):
         self.actividad2Text.setGeometry(QRect(130, 180, 311, 22))
         self.save = QPushButton(res_mismoDia)
         self.save.setObjectName(u"save")
-        self.save.setGeometry(QRect(30, 220, 75, 24))
+        self.save.setGeometry(QRect(30, 240, 75, 24))
         self.layoutWidget = QWidget(res_mismoDia)
         self.layoutWidget.setObjectName(u"layoutWidget")
         self.layoutWidget.setGeometry(QRect(20, 20, 464, 108))
@@ -58,6 +58,9 @@ class Ui_res_mismoDia(object):
 
         self.verticalLayout.addWidget(self.Title2)
 
+        self.obligatoria = QRadioButton(res_mismoDia)
+        self.obligatoria.setObjectName(u"obligatoria")
+        self.obligatoria.setGeometry(QRect(30, 210, 92, 20))
 
         self.retranslateUi(res_mismoDia)
 
@@ -71,5 +74,6 @@ class Ui_res_mismoDia(object):
         self.save.setText(QCoreApplication.translate("res_mismoDia", u"Guardar", None))
         self.Title.setText(QCoreApplication.translate("res_mismoDia", u"Dos Actividades ", None))
         self.Title2.setText(QCoreApplication.translate("res_mismoDia", u"se realizan simultaneamente", None))
+        self.obligatoria.setText(QCoreApplication.translate("res_mismoDia", u"Obligatoria", None))
     # retranslateUi
 

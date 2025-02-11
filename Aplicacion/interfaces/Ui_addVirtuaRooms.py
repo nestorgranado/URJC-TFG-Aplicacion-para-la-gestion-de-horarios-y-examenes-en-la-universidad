@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'addVirtuaRoomsXUoAxs.ui'
+## Form generated from reading UI file 'addVirtuaRoomsdoGsNn.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -22,7 +22,7 @@ class Ui_CrearAulaCombinada(object):
     def setupUi(self, CrearAulaCombinada):
         if not CrearAulaCombinada.objectName():
             CrearAulaCombinada.setObjectName(u"CrearAulaCombinada")
-        CrearAulaCombinada.resize(484, 343)
+        CrearAulaCombinada.resize(484, 424)
         self.Title = QLabel(CrearAulaCombinada)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(40, 40, 421, 51))
@@ -43,19 +43,25 @@ class Ui_CrearAulaCombinada(object):
         self.edificioText.setGeometry(QRect(120, 180, 201, 22))
         self.cantidad = QLabel(CrearAulaCombinada)
         self.cantidad.setObjectName(u"cantidad")
-        self.cantidad.setGeometry(QRect(50, 220, 171, 16))
+        self.cantidad.setGeometry(QRect(50, 280, 171, 16))
         self.cantidadText = QSpinBox(CrearAulaCombinada)
         self.cantidadText.setObjectName(u"cantidadText")
-        self.cantidadText.setGeometry(QRect(230, 220, 101, 23))
+        self.cantidadText.setGeometry(QRect(230, 280, 101, 23))
         self.capacidad = QLabel(CrearAulaCombinada)
         self.capacidad.setObjectName(u"capacidad")
-        self.capacidad.setGeometry(QRect(50, 250, 101, 16))
+        self.capacidad.setGeometry(QRect(50, 310, 101, 16))
         self.capacidadText = QSpinBox(CrearAulaCombinada)
         self.capacidadText.setObjectName(u"capacidadText")
-        self.capacidadText.setGeometry(QRect(230, 250, 101, 23))
+        self.capacidadText.setGeometry(QRect(230, 310, 101, 23))
         self.add = QPushButton(CrearAulaCombinada)
         self.add.setObjectName(u"add")
-        self.add.setGeometry(QRect(50, 300, 75, 24))
+        self.add.setGeometry(QRect(50, 360, 75, 24))
+        self.tipoAula = QLabel(CrearAulaCombinada)
+        self.tipoAula.setObjectName(u"tipoAula")
+        self.tipoAula.setGeometry(QRect(50, 220, 61, 16))
+        self.tipoAulaText = QComboBox(CrearAulaCombinada)
+        self.tipoAulaText.setObjectName(u"tipoAulaText")
+        self.tipoAulaText.setGeometry(QRect(120, 220, 201, 22))
 
         self.retranslateUi(CrearAulaCombinada)
 
@@ -70,5 +76,6 @@ class Ui_CrearAulaCombinada(object):
         self.cantidad.setText(QCoreApplication.translate("CrearAulaCombinada", u"Cantidad de Aulas Combinadas", None))
         self.capacidad.setText(QCoreApplication.translate("CrearAulaCombinada", u"Capacidad Minima", None))
         self.add.setText(QCoreApplication.translate("CrearAulaCombinada", u"Crear", None))
+        self.tipoAula.setText(QCoreApplication.translate("CrearAulaCombinada", u"Tipo Aula", None))
     # retranslateUi
 

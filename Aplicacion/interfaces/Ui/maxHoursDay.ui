@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>res_separacionDias</class>
- <widget class="QWidget" name="res_separacionDias">
+ <class>MaxHorasDia</class>
+ <widget class="QWidget" name="MaxHorasDia">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>517</width>
-    <height>281</height>
+    <width>520</width>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>res_separacionDias</string>
+   <string>maxHorasDia</string>
   </property>
   <widget class="QLabel" name="Title">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>501</width>
+     <x>0</x>
+     <y>10</y>
+     <width>551</width>
      <height>61</height>
     </rect>
    </property>
@@ -28,73 +28,50 @@
     </font>
    </property>
    <property name="text">
-    <string>Min. Días entre dos Actividades</string>
+    <string>Max. Horas de clase en un día</string>
    </property>
   </widget>
-  <widget class="QLabel" name="actividad1">
+  <widget class="QLabel" name="grupo">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>100</y>
-     <width>71</width>
+     <x>10</x>
+     <y>130</y>
+     <width>49</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Actividad 1</string>
+    <string>Grupo</string>
    </property>
   </widget>
-  <widget class="QLabel" name="actividad2">
+  <widget class="QComboBox" name="grupoText">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>90</x>
      <y>130</y>
+     <width>421</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="horas">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
      <width>61</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Actividad 2</string>
+    <string>Max. Horas</string>
    </property>
   </widget>
-  <widget class="QLabel" name="separacion">
+  <widget class="QSpinBox" name="horasText">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>160</y>
-     <width>91</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Días separación</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="actividad1Text">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>100</y>
-     <width>311</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="actividad2Text">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>130</y>
-     <width>311</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QSpinBox" name="separacionText">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>160</y>
+     <x>90</x>
+     <y>180</y>
      <width>88</width>
      <height>23</height>
     </rect>
@@ -103,8 +80,8 @@
   <widget class="QPushButton" name="save">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>230</y>
+     <x>10</x>
+     <y>260</y>
      <width>75</width>
      <height>24</height>
     </rect>
@@ -113,11 +90,34 @@
     <string>Guardar</string>
    </property>
   </widget>
+  <widget class="QLabel" name="titulacion">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>80</y>
+     <width>51</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Titulación</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="titulacionText">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>80</y>
+     <width>421</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
   <widget class="QRadioButton" name="obligatoria">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>190</y>
+     <x>10</x>
+     <y>220</y>
      <width>92</width>
      <height>20</height>
     </rect>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'roomTypeBNetTz.ui'
+## Form generated from reading UI file 'roomTypeJKXvnL.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -22,7 +22,7 @@ class Ui_res_tipoAula(object):
     def setupUi(self, res_tipoAula):
         if not res_tipoAula.objectName():
             res_tipoAula.setObjectName(u"res_tipoAula")
-        res_tipoAula.resize(560, 230)
+        res_tipoAula.resize(560, 233)
         self.Title = QLabel(res_tipoAula)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(20, 20, 521, 41))

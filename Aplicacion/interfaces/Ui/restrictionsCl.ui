@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>236</width>
-    <height>188</height>
+    <height>254</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,14 +33,14 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
+   <item row="5" column="0">
     <widget class="QPushButton" name="separacion">
      <property name="text">
       <string>Separación entre clases</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="6" column="0">
     <widget class="QPushButton" name="tipoAula">
      <property name="text">
       <string>Tipo aula para clase</string>
@@ -51,6 +51,20 @@
     <widget class="QPushButton" name="todas">
      <property name="text">
       <string>Todas las restricciones</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="horasDia">
+     <property name="text">
+      <string>Max. Horas por día</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="huecosSemana">
+     <property name="text">
+      <string>Max. Huecos por semana</string>
      </property>
     </widget>
    </item>

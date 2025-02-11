@@ -6,8 +6,9 @@ import xml.etree.ElementTree as ET
 from lxml import etree
 from xml.dom import minidom
 import platform
+from datetime import datetime, timedelta
 
-def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividades, aulaPorCampus, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipo):
+def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividades, aulaPorCampus, aulaPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipo):
     # Elemento Raiz
     root = etree.Element("fet")
     root.set("version", "6.18.1")
@@ -56,7 +57,12 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
 
     # Etiquetas de asignaturas(por ahora sin usar)
     EtiquetasAsignaturas = etree.SubElement(root, "Activity_Tags_List")
-    EtiquetasAsignaturas.text = ""
+    for tipoAu in aulaPorTipo.keys():
+        etiqueta = etree.SubElement(EtiquetasAsignaturas, "Activity_Tag")
+        etree.SubElement(etiqueta, "Name").text = tipoAu
+        etree.SubElement(etiqueta, "Printable").text = "true"
+        etree.SubElement(etiqueta, "Comments").text = ""
+
 
     # Lista Profesores
     listaProfesores = etree.SubElement(root, "Teachers_List")
@@ -110,6 +116,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
         actividadXML = etree.SubElement(listaActividades, "Activity")
         if tipo == "Examen":
             etree.SubElement(actividadXML, "Subject").text = actividad.getAsignatura()
+            etree.SubElement(actividadXML, "Activity_Tag").text = actividad.getTipoAula()
             for curso in actividad.getCurso():
                 etree.SubElement(actividadXML, "Students").text = curso
             etree.SubElement(actividadXML, "Duration").text = str(actividad.getDuracion())
@@ -121,6 +128,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
             i += 1
         else:
             etree.SubElement(actividadXML, "Subject").text = actividad.getAsignatura()
+            etree.SubElement(actividadXML, "Activity_Tag").text = actividad.getTipoAula()
             for curso in actividad.getCurso():
                 etree.SubElement(actividadXML, "Students").text = curso
             etree.SubElement(actividadXML, "Duration").text = str(actividad.getDuracion())
@@ -216,7 +224,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                                 for actividadInicial in actividadesPorCuros[curso]:
                                     for actividadConsecutiva in actividadesPorCuros[cursoConsecutivo]:
                                         constraint_mismoCuros = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-                                        etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = "100"
+                                        etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = str(restriccion.getObligatoria())
                                         etree.SubElement(constraint_mismoCuros, "Consecutive_If_Same_Day").text = "false"
                                         etree.SubElement(constraint_mismoCuros, "Number_of_Activities").text = "2"
                                         etree.SubElement(constraint_mismoCuros, "Activity_Id").text = str(actividadInicial.getIdActividad())
@@ -229,7 +237,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                     case "CursosConsecutivosSeparado24h":
                         for curso in actividadesPorCuros:
                             constraint_mismoCuros = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-                            etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = "100"
+                            etree.SubElement(constraint_mismoCuros, "Weight_Percentage").text = str(restriccion.getObligatoria())
                             etree.SubElement(constraint_mismoCuros, "Consecutive_If_Same_Day").text = "false"
                             etree.SubElement(constraint_mismoCuros, "Number_of_Activities").text = str(len(actividadesPorCuros[curso]))
 
@@ -243,7 +251,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                     # Restriccion dos examenes son el mismo dia y hora
                     case "RestriccionExamenesMismoDia": 
                         constraint_mismoDia = etree.SubElement(time_constraints, "ConstraintActivitiesSameStartingTime")
-                        etree.SubElement(constraint_mismoDia, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_mismoDia, "Weight_Percentage").text = str(restriccion.getObligatoria())
                         etree.SubElement(constraint_mismoDia, "Number_of_Activities").text = "2"
                         etree.SubElement(constraint_mismoDia, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
                         etree.SubElement(constraint_mismoDia, "Activity_Id").text = str(restriccion.getDatos()["Actividad2"].getIdActividad())
@@ -253,7 +261,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                     # Restriccion separacion entre dos asignaturas
                     case "RestriccionXDiasEntreActividades":
                         constraint_separacionExamenes = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-                        etree.SubElement(constraint_separacionExamenes, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_separacionExamenes, "Weight_Percentage").text = str(restriccion.getObligatoria())
                         etree.SubElement(constraint_separacionExamenes, "Consecutive_If_Same_Day").text = "false"
                         etree.SubElement(constraint_separacionExamenes, "Number_of_Activities").text = "2"
                         etree.SubElement(constraint_separacionExamenes, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
@@ -268,7 +276,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                     # Restriccion separacion entre dos asignaturas
                     case "RestriccionXDiasEntreActividades" | "SeparacionClasesMismaAsignatura":
                         constraint_separacionclases = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-                        etree.SubElement(constraint_separacionclases, "Weight_Percentage").text = "100"
+                        etree.SubElement(constraint_separacionclases, "Weight_Percentage").text = str(restriccion.getObligatoria())
                         etree.SubElement(constraint_separacionclases, "Consecutive_If_Same_Day").text = "false"
                         etree.SubElement(constraint_separacionclases, "Number_of_Activities").text = "2"
                         etree.SubElement(constraint_separacionclases, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
@@ -278,27 +286,63 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                         etree.SubElement(constraint_separacionclases, "Comments").text = ""
 
                     # Turno de la asignatura
-                    case "RestriccionTurnoActividad":
+                    case "RestriccionTurno":
+                        formato = "%H:%M"
+                        horaini = datetime.strptime(restriccion.getDatos()["HoraIni"], formato)
+                        horafin = datetime.strptime(restriccion.getDatos()["HoraFin"], formato)
                         turno = []
-                        if restriccion.datos["Turno"] == "Mañana":
-                            turno = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00"]
-                        else:
-                            turno = ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"]
 
-                        constraint_turnoActividad= etree.SubElement(time_constraints, "ConstraintActivityPreferredTimeSlots")
-                        etree.SubElement(constraint_turnoActividad, "Weight_Percentage").text = "100"
-                        etree.SubElement(constraint_turnoActividad, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
-                        etree.SubElement(constraint_turnoActividad, "Number_of_Preferred_Time_Slots").text = str(dias.getNumDias() * 7)
+                        while horaini <= horafin:
+                            turno.append(horaini.strftime(formato))
+                            horaini += timedelta(hours=1)
 
-                        for dia in dias.getDias():
-                            for hora in turno:
-                                horaElegida = etree.SubElement(constraint_turnoActividad, "Preferred_Time_Slot")
-                                etree.SubElement(horaElegida, "Preferred_Day").text = str(dia)
-                                etree.SubElement(horaElegida, "Preferred_Hour").text = hora
+                        for actividad in actividadesPorCuros[restriccion.getDatos()["Curso"]]:
+                            constraint_turnoActividad= etree.SubElement(time_constraints, "ConstraintActivityPreferredTimeSlots")
+                            etree.SubElement(constraint_turnoActividad, "Weight_Percentage").text = str(restriccion.getObligatoria())
+                            etree.SubElement(constraint_turnoActividad, "Activity_Id").text = str(actividad.getIdActividad())
+                            etree.SubElement(constraint_turnoActividad, "Number_of_Preferred_Time_Slots").text = str(dias.getNumDias() * len(turno))
 
-                        etree.SubElement(constraint_turnoActividad, "Active").text = "true"
-                        etree.SubElement(constraint_turnoActividad, "Comments").text = ""
+                            for dia in dias.getDias():
+                                for hora in turno:
+                                    horaElegida = etree.SubElement(constraint_turnoActividad, "Preferred_Time_Slot")
+                                    etree.SubElement(horaElegida, "Preferred_Day").text = str(dia)
+                                    etree.SubElement(horaElegida, "Preferred_Hour").text = hora
 
+                            etree.SubElement(constraint_turnoActividad, "Active").text = "true"
+                            etree.SubElement(constraint_turnoActividad, "Comments").text = ""
+                            for actividadHija in actividad.getActividadesHija():
+                                constraint_turnoActividad= etree.SubElement(time_constraints, "ConstraintActivityPreferredTimeSlots")
+                                etree.SubElement(constraint_turnoActividad, "Weight_Percentage").text = str(restriccion.getObligatoria())
+                                etree.SubElement(constraint_turnoActividad, "Activity_Id").text = str(actividad.getIdActividad())
+                                etree.SubElement(constraint_turnoActividad, "Number_of_Preferred_Time_Slots").text = str(dias.getNumDias() * len(turno))
+
+                                for dia in dias.getDias():
+                                    for hora in turno:
+                                        horaElegida = etree.SubElement(constraint_turnoActividad, "Preferred_Time_Slot")
+                                        etree.SubElement(horaElegida, "Preferred_Day").text = str(dia)
+                                        etree.SubElement(horaElegida, "Preferred_Hour").text = hora
+
+                                etree.SubElement(constraint_turnoActividad, "Active").text = "true"
+                                etree.SubElement(constraint_turnoActividad, "Comments").text = ""
+
+                    # Max Horas clase por día
+                    case "MaxHorasPorDia":
+                        constraint_maxHorasDia= etree.SubElement(time_constraints, "ConstraintStudentsSetMaxHoursDaily")
+                        etree.SubElement(constraint_maxHorasDia, "Weight_Percentage").text = str(restriccion.getObligatoria())
+                        etree.SubElement(constraint_maxHorasDia, "Maximum_Hours_Daily").text = str(restriccion.getDatos()["Horas"])
+                        etree.SubElement(constraint_maxHorasDia, "Students").text = restriccion.getDatos()["Curso"]
+                        etree.SubElement(constraint_maxHorasDia, "Active").text = "true"
+                        etree.SubElement(constraint_maxHorasDia, "Comments").text = ""
+
+                    # Max Huecos entre clases por semana
+                    case "MaxHuecosPorSemana":
+                        constraint_maxHorasDia= etree.SubElement(time_constraints, "ConstraintStudentsSetMaxGapsPerWeek")
+                        etree.SubElement(constraint_maxHorasDia, "Weight_Percentage").text = str(restriccion.getObligatoria())
+                        etree.SubElement(constraint_maxHorasDia, "Max_Gaps").text = str(restriccion.getDatos()["Horas"])
+                        etree.SubElement(constraint_maxHorasDia, "Students").text = restriccion.getDatos()["Curso"]
+                        etree.SubElement(constraint_maxHorasDia, "Active").text = "true"
+                        etree.SubElement(constraint_maxHorasDia, "Comments").text = ""
+                        
     # Restricciones de Lugar
     space_constraints = etree.SubElement(root, "Space_Constraints_List")
     # Restriccion Basica
@@ -306,6 +350,17 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
     etree.SubElement(constraint_space, "Weight_Percentage").text = "100"
     etree.SubElement(constraint_space, "Active").text = "true"
     etree.SubElement(constraint_space, "Comments").text = ""
+
+    for tipoAu, aulas in aulaPorTipo.items():
+        constraint_tipoAulas = etree.SubElement(space_constraints, "ConstraintActivityTagPreferredRooms")
+        etree.SubElement(constraint_tipoAulas, "Weight_Percentage").text = "100"
+        etree.SubElement(constraint_tipoAulas, "Activity_Tag").text = tipoAu
+        etree.SubElement(constraint_tipoAulas, "Number_of_Preferred_Rooms").text = str(len(aulas))
+        for aula in aulas:
+            etree.SubElement(constraint_tipoAulas, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
+
+        etree.SubElement(constraint_tipoAulas, "Active").text = "true"
+        etree.SubElement(constraint_tipoAulas, "Comments").text = ""
 
     if tipo == "Examen":
         for restriccion in restriccionesLugar:
@@ -320,7 +375,7 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                                 aulas = aulaPorCampus[campus]
 
                                 constraint_examenCampus = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
-                                etree.SubElement(constraint_examenCampus, "Weight_Percentage").text = "100"
+                                etree.SubElement(constraint_examenCampus, "Weight_Percentage").text = str(restriccion.getObligatoria())
                                 etree.SubElement(constraint_examenCampus, "Activity_Id").text = str(i)
                                 etree.SubElement(constraint_examenCampus, "Number_of_Preferred_Rooms").text = str(len(aulas))
                                 for aula in aulas:
@@ -329,33 +384,11 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                                 etree.SubElement(constraint_examenCampus, "Active").text = "true"
                                 etree.SubElement(constraint_examenCampus, "Comments").text = ""
                                 i += 1
-                    
-                    # Restriccion dos examenes son el mismo dia y hora
-                    case "RestriccionAulaPreferida": 
-                        constraint_tipoAulas = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
-                        etree.SubElement(constraint_tipoAulas, "Weight_Percentage").text = "100"
-                        etree.SubElement(constraint_tipoAulas, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
-                        etree.SubElement(constraint_tipoAulas, "Number_of_Preferred_Rooms").text = str(len(restriccion.getDatos()["Aulas"]))
-                        for aula in restriccion.getDatos()["Aulas"]:
-                            etree.SubElement(constraint_tipoAulas, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
 
-                        etree.SubElement(constraint_tipoAulas, "Active").text = "true"
-                        etree.SubElement(constraint_tipoAulas, "Comments").text = ""
-    else:
+    """else:
         for restriccion in restriccionesLugar:
             if restriccion.getEstado():
-                match restriccion.getNombre():
-                    # Restriccion dos examenes son el mismo dia y hora
-                    case "RestriccionAulaPreferida": 
-                        constraint_tipoAulas = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
-                        etree.SubElement(constraint_tipoAulas, "Weight_Percentage").text = "100"
-                        etree.SubElement(constraint_tipoAulas, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
-                        etree.SubElement(constraint_tipoAulas, "Number_of_Preferred_Rooms").text = str(len(restriccion.getDatos()["Aulas"]))
-                        for aula in restriccion.getDatos()["Aulas"]:
-                            etree.SubElement(constraint_tipoAulas, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
-
-                        etree.SubElement(constraint_tipoAulas, "Active").text = "true"
-                        etree.SubElement(constraint_tipoAulas, "Comments").text = ""
+                match restriccion.getNombre():"""
 
     with open(path, "wb") as file:
         file.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding="UTF-8"))
