@@ -684,8 +684,9 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         nuevo_curso = int(self.cursoText.text())
         
         # Agregar el nuevo texto a la lista de Campus
-        nueva_asignatura = Asignatura(nuevo_codigo, nuevo_nombre, nuevo_numAlumnos, self.titulaciones[self.titulacion_index].getNombre(), nuevo_curso)
+        nueva_asignatura = Asignatura(nuevo_codigo, nuevo_nombre, self.titulaciones[self.titulacion_index].getNombre(), nuevo_numAlumnos, nuevo_curso)
         self.titulaciones[self.titulacion_index].agregar_asignatura(nueva_asignatura)
+        self.asignaturas = self.titulaciones[self.titulacion_index].getAsignaturas()
         
         # Agregar el nuevo texto como un nuevo item en el QListWidget
         nuevo_item = "(" + str(nuevo_codigo) + ") " + str(nuevo_nombre)
@@ -717,7 +718,7 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
             nuevo_hija = (self.codigoHijaText.text(), self.nombreHijaText.text())
             
             # Actualizar el elemento
-            self.hijas[self.hija_index].setAsignaturas_hijas(nuevo_hija)
+            self.hijas[self.hija_index] = nuevo_hija
          
             # Actualizar el elemento visualmente en el QListWidget
             nuevo_item = "(" + str(self.codigoHijaText.text()) + ") " + str(self.nombreHijaText.text())
@@ -732,7 +733,7 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         nuevo_hija = (self.codigoHijaText.text(), self.nombreHijaText.text())
         
         # Agregar el nuevo texto a la lista de Campus
-        self.hijas[self.hija_index].agregar_hija(nuevo_hija)
+        self.hijas.append(nuevo_hija)
         
         # Agregar el nuevo texto como un nuevo item en el QListWidget
         nuevo_item = "(" + str(self.codigoHijaText.text()) + ") " + str(self.nombreHijaText.text())
@@ -1152,6 +1153,11 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.crearHorario.clicked.connect(self.nuevoHorario)
 
     def crearExamenes(self):
+        global actividadesPorCuros, restriccionesTiempo, actividades
+        actividadesPorCuros.clear()
+        restriccionesTiempo.clear()
+        actividades.clear()
+
         asignaturasUsadas = set()
         idActividad = 1
         cursos_dict = defaultdict(list)
@@ -1179,10 +1185,12 @@ class ExamenesUI(QWidget, Ui_Examenes):
                     idActividad += 1
                     actividades.append(nuevaActividad)
         
-        global actividadesPorCuros
         actividadesPorCuros = cursos_dict
     
     def crearCurso(self):
+        global alumnos
+        alumnos.clear()
+
         for tit in self.titulaciones:
             cursos_dict = {}
             alumnosTit = AlumnosTitulacion(tit.getNombre())
@@ -1801,7 +1809,11 @@ class ClasesUI(QWidget, Ui_Clases):
         self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
 
     def crearClases(self):
-        global actividadesPorCuros, restriccionesTiempo
+        global actividadesPorCuros, restriccionesTiempo, actividades
+        actividadesPorCuros.clear()
+        restriccionesTiempo.clear()
+        actividades.clear()
+
         asignaturasUsadas = set()
         idActividad = 1
         cursos_dict = defaultdict(list)
@@ -1842,6 +1854,9 @@ class ClasesUI(QWidget, Ui_Clases):
         restriccionesTiempo.append(separacionClases)
 
     def crearCurso(self):
+        global alumnos
+        alumnos.clear()
+
         for tit in self.titulaciones:
             cursos_dict = {}
             alumnosTit = AlumnosTitulacion(tit.getNombre())
