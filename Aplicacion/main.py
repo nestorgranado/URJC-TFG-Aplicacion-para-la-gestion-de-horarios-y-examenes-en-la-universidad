@@ -85,11 +85,15 @@ class ImportarUI(QWidget, Ui_importar):
         titulaciones, campuses, aulaCampus, aulasTipo, error = importarInstitucion(self.rutaText.text()) # Importación de datos
 
         # Si no hay error comprobar que se ha importado y añadirlo a la Institución
-        if error == "": 
-            if campuses:
+        if error == "":
+            if  campuses and titulaciones:
+                institucion.sumar_campus(campuses)
+                institucion.sumar_titulacion(titulaciones)
+            elif campuses:
                 institucion.sumar_campus(campuses)
             elif titulaciones:
-                institucion.sumar_titulacion(titulaciones)   
+                institucion.sumar_titulacion(titulaciones)
+
             if aulaCampus:
                 aulasPorCampus = aulaCampus
             if aulasTipo:

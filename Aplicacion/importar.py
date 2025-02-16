@@ -212,7 +212,19 @@ def importarXML(path):
                         aulaXML.find('Tipo').text
                     )
 
+                    aulasTipo_dict["TODAS"].append(aula)
+                    match aulaXML.find('Tipo').text:
+                        case "AULA":
+                            if " ".join(aulaXML.find('Número').text.split()[:2]) == "AULA MAGNA":
+                                aulasTipo_dict["AULA MAGNA"].append(aula)
+                            aulasTipo_dict["AULA"].append(aula)
+                        case "SEMINARIO":
+                            aulasTipo_dict["SEMINARIO"].append(aula)
+                        case "LABORATORIO":
+                            aulasTipo_dict["LABORATORIO"].append(aula)
+
                     edificio.agregar_aula(aula)
+                    aulasCampus_dict[quitar_acentos(nombreCampus)].append((edificio.getNombre(), aula))
 
                 else:
                     combinaciones = []
@@ -231,16 +243,15 @@ def importarXML(path):
                     
                     aula = AulaCombinada(
                         aulaXML.find('Número').text,
+                        edificioXML.find('Nombre').text,
                         int(aulaXML.find('CapacidadClase').text),
                         int(aulaXML.find('CapacidadExamen').text),
-                        aulaCombinadaXML.find('Tipo').text,
+                        aulaXML.find('Tipo').text,
                         combinaciones
                     )
 
-                    tipo_aula = aulaCombinadaXML.find('Tipo').text
-
                     aulasTipo_dict["TODAS"].append(aula)
-                    match tipo_aula:
+                    match aulaXML.find('Tipo').text:
                         case "AULA":
                             if " ".join(aulaCombinadaXML.find('Número').text.split()[:2]) == "AULA MAGNA":
                                 aulasTipo_dict["AULA MAGNA"].append(aula)
@@ -273,7 +284,8 @@ def importarXML(path):
                 int(asignaturaXML.find('Curso').text)
             )
             for hijaXML in asignaturaXML.findall('AsignaturaHija'):
-                asignatura.agregar_hija((hijaXML.find('Código'), hijaXML.find('Nombre')))
+                asignatura.agregar_hija((hijaXML.find('Código').text, hijaXML.find('Nombre').text))
+
             titulacion.agregar_asignatura(asignatura)
         institucion.agregar_titulacion(titulacion)
 
