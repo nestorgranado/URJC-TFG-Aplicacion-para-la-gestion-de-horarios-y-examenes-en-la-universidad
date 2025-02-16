@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'maxGapsWeekPmecNH.ui'
+## Form generated from reading UI file 'maxGapsWeekVqFbXV.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -16,13 +16,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QPushButton,
-    QRadioButton, QSizePolicy, QSpinBox, QWidget)
+    QSizePolicy, QSpinBox, QWidget)
 
 class Ui_MaxHuecosSemana(object):
     def setupUi(self, MaxHuecosSemana):
         if not MaxHuecosSemana.objectName():
             MaxHuecosSemana.setObjectName(u"MaxHuecosSemana")
-        MaxHuecosSemana.resize(624, 301)
+        MaxHuecosSemana.resize(624, 260)
         self.Title = QLabel(MaxHuecosSemana)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(0, 10, 611, 61))
@@ -43,16 +43,13 @@ class Ui_MaxHuecosSemana(object):
         self.huecosText.setGeometry(QRect(140, 180, 88, 23))
         self.save = QPushButton(MaxHuecosSemana)
         self.save.setObjectName(u"save")
-        self.save.setGeometry(QRect(10, 250, 75, 24))
+        self.save.setGeometry(QRect(10, 220, 75, 24))
         self.titulacion = QLabel(MaxHuecosSemana)
         self.titulacion.setObjectName(u"titulacion")
         self.titulacion.setGeometry(QRect(10, 80, 51, 16))
         self.titulacionText = QComboBox(MaxHuecosSemana)
         self.titulacionText.setObjectName(u"titulacionText")
         self.titulacionText.setGeometry(QRect(140, 80, 471, 22))
-        self.obligatoria = QRadioButton(MaxHuecosSemana)
-        self.obligatoria.setObjectName(u"obligatoria")
-        self.obligatoria.setGeometry(QRect(10, 210, 92, 20))
 
         self.retranslateUi(MaxHuecosSemana)
 
@@ -66,6 +63,5 @@ class Ui_MaxHuecosSemana(object):
         self.huecos.setText(QCoreApplication.translate("MaxHuecosSemana", u"Max. Huecos/Semana", None))
         self.save.setText(QCoreApplication.translate("MaxHuecosSemana", u"Guardar", None))
         self.titulacion.setText(QCoreApplication.translate("MaxHuecosSemana", u"Titulaci\u00f3n", None))
-        self.obligatoria.setText(QCoreApplication.translate("MaxHuecosSemana", u"Obligatoria", None))
     # retranslateUi
 

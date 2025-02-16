@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>236</width>
-    <height>254</height>
+    <height>278</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,31 +26,17 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QPushButton" name="turno">
-     <property name="text">
-      <string>Elegir turno</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QPushButton" name="separacion">
-     <property name="text">
-      <string>Separación entre clases</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QPushButton" name="tipoAula">
-     <property name="text">
-      <string>Tipo aula para clase</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <widget class="QPushButton" name="todas">
      <property name="text">
       <string>Todas las restricciones</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="turno">
+     <property name="text">
+      <string>Elegir turno</string>
      </property>
     </widget>
    </item>
@@ -65,6 +51,20 @@
     <widget class="QPushButton" name="huecosSemana">
      <property name="text">
       <string>Max. Huecos por semana</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QPushButton" name="separacion">
+     <property name="text">
+      <string>Separación entre clases</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QPushButton" name="tipoAula">
+     <property name="text">
+      <string>Tipo aula para clase</string>
      </property>
     </widget>
    </item>

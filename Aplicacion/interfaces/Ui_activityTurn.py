@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'activityTurnkkOYRF.ui'
+## Form generated from reading UI file 'activityTurnfPIepG.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -23,7 +23,7 @@ class Ui_res_turno(object):
     def setupUi(self, res_turno):
         if not res_turno.objectName():
             res_turno.setObjectName(u"res_turno")
-        res_turno.resize(469, 270)
+        res_turno.resize(469, 264)
         self.Title = QLabel(res_turno)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(10, 10, 661, 71))

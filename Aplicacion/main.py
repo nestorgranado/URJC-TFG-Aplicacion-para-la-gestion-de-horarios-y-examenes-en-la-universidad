@@ -1472,8 +1472,6 @@ class Res_MaxHorasDia(QWidget, Ui_MaxHorasDia):
             self.titulacionText.setCurrentText(restriccion.getDatos["Curso"].split('-')[0])
             self.grupoText.setCurrentText(restriccion.getDatos["Curso"])
             self.horasText.setValue(restriccion.getDatos["Horas"])
-            if restriccion.isObligatoria():
-                self.obligatoria.setChecked(True)
 
         # Guardar
         self.save.clicked.connect(self.guardar)
@@ -1493,7 +1491,7 @@ class Res_MaxHorasDia(QWidget, Ui_MaxHorasDia):
     def guardar(self):
         currentGrupo = self.grupoText.currentText()
         dato = {"Curso": currentGrupo, "Horas": self.horasText.value()}
-        nuevaRestriccion = Restriccion("MaxHorasPorDia", dato, self.obligatoria.isChecked(), True)
+        nuevaRestriccion = Restriccion("MaxHorasPorDia", dato, True, True)
 
         if self.restriccion != None:
             restriccionesTiempo[self.restIndex] = nuevaRestriccion
@@ -1510,6 +1508,7 @@ class Res_MaxHuecosSemana(QWidget, Ui_MaxHuecosSemana):
         self.tit = institucion.getTitulacion()
         self.cursos = list(alumnos)
         self.restIndex = restIndex
+        self.restriccion = restriccion
 
         self.titulacionText.addItem("Seleccione una opción...")
         self.grupoText.addItem("Seleccione una opción...")
@@ -1519,12 +1518,10 @@ class Res_MaxHuecosSemana(QWidget, Ui_MaxHuecosSemana):
 
         self.titulacionText.currentIndexChanged.connect(self.actualizarGrupos)
 
-        if restriccion != None:
-            self.titulacionText.setCurrentText(restriccion.getDatos["Curso"].split('-')[0])
-            self.grupoText.setCurrentText(restriccion.getDatos["Curso"])
-            self.horasText.setValue(restriccion.getDatos["Horas"])
-            if restriccion.isObligatoria():
-                self.obligatoria.setChecked(True)
+        if self.restriccion != None:
+            self.titulacionText.setCurrentText(self.restriccion.getDatos["Curso"].split('-')[0])
+            self.grupoText.setCurrentText(self.restriccion.getDatos["Curso"])
+            self.horasText.setValue(self.restriccion.getDatos["Horas"])
 
         # Guardar
         self.save.clicked.connect(self.guardar)
@@ -1544,12 +1541,14 @@ class Res_MaxHuecosSemana(QWidget, Ui_MaxHuecosSemana):
     def guardar(self):
         currentGrupo = self.grupoText.currentText()
         dato = {"Curso": currentGrupo, "Horas": self.huecosText.value()}
-        nuevaRestriccion = Restriccion("MaxHuecosPorSemana", dato, self.obligatoria.isChecked(), True)
+        nuevaRestriccion = Restriccion("MaxHuecosPorSemana", dato, True, True)
 
-        if restriccion != None:
+        if self.restriccion != None:
             restriccionesTiempo[self.restIndex] = nuevaRestriccion
         else:
             restriccionesTiempo.append(nuevaRestriccion)
+        
+        self.close()
 
 class RestriccionesClases(QWidget, Ui_RestriccionesCl):
     def __init__(self):
@@ -1559,7 +1558,7 @@ class RestriccionesClases(QWidget, Ui_RestriccionesCl):
         self.separacion.clicked.connect(self.mostrarSeparacionUI)
         self.turno.clicked.connect(self.mostrarTurnoUI)
         self.horasDia.clicked.connect(self.mostrarMaxHorasUI)
-        #self.huecosSemana.clicked.connect(self.mostrarMaxHuecosUI)
+        self.huecosSemana.clicked.connect(self.mostrarMaxHuecosUI)
         self.tipoAula.clicked.connect(self.mostrarTipoAulaUI)
         self.todas.clicked.connect(self.mostrarListaRestriccionesUI)
 
@@ -1575,10 +1574,10 @@ class RestriccionesClases(QWidget, Ui_RestriccionesCl):
         self.maxDiaUI = Res_MaxHorasDia(None, 0 , "")
         self.maxDiaUI.show()
 
-    """def mostrarMaxHuecosUI(self):
+    def mostrarMaxHuecosUI(self):
         self.maxHuecosUI = Res_MaxHuecosSemana(None, 0 , "")
         self.maxHuecosUI.show()
-    """
+        
     def mostrarTipoAulaUI(self):
         self.tipoAulaUI = Res_TipoAula(None, 0)
         self.tipoAulaUI.show()
