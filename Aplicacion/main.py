@@ -1248,6 +1248,8 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.restriccionesUI.show()
     
     def nuevoHorario(self):
+        global ruta_fet
+
         # Nombre y extensión predeterminada del archivo
         default_filename = "data.fet"
 
@@ -1261,9 +1263,6 @@ class ExamenesUI(QWidget, Ui_Examenes):
             
             # Guardar el archivo en la ruta seleccionada
             exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
-
-        # Ruta FET
-        ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
         
         # Obtener el directorio base del archivo .fet
         base_dir = os.path.dirname(file_path)
@@ -1855,7 +1854,7 @@ class ClasesUI(QWidget, Ui_Clases):
 
     def crearCurso(self):
         borrar_datos()
-        
+
         for tit in self.titulaciones:
             cursos_dict = {}
             alumnosTit = AlumnosTitulacion(tit.getNombre())
@@ -1889,6 +1888,8 @@ class ClasesUI(QWidget, Ui_Clases):
             exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
 
     def nuevoHorario(self):
+        global ruta_fet
+
         if self.semanal.isChecked():
             global diasSemana, horasDia
             diasSemana = Dias()
@@ -1907,9 +1908,6 @@ class ClasesUI(QWidget, Ui_Clases):
             
             # Guardar el archivo en la ruta seleccionada
             exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Clase")
-
-        # Ruta FET
-        ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
         
         # Obtener el directorio base del archivo .fet
         base_dir = os.path.dirname(file_path)
@@ -2040,6 +2038,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modificarAsignaturaUI.show()
 
 if __name__ == '__main__':
+    # Ruta FET
+    ruta_fet = "C:/Users/nesto/Desktop/TFG/FET/fet-6.18.1/fet-cl.exe"
+
+    # Datos Aplicación
     institucion = Universidad("URJC")   #ED Universidad
     alumnos = []                        # Titulaciones-Cursos-Asignaturas
     diasSemana = Dias()                 # Dias por semana que va ha tener el horario
