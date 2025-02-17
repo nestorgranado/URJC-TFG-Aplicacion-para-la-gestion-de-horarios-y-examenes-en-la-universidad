@@ -57,6 +57,14 @@ def quitar_acentos(texto):
     texto_sin_acentos = ''.join(char for char in texto_normalizado if unicodedata.category(char) != 'Mn')
     return texto_sin_acentos
 
+def borrar_datos():
+    alumnos.clear()
+    actividades.clear()
+    asignaturasElegidas.clear()            
+    actividadesPorCuros.clear()        
+    restriccionesTiempo.clear()
+    restriccionesLugar.clear()
+
 # Clase para mostrar una ventana emergente con un mensaje de error que se le pase al constructor
 class DialogoError(QDialog): 
     def __init__(self, mensaje):
@@ -1157,11 +1165,6 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.crearHorario.clicked.connect(self.nuevoHorario)
 
     def crearExamenes(self):
-        global actividadesPorCuros, restriccionesTiempo, actividades
-        actividadesPorCuros.clear()
-        restriccionesTiempo.clear()
-        actividades.clear()
-
         asignaturasUsadas = set()
         idActividad = 1
         cursos_dict = defaultdict(list)
@@ -1192,8 +1195,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
         actividadesPorCuros = cursos_dict
     
     def crearCurso(self):
-        global alumnos
-        alumnos.clear()
+        borrar_datos()
 
         for tit in self.titulaciones:
             cursos_dict = {}
@@ -1812,11 +1814,6 @@ class ClasesUI(QWidget, Ui_Clases):
         self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
 
     def crearClases(self):
-        global actividadesPorCuros, restriccionesTiempo, actividades
-        actividadesPorCuros.clear()
-        restriccionesTiempo.clear()
-        actividades.clear()
-
         asignaturasUsadas = set()
         idActividad = 1
         cursos_dict = defaultdict(list)
@@ -1857,9 +1854,8 @@ class ClasesUI(QWidget, Ui_Clases):
         restriccionesTiempo.append(separacionClases)
 
     def crearCurso(self):
-        global alumnos
-        alumnos.clear()
-
+        borrar_datos()
+        
         for tit in self.titulaciones:
             cursos_dict = {}
             alumnosTit = AlumnosTitulacion(tit.getNombre())

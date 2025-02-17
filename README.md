@@ -46,8 +46,3 @@ Si deseas contribuir, por favor sigue estos pasos:
 3. Realiza tus cambios y haz commit (`git commit -m "Descripción de los cambios"`).
 4. Sube los cambios a tu fork (`git push origin nueva-funcionalidad`).
 5. Crea un Pull Request.
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT. Para más información, consulta el archivo `LICENSE`.
-
