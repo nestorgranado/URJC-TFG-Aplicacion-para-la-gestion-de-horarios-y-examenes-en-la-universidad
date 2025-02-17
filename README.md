@@ -36,13 +36,3 @@ sudo pip install pyside6
    ```sh
    python main.py
    ```
-
-## Contribución
-
-Si deseas contribuir, por favor sigue estos pasos:
-
-1. Haz un fork del repositorio.
-2. Crea una rama con tu nueva funcionalidad (`git checkout -b nueva-funcionalidad`).
-3. Realiza tus cambios y haz commit (`git commit -m "Descripción de los cambios"`).
-4. Sube los cambios a tu fork (`git push origin nueva-funcionalidad`).
-5. Crea un Pull Request.
