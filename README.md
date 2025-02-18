@@ -22,6 +22,18 @@ Si usas Linux o macOS, podrías necesitar permisos de administrador:
 sudo pip install pyside6
 ```
 
+Instalar Pandas:
+
+```sh
+pip install pandas
+```
+
+Si usas Linux o macOS y necesitas permisos de administrador:
+
+```sh
+sudo pip install pandas
+```
+
 ## Uso
 
 1. Clonar el repositorio:
@@ -35,4 +47,4 @@ sudo pip install pyside6
 3. Ejecutar la aplicación:
    ```sh
    python main.py
-   ```
+   
