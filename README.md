@@ -6,9 +6,11 @@
 
 Esta aplicación permite gestionar de manera eficiente los horarios de clases y exámenes en una universidad, facilitando la organización y planificación tanto para alumnos como para docentes.
 
-## Instalación
+## Python
 
 **Versión de Python:** 3.12.6
+
+### Librerias
 
 Instalar Pyside6:
 
@@ -34,6 +36,18 @@ Si usas Linux o macOS y necesitas permisos de administrador:
 sudo pip install pandas
 ```
 
+Instalar lxml:
+
+```sh
+pip install lxml
+```
+
+Si usas Linux o macOS y necesitas permisos de administrador:
+
+```sh
+sudo pip install lxml
+```
+
 ## Uso
 
 1. Clonar el repositorio:
@@ -47,4 +61,4 @@ sudo pip install pandas
 3. Ejecutar la aplicación:
    ```sh
    python main.py
-   
+   ```
