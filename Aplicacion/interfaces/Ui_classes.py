@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'classesJAgSLi.ui'
+## Form generated from reading UI file 'classesZPkTRX.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -23,7 +23,7 @@ class Ui_Clases(object):
     def setupUi(self, Clases):
         if not Clases.objectName():
             Clases.setObjectName(u"Clases")
-        Clases.resize(349, 432)
+        Clases.resize(349, 437)
         self.Title = QLabel(Clases)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(50, 10, 181, 50))
@@ -32,10 +32,10 @@ class Ui_Clases(object):
         self.Title.setFont(font)
         self.Datos = QGroupBox(Clases)
         self.Datos.setObjectName(u"Datos")
-        self.Datos.setGeometry(QRect(80, 70, 191, 261))
+        self.Datos.setGeometry(QRect(80, 70, 191, 281))
         self.layoutWidget = QWidget(self.Datos)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(10, 20, 161, 221))
+        self.layoutWidget.setGeometry(QRect(10, 20, 161, 241))
         self.verticalLayout_2 = QVBoxLayout(self.layoutWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -82,9 +82,14 @@ class Ui_Clases(object):
 
         self.verticalLayout_2.addWidget(self.exportar)
 
+        self.fet = QPushButton(self.layoutWidget)
+        self.fet.setObjectName(u"fet")
+
+        self.verticalLayout_2.addWidget(self.fet)
+
         self.layoutWidget2 = QWidget(Clases)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.layoutWidget2.setGeometry(QRect(20, 350, 301, 26))
+        self.layoutWidget2.setGeometry(QRect(20, 370, 301, 26))
         self.horizontalLayout_3 = QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -114,6 +119,7 @@ class Ui_Clases(object):
         self.otros.setText(QCoreApplication.translate("Clases", u"Otros", None))
         self.aulasCombinadas.setText(QCoreApplication.translate("Clases", u"Aulas Combinadas", None))
         self.exportar.setText(QCoreApplication.translate("Clases", u"Exportar Datos", None))
+        self.fet.setText(QCoreApplication.translate("Clases", u"Conectar FET", None))
         self.restricciones.setText(QCoreApplication.translate("Clases", u"Ver Restricciones", None))
         self.crearHorario.setText(QCoreApplication.translate("Clases", u"Crear Horario", None))
     # retranslateUi

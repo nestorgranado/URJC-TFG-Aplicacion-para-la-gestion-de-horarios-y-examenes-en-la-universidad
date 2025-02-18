@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>349</width>
-    <height>432</height>
+    <height>437</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
      <x>80</x>
      <y>70</y>
      <width>191</width>
-     <height>261</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="title">
@@ -49,7 +49,7 @@
       <x>10</x>
       <y>20</y>
       <width>161</width>
-      <height>221</height>
+      <height>241</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -117,6 +117,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="fet">
+       <property name="text">
+        <string>Conectar FET</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -124,7 +131,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>350</y>
+     <y>370</y>
      <width>301</width>
      <height>26</height>
     </rect>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowUDojne.ui'
+## Form generated from reading UI file 'MainWindoweTRmRf.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -78,6 +78,9 @@ class Ui_MainWindow(object):
         self.crearHorario = QPushButton(self.centralwidget)
         self.crearHorario.setObjectName(u"crearHorario")
         self.crearHorario.setGeometry(QRect(190, 280, 121, 24))
+        self.fet = QPushButton(self.centralwidget)
+        self.fet.setObjectName(u"fet")
+        self.fet.setGeometry(QRect(340, 280, 91, 24))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -98,5 +101,6 @@ class Ui_MainWindow(object):
         self.titulacion.setText(QCoreApplication.translate("MainWindow", u"Titulacion", None))
         self.asignatura.setText(QCoreApplication.translate("MainWindow", u"Asignatura", None))
         self.crearHorario.setText(QCoreApplication.translate("MainWindow", u"Crear Horario", None))
+        self.fet.setText(QCoreApplication.translate("MainWindow", u"Conectar FET", None))
     # retranslateUi
 

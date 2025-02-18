@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'examsyTBMpT.ui'
+## Form generated from reading UI file 'examsCJPmZy.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -23,7 +23,7 @@ class Ui_Examenes(object):
     def setupUi(self, Examenes):
         if not Examenes.objectName():
             Examenes.setObjectName(u"Examenes")
-        Examenes.resize(391, 455)
+        Examenes.resize(391, 458)
         self.Title = QLabel(Examenes)
         self.Title.setObjectName(u"Title")
         self.Title.setGeometry(QRect(50, 10, 181, 50))
@@ -32,10 +32,10 @@ class Ui_Examenes(object):
         self.Title.setFont(font)
         self.Datos = QGroupBox(Examenes)
         self.Datos.setObjectName(u"Datos")
-        self.Datos.setGeometry(QRect(90, 80, 221, 281))
+        self.Datos.setGeometry(QRect(90, 80, 221, 321))
         self.layoutWidget = QWidget(self.Datos)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(11, 30, 201, 241))
+        self.layoutWidget.setGeometry(QRect(11, 30, 201, 271))
         self.verticalLayout_2 = QVBoxLayout(self.layoutWidget)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -79,9 +79,14 @@ class Ui_Examenes(object):
 
         self.verticalLayout_2.addWidget(self.exportar)
 
+        self.fet = QPushButton(self.layoutWidget)
+        self.fet.setObjectName(u"fet")
+
+        self.verticalLayout_2.addWidget(self.fet)
+
         self.layoutWidget1 = QWidget(Examenes)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(50, 380, 301, 26))
+        self.layoutWidget1.setGeometry(QRect(50, 410, 301, 26))
         self.horizontalLayout_3 = QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -110,6 +115,7 @@ class Ui_Examenes(object):
         self.dias.setText(QCoreApplication.translate("Examenes", u"D\u00edas", None))
         self.aulasCombinadas.setText(QCoreApplication.translate("Examenes", u"Aulas Combinadas", None))
         self.exportar.setText(QCoreApplication.translate("Examenes", u"Exportar Datos", None))
+        self.fet.setText(QCoreApplication.translate("Examenes", u"Conectar FET", None))
         self.restricciones.setText(QCoreApplication.translate("Examenes", u"Ver Restricciones", None))
         self.crearHorario.setText(QCoreApplication.translate("Examenes", u"Crear Horario", None))
     # retranslateUi
