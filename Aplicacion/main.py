@@ -463,26 +463,56 @@ class ModificarAula(QWidget, Ui_ModificarAula):
         self.capExamenText.setValue(self.aulas[self.aula_index].getCapacidadExamen())
         self.tipoText.setText(self.aulas[self.aula_index].getTipo())
 
+    def calcularIndice(self, lista):
+        aula = self.aulas[self.aula_index]
+        indice = 0
+        salir = False
+        while indice < len(lista) and not salir:
+            if lista[indice].getNumero() == aula.getNumero():
+                salir = True
+            indice+=1
+        return indice
+    
     def modificar_elemento(self):
         if self.aula_index is not None:  # Verificar si hay un elemento seleccionado
+            aula = self.aulas[self.aula_index]
+            tipo = aula.getTipo()
+
             # Obtener el nuevo texto del QLineEdit
             nuevo_numero = self.numeroText.text()
             nuevo_capClase = self.capClaseText.value()
             nuevo_capExamen = self.capExamenText.value()
-            nuevo_tipo = self.tipoText.text()
+            nuevo_tipo = self.tipoText.text().upper()
             
             # Actualizar el elemento en la lista de titulaciones
-            self.aulas[self.aulas].setNumero(nuevo_numero)
-            self.aulas[self.aulas].setCapacidadClase(nuevo_capClase)
-            self.aulas[self.aulas].setCapacidadExamen(nuevo_capExamen)
-            self.aulas[self.aulas].setTipo(nuevo_tipo)
+            nueva_aula = Aula(nuevo_numero, self.edificios[self.edificio_index].getNombre(), nuevo_capClase, nuevo_capExamen, nuevo_tipo) 
+
+            if tipo != nuevo_tipo:
+                global aulasPorTipo
+                indiceAulaTipo = self.calcularIndice(aulasPorTipo["TODAS"])
+                aulasPorTipo["TODAS"][indiceAulaTipo] = nueva_aula
+                indiceAulaTipo = self.calcularIndice(aulasPorTipo[tipo])
+                del aulasPorTipo[tipo][indiceAulaTipo]
+
+                match nuevo_tipo:
+                    case "AULA":
+                        aulasPorTipo["AULA"].append(nueva_aula)
+                    case "AULA MAGNA":
+                        aulasPorTipo["AULA"].append(nueva_aula)
+                        aulasPorTipo["AULA MAGNA"].append(nueva_aula)
+                    case "SEMINARIO":
+                        aulasPorTipo["SEMINARIO"].append(nueva_aula)
+                    case "LABORATORIO":
+                        aulasPorTipo["LABORATORIO"].append(nueva_aula)
          
             # Actualizar el elemento visualmente en el QListWidget
             self.list.item(self.aula_index).setText(nuevo_numero)
 
             # Actualizar datos
+            self.aulas[self.aula_index] = nueva_aula
             self.edificios[self.edificio_index].setAulas(self.aulas)
             self.campuses[self.campus_index].setEdificios(self.edificios)
+            institucion.setCampus(self.campuses)
     
     def agregar_elemento(self):
         # Obtener el nuevo texto del QLineEdit
@@ -494,12 +524,27 @@ class ModificarAula(QWidget, Ui_ModificarAula):
         # Agregar el nuevo texto a la lista de Campus
         nueva_aula = Aula(nuevo_numero, self.edificios[self.edificio_index].getNombre(), nuevo_capClase, nuevo_capExamen, nuevo_tipo)
         self.edificios[self.edificio_index].agregar_aula(nueva_aula)
+
+        global aulasPorCampus, aulasPorTipo
+        aulasPorCampus[quitar_acentos(self.campuses[self.campus_index].getNombre())].append(nueva_aula)
+        aulasPorTipo["TODAS"].append(nueva_aula)
+        match nuevo_tipo:
+            case "AULA":
+                aulasPorTipo["AULA"].append(nueva_aula)
+            case "AULA MAGNA":
+                aulasPorTipo["AULA"].append(nueva_aula)
+                aulasPorTipo["AULA MAGNA"].append(nueva_aula)
+            case "SEMINARIO":
+                aulasPorTipo["SEMINARIO"].append(nueva_aula)
+            case "LABORATORIO":
+                aulasPorTipo["LABORATORIO"].append(nueva_aula) 
         
         # Agregar el nuevo texto como un nuevo item en el QListWidget
         self.list.addItem(nuevo_numero)
 
         # Actualizar datos
         self.campuses[self.campus_index].setEdificios(self.edificios)
+        institucion.setCampus(self.campuses)
 
     def borrar_elemento(self):
         if self.aula_index is not None:  # Verificar si hay un elemento seleccionado
