@@ -1190,9 +1190,6 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
             
             # Actualizar el elemento
             self.actividades[self.index].setDuracion(nuevo_duracion)
-         
-            # Actualizar el elemento visualmente en el QListWidget
-            self.actividadesList.item(self.index).setText(nuevo_asignatura)
 
     def borrar_elemento(self):
         if self.index is not None:  # Verificar si hay un elemento seleccionado
@@ -1385,10 +1382,6 @@ class ExamenesUI(QWidget, Ui_Examenes):
             
             # Guardar el archivo en la ruta seleccionada
             exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
-    
-    def mostrarNuevoExamenUI(self):
-        self.nuevoExamenUI = NuevoExamen()
-        self.nuevoExamenUI.show()
 
     def mostrarModificarExamenUI(self):
         self.modificarExamenUI = ModificarExamen()
