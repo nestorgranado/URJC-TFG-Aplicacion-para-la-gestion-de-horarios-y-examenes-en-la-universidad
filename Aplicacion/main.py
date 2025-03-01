@@ -183,12 +183,12 @@ class ModificarName(QWidget, Ui_ModificarName):
         for campus in self.nameList:
             self.list.addItem(campus.getNombre())
 
-        self.save.clicked.connect(self.guardarCampus) # guardar
-
         self.list.itemClicked.connect(self.updateLineEditText) # Actualizar el lineEdit con el nombre del elemento selecionado del QListWidget
         self.modify.clicked.connect(self.modificar_elemento) # Modificar valor del elemento seleccionado de la QListWidget
         self.add.clicked.connect(self.agregar_elemento) # Crear un nuevo elemento
         self.sup.clicked.connect(self.borrar_elemento) # Borrar elemento seleccionado
+
+        self.save.clicked.connect(self.guardarCampus) # guardar
         
         self.selected_index = None  # Variable para guardar el índice del elemento seleccionado
 
@@ -231,7 +231,7 @@ class ModificarName(QWidget, Ui_ModificarName):
             self.selected_index = None
 
     def guardarCampus(self):
-        institucion.sumar_campus(self.nameList)
+        institucion.setCampus(self.nameList)
         self.close()
 
 # Clase para Modificar Datos de los Edififcios
