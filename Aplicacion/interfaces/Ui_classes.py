@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'classesZPkTRX.ui'
+## Form generated from reading UI file 'classesKAVKid.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -82,11 +82,6 @@ class Ui_Clases(object):
 
         self.verticalLayout_2.addWidget(self.exportar)
 
-        self.fet = QPushButton(self.layoutWidget)
-        self.fet.setObjectName(u"fet")
-
-        self.verticalLayout_2.addWidget(self.fet)
-
         self.layoutWidget2 = QWidget(Clases)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
         self.layoutWidget2.setGeometry(QRect(20, 370, 301, 26))
@@ -119,7 +114,6 @@ class Ui_Clases(object):
         self.otros.setText(QCoreApplication.translate("Clases", u"Otros", None))
         self.aulasCombinadas.setText(QCoreApplication.translate("Clases", u"Aulas Combinadas", None))
         self.exportar.setText(QCoreApplication.translate("Clases", u"Exportar Datos", None))
-        self.fet.setText(QCoreApplication.translate("Clases", u"Conectar FET", None))
         self.restricciones.setText(QCoreApplication.translate("Clases", u"Ver Restricciones", None))
         self.crearHorario.setText(QCoreApplication.translate("Clases", u"Crear Horario", None))
     # retranslateUi

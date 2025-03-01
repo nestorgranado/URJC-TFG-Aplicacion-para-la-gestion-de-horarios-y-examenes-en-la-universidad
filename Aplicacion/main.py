@@ -79,6 +79,7 @@ class DialogoError(QDialog):
         self.setLayout(layout)
 
         layout.addWidget(QLabel(mensaje))
+        self.adjustSize()
 
 # Interfaz para importar datos al sistema
 class ImportarUI(QWidget, Ui_importar):
@@ -125,9 +126,12 @@ class ImportarUI(QWidget, Ui_importar):
 
 # Conexion con fet-cl.exe
 class FETConnectUI(QWidget, Ui_conexionFET):
-    def __init__(self):
+    def __init__(self, mensaje):
         super().__init__()
         self.setupUi(self)
+
+        self.label.setText(mensaje)
+        self.adjustSize()
 
         if ruta_fet:
             self.rutaText.setText(ruta_fet)
@@ -662,7 +666,7 @@ class AulaCombinadaUI(QWidget, Ui_CrearAulaCombinada):
                 self.close()
         else:
             self.error = DialogoError("No hay combinaciones de aulas que satisfagan esta restricción")
-            self.error.show()
+            self.error.exec()
 
 # Clase para Modificar Datos de las Asignaturas
 class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
@@ -1235,7 +1239,6 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.aulasCombinadas.clicked.connect(self.mostrarAulaCombinadaUI)
 
         self.exportar.clicked.connect(self.exportarDatos)
-        self.fet.clicked.connect(self.mostrarFETConnectUI)
 
         self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
         self.crearHorario.clicked.connect(self.nuevoHorario)
@@ -1326,47 +1329,61 @@ class ExamenesUI(QWidget, Ui_Examenes):
     def nuevoHorario(self):
         global ruta_fet
 
-        if not ruta_fet.endswith("fet-cl.exe"):
-            dialogoError = DialogoError("No se ha especificado la ruta de FET correctamente")
-            dialogoError.exec()
-        else:
-            # Nombre y extensión predeterminada del archivo
-            default_filename = "data.fet"
+        ruta_carpeta = os.path.dirname(ruta_fet)
 
-            #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
-            file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo FET", default_filename, "Archivos FET (*.fet)")
+        if os.path.isdir(ruta_carpeta):
+            if os.path.isfile(ruta_fet):
+                # Nombre y extensión predeterminada del archivo
+                default_filename = "data.fet"
 
-            if file_path:
-                # Asegurarse de que la extensión sea .fet (si el usuario la cambia accidentalmente)
-                if not file_path.endswith(".fet"):
-                    file_path += ".fet"
-                
-                # Guardar el archivo en la ruta seleccionada
-                exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
-            
-            # Obtener el directorio base del archivo .fet
-            base_dir = os.path.dirname(file_path)
+                #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
+                file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo FET", default_filename, "Archivos FET (*.fet)")
 
-            # Crear el directorio "Resultado" en el mismo directorio que el archivo .fet
-            resultado_dir = os.path.join(base_dir, "Resultado")
-            os.makedirs(resultado_dir, exist_ok=True)
-
-            # Verificar si el archivo existe
-            if os.path.isfile(file_path):
-                try:
-                    # Construir el comando para ejecutar FET
-                    command = [ruta_fet, f"--inputfile={file_path}", f"--outputdir={resultado_dir}"]
-                    print("Ejecutando comando:", " ".join(command))  # Para depuración
+                if file_path:
+                    # Asegurarse de que la extensión sea .fet (si el usuario la cambia accidentalmente)
+                    if not file_path.endswith(".fet"):
+                        file_path += ".fet"
                     
-                    # Ejecutar FET con el archivo .fet
-                    subprocess.run(command, check=True)
-                    print(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
-                except subprocess.CalledProcessError as e:
-                    print(f"Hubo un error al ejecutar FET: {e}")
-                except Exception as e:
-                    print(f"Otro error ocurrió: {e}")
+                    # Guardar el archivo en la ruta seleccionada
+                    exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
+                
+                # Obtener el directorio base del archivo .fet
+                base_dir = os.path.dirname(file_path)
+
+                # Crear el directorio "Resultado" en el mismo directorio que el archivo .fet
+                resultado_dir = os.path.join(base_dir, "Resultado")
+                os.makedirs(resultado_dir, exist_ok=True)
+
+                # Verificar si el archivo existe
+                if os.path.isfile(file_path):
+                    try:
+                        # Construir el comando para ejecutar FET
+                        command = [ruta_fet, f"--inputfile={file_path}", f"--outputdir={resultado_dir}"]
+                        print("Ejecutando comando:", " ".join(command))  # Para depuración
+                        
+                        # Ejecutar FET con el archivo .fet
+                        subprocess.run(command, check=True)
+                        print(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
+                        dialogoError = DialogoError(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
+                        dialogoError.exec()
+                    except subprocess.CalledProcessError as e:
+                        print(f"Hubo un error al ejecutar FET: {e}")
+                        dialogoError = DialogoError(f"Error: Hubo un error al ejecutar FET: {e}")
+                        dialogoError.exec()
+                    except Exception as e:
+                        print(f"Otro error ocurrió: {e}")
+                        dialogoError = DialogoError(f"Error: Otro error ocurrió: {e}")
+                        dialogoError.exec()
+                else:
+                    print(f"El archivo {file_path} no existe.")
+                    dialogoError = DialogoError(f"Error: El archivo {file_path} no existe.")
+                    dialogoError.exec()
             else:
-                print(f"El archivo {file_path} no existe.")
+                self.fetConnect = FETConnectUI(f"Error: No se encontró {ruta_ejecutable}. Indique la ruta de fet-cl.exe:")
+                self.fetConnect.show()
+        else:
+            self.fetConnect = FETConnectUI(f"Error: La carpeta {ruta_carpeta} no existe. Indique la ruta de fet-cl.exe:")
+            self.fetConnect.show()
 
     def exportarDatos(self):
         # Nombre y extensión predeterminada del archivo
@@ -1390,10 +1407,6 @@ class ExamenesUI(QWidget, Ui_Examenes):
     def mostrarAulaCombinadaUI(self):
         self.aulaCombinadaUI = AulaCombinadaUI("Examen")
         self.aulaCombinadaUI.show()
-
-    def mostrarFETConnectUI(self):
-        self.fetConnect = FETConnectUI()
-        self.fetConnect.show()
 
 # Restricciones Clases
 class ListaRestricionesCl(QWidget, Ui_ListaRestriccionesCl):
@@ -1889,7 +1902,6 @@ class ClasesUI(QWidget, Ui_Clases):
         self.otros.clicked.connect(self.mostrarOtrosHorariosUI)
         self.aulasCombinadas.clicked.connect(self.mostrarAulaCombinadaUI)
         self.exportar.clicked.connect(self.exportarDatos)
-        self.fet.clicked.connect(self.mostrarFETConnectUI)
         self.crearHorario.clicked.connect(self.nuevoHorario)
         self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
 
@@ -1968,54 +1980,67 @@ class ClasesUI(QWidget, Ui_Clases):
             exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
 
     def nuevoHorario(self):
-        global ruta_fet
-
-        if not ruta_fet.endswith("fet-cl.exe"):
-            dialogoError = DialogoError("No se ha especificado la ruta de FET correctamente")
-            dialogoError.exec()
-        else:
-            if self.semanal.isChecked():
+        if self.semanal.isChecked():
                 global diasSemana, horasDia
                 diasSemana = Dias()
                 horasDia = Horas()
 
-            # Nombre y extensión predeterminada del archivo
-            default_filename = "data.fet"
+        global ruta_fet
+        ruta_carpeta = os.path.dirname(ruta_fet)
 
-            #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
-            file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo FET", default_filename, "Archivos FET (*.fet)")
+        if os.path.isdir(ruta_carpeta):
+            if os.path.isfile(ruta_fet):
+                # Nombre y extensión predeterminada del archivo
+                default_filename = "data.fet"
 
-            if file_path:
-                # Asegurarse de que la extensión sea .fet (si el usuario la cambia accidentalmente)
-                if not file_path.endswith(".fet"):
-                    file_path += ".fet"
-                
-                # Guardar el archivo en la ruta seleccionada
-                exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Clase")
-            
-            # Obtener el directorio base del archivo .fet
-            base_dir = os.path.dirname(file_path)
+                #  Abrir un diálogo para seleccionar la ubicación y nombre del archivo a guardar
+                file_path, _ = QFileDialog.getSaveFileName(self, "Guardar archivo FET", default_filename, "Archivos FET (*.fet)")
 
-            # Crear el directorio "Resultado" en el mismo directorio que el archivo .fet
-            resultado_dir = os.path.join(base_dir, "Resultado")
-            os.makedirs(resultado_dir, exist_ok=True)
-
-            # Verificar si el archivo existe
-            if os.path.isfile(file_path):
-                try:
-                    # Construir el comando para ejecutar FET
-                    command = [ruta_fet, f"--inputfile={file_path}", f"--outputdir={resultado_dir}"]
-                    print("Ejecutando comando:", " ".join(command))  # Para depuración
+                if file_path:
+                    # Asegurarse de que la extensión sea .fet (si el usuario la cambia accidentalmente)
+                    if not file_path.endswith(".fet"):
+                        file_path += ".fet"
                     
-                    # Ejecutar FET con el archivo .fet
-                    subprocess.run(command, check=True)
-                    print(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
-                except subprocess.CalledProcessError as e:
-                    print(f"Hubo un error al ejecutar FET: {e}")
-                except Exception as e:
-                    print(f"Otro error ocurrió: {e}")
+                    # Guardar el archivo en la ruta seleccionada
+                    exportarFET(file_path, institucion, diasSemana, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Clase")
+                
+                # Obtener el directorio base del archivo .fet
+                base_dir = os.path.dirname(file_path)
+
+                # Crear el directorio "Resultado" en el mismo directorio que el archivo .fet
+                resultado_dir = os.path.join(base_dir, "Resultado")
+                os.makedirs(resultado_dir, exist_ok=True)
+
+                # Verificar si el archivo existe
+                if os.path.isfile(file_path):
+                    try:
+                        # Construir el comando para ejecutar FET
+                        command = [ruta_fet, f"--inputfile={file_path}", f"--outputdir={resultado_dir}"]
+                        print("Ejecutando comando:", " ".join(command))  # Para depuración
+                        
+                        # Ejecutar FET con el archivo .fet
+                        subprocess.run(command, check=True)
+                        print(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
+                        dialogoError = DialogoError(f"FET se ejecutó correctamente. Los resultados están en: {resultado_dir}")
+                        dialogoError.exec()
+                    except subprocess.CalledProcessError as e:
+                        print(f"Hubo un error al ejecutar FET: {e}")
+                        dialogoError = DialogoError(f"Error: Hubo un error al ejecutar FET: {e}")
+                        dialogoError.exec()
+                    except Exception as e:
+                        print(f"Otro error ocurrió: {e}")
+                        dialogoError = DialogoError(f"Error: Otro error ocurrió: {e}")
+                        dialogoError.exec()
+                else:
+                    print(f"El archivo {file_path} no existe.")
+                    dialogoError = DialogoError(f"Error: El archivo {file_path} no existe.")
+                    dialogoError.exec()
             else:
-                print(f"El archivo {file_path} no existe.")
+                self.fetConnect = FETConnectUI(f"Error: No se encontró {ruta_ejecutable}. Indique la ruta de fet-cl.exe:")
+                self.fetConnect.show()
+        else:
+            self.fetConnect = FETConnectUI(f"Error: La carpeta {ruta_carpeta} no existe. Indique la ruta de fet-cl.exe:")
+            self.fetConnect.show()
 
     def mostrarAulaCombinadaUI(self):
         self.aulaCombinadaUI = AulaCombinadaUI("Clase")
@@ -2033,10 +2058,6 @@ class ClasesUI(QWidget, Ui_Clases):
     def mostrarModificarClasesUI(self):
         self.modificarClaseUI = ModificarClase()
         self.modificarClaseUI.show()
-    
-    def mostrarFETConnectUI(self):
-        self.fetConnect = FETConnectUI()
-        self.fetConnect.show()
 
 # Horarios
 class HorariosUI(QWidget, Ui_crearHorario):
@@ -2077,7 +2098,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         # Crear Horario
         self.crearHorario.clicked.connect(self.mostrarCrearHorarioUI)
-        self.fet.clicked.connect(self.mostrarFETConnectUI)
 
     def mostrarCrearHorarioUI(self):
         self.horariosUI = HorariosUI()
@@ -2126,13 +2146,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modificarAsignaturaUI = ModificarAsignatura()
         self.modificarAsignaturaUI.show()
 
-    def mostrarFETConnectUI(self):
-        self.fetConnect = FETConnectUI()
-        self.fetConnect.show()
-
 if __name__ == '__main__':
     # Ruta FET
-    ruta_fet = ""
+    ruta_fet = "./fet-6.18.1/fet-cl.exe"
 
     # Datos Aplicación
     institucion = Universidad("URJC")   #ED Universidad

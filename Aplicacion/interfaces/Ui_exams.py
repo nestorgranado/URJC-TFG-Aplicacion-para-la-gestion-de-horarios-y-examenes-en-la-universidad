@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'examsCJPmZy.ui'
+## Form generated from reading UI file 'examsGTdYKZ.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -79,11 +79,6 @@ class Ui_Examenes(object):
 
         self.verticalLayout_2.addWidget(self.exportar)
 
-        self.fet = QPushButton(self.layoutWidget)
-        self.fet.setObjectName(u"fet")
-
-        self.verticalLayout_2.addWidget(self.fet)
-
         self.layoutWidget1 = QWidget(Examenes)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
         self.layoutWidget1.setGeometry(QRect(50, 410, 301, 26))
@@ -115,7 +110,6 @@ class Ui_Examenes(object):
         self.dias.setText(QCoreApplication.translate("Examenes", u"D\u00edas", None))
         self.aulasCombinadas.setText(QCoreApplication.translate("Examenes", u"Aulas Combinadas", None))
         self.exportar.setText(QCoreApplication.translate("Examenes", u"Exportar Datos", None))
-        self.fet.setText(QCoreApplication.translate("Examenes", u"Conectar FET", None))
         self.restricciones.setText(QCoreApplication.translate("Examenes", u"Ver Restricciones", None))
         self.crearHorario.setText(QCoreApplication.translate("Examenes", u"Crear Horario", None))
     # retranslateUi

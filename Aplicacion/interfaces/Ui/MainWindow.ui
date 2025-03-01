@@ -113,19 +113,6 @@
      <string>Crear Horario</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="fet">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>280</y>
-      <width>91</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Conectar FET</string>
-    </property>
-   </widget>
   </widget>
  </widget>
  <resources/>
