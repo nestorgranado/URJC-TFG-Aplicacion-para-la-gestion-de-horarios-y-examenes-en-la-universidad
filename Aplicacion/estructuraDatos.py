@@ -460,3 +460,6 @@ class Restriccion:
     
     def desactivar(self):
         self.activo = False
+    
+    def getActividad(self):
+        return self.activo

@@ -1398,7 +1398,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar)
 
     def mostrarModificarExamenUI(self):
         self.modificarExamenUI = ModificarExamen()
@@ -1977,7 +1977,7 @@ class ClasesUI(QWidget, Ui_Clases):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar)
 
     def nuevoHorario(self):
         if self.semanal.isChecked():
@@ -2116,7 +2116,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemana, horasDia, actividades)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar)
 
     def mostrarImportUI(self):
         self.importUI = ImportarUI()

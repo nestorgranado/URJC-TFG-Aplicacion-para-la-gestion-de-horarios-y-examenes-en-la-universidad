@@ -6,7 +6,7 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import platform
 
-# Exportar las Escuelas
+# Exportar las Titulaciones
 def exportarTitulaciones(root, universidad):
     # Por cada escuela crear un elemnto "Escuela" y un atributo "Nombre" y recorrer la lista de Titulcaiones
     titulacionesListXML = ET.SubElement(root, "ListaTitulaciones")
@@ -56,12 +56,19 @@ def exportarCampus(root, universidad):
                             ET.SubElement(aulasCombinadasXML, "CapacidadExamen").text = str(aulaCombinada.getCapacidadExamen())
                             ET.SubElement(aulasCombinadasXML, "Tipo").text = aulaCombinada.getTipo()
 
+# Exportar las Instituciones(Campus y Titulaciones)
+def exportarInstitucion(root, universidad):
+    # Nombre de la institucion
+    ET.SubElement(root, "Nombre").text = universidad.getNombre()
+
+    # Exportar Campus y Titulaciones
+    exportarCampus(root, universidad)
+    exportarTitulaciones(root, universidad)
+
 # Exportar Cursos
 def exportarCursos(root, alumnos):
-    # Crea un elemenro "Curso" y un atributo "Nombre" y "Número Alumnos" y se recorre los grupos
-    cursoXML = ET.SubElement(root, "Alumnos")
     for alumnosTit in alumnos:
-        alumnosTitXML = ET.SubElement(cursoXML, "AlumnosTitulacion")
+        alumnosTitXML = ET.SubElement(root, "AlumnosTitulacion")
         ET.SubElement(alumnosTitXML, "Nombre").text = alumnosTit.getNombre()
         ET.SubElement(alumnosTitXML, "NúmeroAlumnos").text = str(alumnosTit.getNumAlumnos())
         for alumnosCurso in alumnosTit.getCursos():
@@ -75,57 +82,180 @@ def exportarCursos(root, alumnos):
 
 # Exportar Días por Semana
 def exportarDias(root, diasSemana):
-    # exportar datos del los dias
-    dias = ET.SubElement(root, "DiasPorSemana")
-    ET.SubElement(dias, "NuemroDias").text = str(diasSemana.getNumDias())
+    ET.SubElement(root, "NuemroDias").text = str(diasSemana.getNumDias())
 
     for dia in diasSemana.getDias():
-        diaXML = ET.SubElement(dias, "Dia")
+        diaXML = ET.SubElement(root, "Dia")
         ET.SubElement(diaXML, "Nombre").text = dia
 
 # Exportar Horas por Día
 def exportarHoras(root, horasDia):
-    # exportar datos del las horas
-    horas = ET.SubElement(root, "HorasporDia")
-    ET.SubElement(horas, "NuemroHoras").text = str(horasDia.getNumHoras())
+    ET.SubElement(root, "NuemroHoras").text = str(horasDia.getNumHoras())
 
     for hora in horasDia.getHoras():
-        horaXML = ET.SubElement(horas, "Hora")
+        horaXML = ET.SubElement(root, "Hora")
         ET.SubElement(horaXML, "Nombre").text = hora
 
-    return horas
+# Exportar Asignaturas
+def exportarAsignaturas(root, asignaturas):
+    for asignatura in asignaturas:
+        asignaturaXML = ET.SubElement(root, "Asignatura")
+        ET.SubElement(asignaturaXML, "Codigo").text = str(asignatura.getCodigo())
+        ET.SubElement(asignaturaXML, "Nombre").text = asignatura.getNombre()
+        ET.SubElement(asignaturaXML, "Titulacion").text = asignatura.getTitulacion()
+        ET.SubElement(asignaturaXML, "NumAlumnos").text = str(asignatura.getNumAlumnos())
+        ET.SubElement(asignaturaXML, "Curso").text = str(asignatura.getCurso())
+        if asignatura.getAsignaturas_hijas():
+            hijasXML = ET.SubElement(asignaturaXML, "AsignaturasHijas")
+            for hija in asignatura.getAsignaturas_hijas():
+                hijaXML = ET.SubElement(hijasXML, "AsignaturaHija")
+                ET.SubElement(hijaXML, "PlanHija").text = hija[0]
+                ET.SubElement(hijaXML, "Asignatura").text = hija[1]
 
 # Exportar Actividades
 def exportarActividades(root, actividades):
-    actividad = ET.SubElement(root, "Actividades")
     for act in actividades:
-        activiadXML = ET.SubElement(actividad, "Actividad")
+        activiadXML = ET.SubElement(root, "Actividad")
+        ET.SubElement(activiadXML, "Id").text = str(act.getIdActividad())
+        ET.SubElement(activiadXML, "IdGrupo").text = str(act.getIdGrupo())
         ET.SubElement(activiadXML, "Asignatura").text = act.getAsignatura()
         ET.SubElement(activiadXML, "Titulaciones").text = ", ".join(act.getTitulacion())
+        ET.SubElement(activiadXML, "Campus").text = act.getCampus()
         ET.SubElement(activiadXML, "Cursos").text = ", ".join(act.getCurso())
         ET.SubElement(activiadXML, "Duracion").text = str(act.getDuracion())
-
-# Exportar main
-def exportar(path, universidad, alumnos, diasSemana, horasDia, actividades):
-     # Crear el elemento raiz
-    root = ET.Element("Institución")
-    # Crear el atributo "Nombre"
-    ET.SubElement(root, "Nombre").text = universidad.getNombre()
-
-    # Exportar datos de la institución
-    exportarCampus(root, universidad)
-    exportarTitulaciones(root, universidad)
-
-    curso = None
-    if alumnos:
-        curso = exportarCursos(root, alumnos)
-
-    dias = exportarDias(root, diasSemana)
-    horas = exportarHoras(root, horasDia)
+        ET.SubElement(activiadXML, "DuracionTotal").text = str(act.getDuracionTotal())
+        ET.SubElement(activiadXML, "TipoAula").text = act.getTipoAula()
+        if act.getActividadesHija():
+            listaHijaXML = ET.SubElement(activiadXML, "ActividadesHijas")
+            for actHija in act.getActividadesHija():
+                hijaXML = ET.SubElement(listaHijaXML, "ActividadHija")
+                ET.SubElement(hijaXML, "Id").text = str(actHija.getIdActividad())
+                ET.SubElement(hijaXML, "IdGrupo").text = str(actHija.getIdGrupo())
+                ET.SubElement(hijaXML, "Asignatura").text = actHija.getAsignatura()
+                ET.SubElement(hijaXML, "Titulaciones").text = ", ".join(actHija.getTitulacion())
+                ET.SubElement(hijaXML, "Campus").text = actHija.getCampus()
+                ET.SubElement(hijaXML, "Cursos").text = ", ".join(actHija.getCurso())
+                ET.SubElement(hijaXML, "Duracion").text = str(actHija.getDuracion())
+                ET.SubElement(hijaXML, "DuracionTotal").text = str(actHija.getDuracionTotal())
+                ET.SubElement(hijaXML, "TipoAula").text = actHija.getTipoAula()
+            
+# Exportar Restricciones
+def exportarRestricciones(root, restriccionesT, restriccionesL):
+    # Exportar restricciones de tiempo
+    rTiempoXML = ET.SubElement(root, "RestriccionesTiempo")
+    for restriccion in restriccionesT:
+        restriccionXML = ET.SubElement(rTiempoXML, "Restriccion")
+        ET.SubElement(restriccionXML, "Nombre").text = restriccion.getNombre()
+        datosXML = ET.SubElement(restriccionXML, "Datos")
+        for key, value in restriccion.getDatos().items():
+            valorXML = ET.SubElement(datosXML, key)
+            if isinstance(value, Actividad):
+                ET.SubElement(valorXML, "Id").text = str(value.getIdActividad())
+                ET.SubElement(valorXML, "IdGrupo").text = str(value.getIdGrupo())
+                ET.SubElement(valorXML, "Asignatura").text = value.getAsignatura()
+                ET.SubElement(valorXML, "Titulaciones").text = ", ".join(value.getTitulacion())
+                ET.SubElement(valorXML, "Campus").text = value.getCampus()
+                ET.SubElement(valorXML, "Cursos").text = ", ".join(value.getCurso())
+                ET.SubElement(valorXML, "Duracion").text = str(value.getDuracion())
+                ET.SubElement(valorXML, "DuracionTotal").text = str(value.getDuracionTotal())
+                ET.SubElement(valorXML, "TipoAula").text = value.getTipoAula()
+                if value.getActividadesHija():
+                    listaHijaXML = ET.SubElement(valorXML, "ActividadesHijas")
+                    for actHija in value.getActividadesHija():
+                        hijaXML = ET.SubElement(listaHijaXML, "ActividadHija")
+                        ET.SubElement(hijaXML, "Id").text = str(actHija.getIdActividad())
+                        ET.SubElement(hijaXML, "IdGrupo").text = str(actHija.getIdGrupo())
+                        ET.SubElement(hijaXML, "Asignatura").text = actHija.getAsignatura()
+                        ET.SubElement(hijaXML, "Titulaciones").text = ", ".join(actHija.getTitulacion())
+                        ET.SubElement(hijaXML, "Campus").text = actHija.getCampus()
+                        ET.SubElement(hijaXML, "Cursos").text = ", ".join(actHija.getCurso())
+                        ET.SubElement(hijaXML, "Duracion").text = str(actHija.getDuracion())
+                        ET.SubElement(hijaXML, "DuracionTotal").text = str(actHija.getDuracionTotal())
+                        ET.SubElement(hijaXML, "TipoAula").text = actHija.getTipoAula()
+            else:   
+                valorXML.text = str(value)
+        
+        ET.SubElement(restriccionXML, "Obligatoria").text = str(restriccion.isObligatoria())
+        ET.SubElement(restriccionXML, "Activa").text = str(restriccion.getActividad())
     
-    actividad = None
+    # Exportar restricciones de Lugar
+    rLugarXML = ET.SubElement(root, "RestriccionesLugar")
+    for restriccion in restriccionesT:
+        restriccionXML = ET.SubElement(rLugarXML, "Restriccion")
+        ET.SubElement(restriccionXML, "Nombre").text = restriccion.getNombre()
+        datosXML = ET.SubElement(restriccionXML, "Datos")
+        for key, value in restriccion.getDatos().items():
+            valorXML = ET.SubElement(datosXML, key)
+            if isinstance(value, Actividad):
+                ET.SubElement(valorXML, "Id").text = str(value.getIdActividad())
+                ET.SubElement(valorXML, "IdGrupo").text = str(value.getIdGrupo())
+                ET.SubElement(valorXML, "Asignatura").text = value.getAsignatura()
+                ET.SubElement(valorXML, "Titulaciones").text = ", ".join(value.getTitulacion())
+                ET.SubElement(valorXML, "Campus").text = value.getCampus()
+                ET.SubElement(valorXML, "Cursos").text = ", ".join(value.getCurso())
+                ET.SubElement(valorXML, "Duracion").text = str(value.getDuracion())
+                ET.SubElement(valorXML, "DuracionTotal").text = str(value.getDuracionTotal())
+                ET.SubElement(valorXML, "TipoAula").text = value.getTipoAula()
+                if value.getActividadesHija():
+                    listaHijaXML = ET.SubElement(valorXML, "ActividadesHijas")
+                    for actHija in value.getActividadesHija():
+                        hijaXML = ET.SubElement(listaHijaXML, "ActividadHija")
+                        ET.SubElement(hijaXML, "Id").text = str(actHija.getIdActividad())
+                        ET.SubElement(hijaXML, "IdGrupo").text = str(actHija.getIdGrupo())
+                        ET.SubElement(hijaXML, "Asignatura").text = actHija.getAsignatura()
+                        ET.SubElement(hijaXML, "Titulaciones").text = ", ".join(actHija.getTitulacion())
+                        ET.SubElement(hijaXML, "Campus").text = actHija.getCampus()
+                        ET.SubElement(hijaXML, "Cursos").text = ", ".join(actHija.getCurso())
+                        ET.SubElement(hijaXML, "Duracion").text = str(actHija.getDuracion())
+                        ET.SubElement(hijaXML, "DuracionTotal").text = str(actHija.getDuracionTotal())
+                        ET.SubElement(hijaXML, "TipoAula").text = actHija.getTipoAula()
+            else:   
+                valorXML.text = str(value)
+
+        ET.SubElement(restriccionXML, "Obligatoria").text = str(restriccion.isObligatoria())
+        ET.SubElement(restriccionXML, "Activa").text = str(restriccion.getActividad())
+
+def exportar(path, universidad, alumnos, dias, horas, asignaturas, actividades, restriccionesT, restriccionesL):
+    # Crear elementos raiz
+    root = ET.Element("Datos")                              # Raiz archivo XML
+    institucionXML = ET.SubElement(root, "Institucion")     # Crear Elemento raiz de la institución
+    cursosXML = ET.SubElement(root, "Cursos")               # Crear Elemento raiz de los cursos
+    diasXML = ET.SubElement(root, "DiasPorSemana")          # Crear Elemento raiz de los días
+    horasXML = ET.SubElement(root, "HorasporDia")           # Crear Elemento raiz de las horas
+    asignaturasXML = ET.SubElement(root, "Asignaturas")     # Crear Elemento raiz de las asignaturas
+    actividadXML = ET.SubElement(root, "Actividades")       # Crear Elemento raiz de las actividades(Clases o Examenes)
+    restriccionesXML = ET.SubElement(root, "Restricciones") # Crear Elemento raiz de las Restricciones(tiempo o lugar)
+
+    # Exportar los datos de la institucion
+    exportarInstitucion(institucionXML, universidad)
+
+    # Exportar los alumnos y los cursos
+    if alumnos:
+        exportarCursos(cursosXML, alumnos)
+    else:
+        cursosXML.text = ""
+
+    # Exportar los dias y las horas
+    exportarDias(diasXML, dias)
+    exportarHoras(horasXML, horas)
+
+    # Exportar asignaturas
+    if asignaturas:
+        exportarAsignaturas(asignaturasXML, asignaturas)
+    else:
+        asignaturasXML.text = ""
+
+    # Exportar Actividades
     if actividades:
-        actividad = exportarActividades(root, actividades)
+        exportarActividades(actividadXML, actividades)
+    else:
+        actividadXML.text = ""
+
+    # Exportar Restricciones
+    if restriccionesT or restriccionesL:
+        exportarRestricciones(restriccionesXML, restriccionesT, restriccionesL)
+    else:
+        restriccionesXML.text = ""
 
     # Convertir el árbol XML a una cadena y guardar en el archivo especificado
     tree = ET.ElementTree(root)
