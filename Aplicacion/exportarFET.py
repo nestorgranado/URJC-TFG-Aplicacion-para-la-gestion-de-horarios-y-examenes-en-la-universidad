@@ -362,33 +362,27 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
         etree.SubElement(constraint_tipoAulas, "Active").text = "true"
         etree.SubElement(constraint_tipoAulas, "Comments").text = ""
 
-    if tipo == "Examen":
-        for restriccion in restriccionesLugar:
-            if restriccion.getEstado():
-                match restriccion.getNombre():
-                    # Restriccion de Examens por Campus
-                    case "MismoCampusDondeSeImparte":
-                        if len(aulaPorCampus) > 1:
-                            i = 1
-                            for actividad in actividades:
-                                campus = actividad.getCampus()
-                                aulas = aulaPorCampus[campus]
+    for restriccion in restriccionesLugar:
+        if restriccion.getEstado():
+            match restriccion.getNombre():
+                # Restriccion de Examens por Campus
+                case "MismoCampusDondeSeImparte":
+                    if len(aulaPorCampus) > 1:
+                        i = 1
+                        for actividad in actividades:
+                            campus = actividad.getCampus()
+                            aulas = aulaPorCampus[campus]
 
-                                constraint_examenCampus = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
-                                etree.SubElement(constraint_examenCampus, "Weight_Percentage").text = str(restriccion.getObligatoria())
-                                etree.SubElement(constraint_examenCampus, "Activity_Id").text = str(i)
-                                etree.SubElement(constraint_examenCampus, "Number_of_Preferred_Rooms").text = str(len(aulas))
-                                for aula in aulas:
-                                    etree.SubElement(constraint_examenCampus, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
+                            constraint_examenCampus = etree.SubElement(space_constraints, "ConstraintActivityPreferredRooms")
+                            etree.SubElement(constraint_examenCampus, "Weight_Percentage").text = str(restriccion.getObligatoria())
+                            etree.SubElement(constraint_examenCampus, "Activity_Id").text = str(i)
+                            etree.SubElement(constraint_examenCampus, "Number_of_Preferred_Rooms").text = str(len(aulas))
+                            for aula in aulas:
+                                etree.SubElement(constraint_examenCampus, "Preferred_Room").text = str(aula.getNumero() + "-" + aula.getEdificio())
 
-                                etree.SubElement(constraint_examenCampus, "Active").text = "true"
-                                etree.SubElement(constraint_examenCampus, "Comments").text = ""
-                                i += 1
-
-    """else:
-        for restriccion in restriccionesLugar:
-            if restriccion.getEstado():
-                match restriccion.getNombre():"""
+                            etree.SubElement(constraint_examenCampus, "Active").text = "true"
+                            etree.SubElement(constraint_examenCampus, "Comments").text = ""
+                            i += 1
 
     with open(path, "wb") as file:
         file.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding="UTF-8"))

@@ -1230,18 +1230,9 @@ class ExamenesUI(QWidget, Ui_Examenes):
 
         self.crearCurso()
 
-        # Activar Restricciones automáticas
-        restriccion48h = Restriccion("MismoCursoSeparado48h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesTiempo.append(restriccion48h)
-        restricion24h = Restriccion("CursosConsecutivosSeparado24h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesTiempo.append(restricion24h)
-
-        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesLugar.append(restriccionCampus)
-
         self.modificar.clicked.connect(self.mostrarModificarExamenUI)
         
-        self.periodoExamenesText.setValue(1)
+        self.periodoExamenesText.setValue(diasSemana.getNumDias())
         self.periodoExamenesText.valueChanged.connect(self.crearDias)
 
         self.aulasCombinadas.clicked.connect(self.mostrarAulaCombinadaUI)
@@ -1253,6 +1244,15 @@ class ExamenesUI(QWidget, Ui_Examenes):
 
     def crearExamenes(self):
         if not actividades:
+            # Activar Restricciones automáticas
+            restriccion48h = Restriccion("MismoCursoSeparado48h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesTiempo.append(restriccion48h)
+            restricion24h = Restriccion("CursosConsecutivosSeparado24h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesTiempo.append(restricion24h)
+
+            restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesLugar.append(restriccionCampus)
+
             asignaturasUsadas = set()
             idActividad = 1
             cursos_dict = defaultdict(list)
@@ -1903,9 +1903,6 @@ class ClasesUI(QWidget, Ui_Clases):
         self.titulaciones = institucion.getTitulacion()
         self.crearCurso()
 
-        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesLugar.append(restriccionCampus)
-
         self.modificar.clicked.connect(self.mostrarModificarClasesUI)
         self.otros.clicked.connect(self.mostrarOtrosHorariosUI)
         self.aulasCombinadas.clicked.connect(self.mostrarAulaCombinadaUI)
@@ -1915,6 +1912,9 @@ class ClasesUI(QWidget, Ui_Clases):
 
     def crearClases(self):
         if not actividades:
+            restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesLugar.append(restriccionCampus)
+
             asignaturasUsadas = set()
             idActividad = 1
             cursos_dict = defaultdict(list)

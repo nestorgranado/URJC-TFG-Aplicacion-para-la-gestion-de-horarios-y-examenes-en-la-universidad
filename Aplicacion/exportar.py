@@ -6,6 +6,18 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import platform
 
+# Funcion que quita comas
+def quitar_comas(texto):
+    return texto.replace(',', '')
+
+# Funcion para quitar comas de los nombres de las asignaturas de una lista
+def quitar_comasLista(lista):
+    # Eliminar comas de cada elemento
+    lista_sin_comas = [elemento.replace(',', '') for elemento in lista]
+    
+    # Unir los elementos con comas
+    return ', '.join(lista_sin_comas)
+
 # Exportar las Titulaciones
 def exportarTitulaciones(root, universidad):
     # Por cada escuela crear un elemnto "Escuela" y un atributo "Nombre" y recorrer la lista de Titulcaiones
@@ -13,12 +25,12 @@ def exportarTitulaciones(root, universidad):
     for titulacion in universidad.getTitulacion():
         titulacionXML = ET.SubElement(titulacionesListXML, "Titulación")
         ET.SubElement(titulacionXML, "Código").text = titulacion.getCodigo()
-        ET.SubElement(titulacionXML, "Nombre").text = titulacion.getNombre()
+        ET.SubElement(titulacionXML, "Nombre").text = quitar_comas(titulacion.getNombre())
         ET.SubElement(titulacionXML, "Campus").text = titulacion.getCampus()
         for asignatura in titulacion.getAsignaturas():
             asignaturaXML = ET.SubElement(titulacionXML, "Asignatura")
             ET.SubElement(asignaturaXML, "Código").text = asignatura.getCodigo()
-            ET.SubElement(asignaturaXML, "Nombre").text = asignatura.getNombre()
+            ET.SubElement(asignaturaXML, "Nombre").text = quitar_comas(asignatura.getNombre())
             ET.SubElement(asignaturaXML, "Titulación").text = asignatura.getTitulacion()
             ET.SubElement(asignaturaXML, "NumAlumnos").text = str(asignatura.getNumAlumnos())
             ET.SubElement(asignaturaXML, "Curso").text = str(asignatura.getCurso())
@@ -69,15 +81,15 @@ def exportarInstitucion(root, universidad):
 def exportarCursos(root, alumnos):
     for alumnosTit in alumnos:
         alumnosTitXML = ET.SubElement(root, "AlumnosTitulacion")
-        ET.SubElement(alumnosTitXML, "Nombre").text = alumnosTit.getNombre()
+        ET.SubElement(alumnosTitXML, "Nombre").text = quitar_comas(alumnosTit.getNombre())
         ET.SubElement(alumnosTitXML, "NúmeroAlumnos").text = str(alumnosTit.getNumAlumnos())
         for alumnosCurso in alumnosTit.getCursos():
             alumnosCursoXML = ET.SubElement(alumnosTitXML, "AlumnosCurso")
-            ET.SubElement(alumnosCursoXML, "Nombre").text = alumnosCurso.getNombre()
+            ET.SubElement(alumnosCursoXML, "Nombre").text = quitar_comas(alumnosCurso.getNombre())
             ET.SubElement(alumnosCursoXML, "NúmeroAlumnos").text = str(alumnosCurso.getNumAlumnos())
             for alumnosAsig in alumnosCurso.getAsignaturas():
                 alumnosAsigXML = ET.SubElement(alumnosCursoXML, "AlumnosAsignatura")
-                ET.SubElement(alumnosAsigXML, "Nombre").text = alumnosAsig.getNombre()
+                ET.SubElement(alumnosAsigXML, "Nombre").text = quitar_comas(alumnosAsig.getNombre())
                 ET.SubElement(alumnosAsigXML, "NúmeroAlumnos").text = str(alumnosAsig.getNumAlumnos())
 
 # Exportar Días por Semana
@@ -101,16 +113,16 @@ def exportarAsignaturas(root, asignaturas):
     for asignatura in asignaturas:
         asignaturaXML = ET.SubElement(root, "Asignatura")
         ET.SubElement(asignaturaXML, "Codigo").text = str(asignatura.getCodigo())
-        ET.SubElement(asignaturaXML, "Nombre").text = asignatura.getNombre()
-        ET.SubElement(asignaturaXML, "Titulacion").text = asignatura.getTitulacion()
+        ET.SubElement(asignaturaXML, "Nombre").text = quitar_comas(asignatura.getNombre())
+        ET.SubElement(asignaturaXML, "Titulacion").text = quitar_comas(asignatura.getTitulacion())
         ET.SubElement(asignaturaXML, "NumAlumnos").text = str(asignatura.getNumAlumnos())
         ET.SubElement(asignaturaXML, "Curso").text = str(asignatura.getCurso())
         if asignatura.getAsignaturas_hijas():
             hijasXML = ET.SubElement(asignaturaXML, "AsignaturasHijas")
             for hija in asignatura.getAsignaturas_hijas():
                 hijaXML = ET.SubElement(hijasXML, "AsignaturaHija")
-                ET.SubElement(hijaXML, "PlanHija").text = hija[0]
-                ET.SubElement(hijaXML, "Asignatura").text = hija[1]
+                ET.SubElement(hijaXML, "PlanHija").text = quitar_comas(hija[0])
+                ET.SubElement(hijaXML, "Asignatura").text = quitar_comas(hija[1])
 
 # Exportar Actividades
 def exportarActividades(root, actividades):
@@ -118,10 +130,10 @@ def exportarActividades(root, actividades):
         activiadXML = ET.SubElement(root, "Actividad")
         ET.SubElement(activiadXML, "Id").text = str(act.getIdActividad())
         ET.SubElement(activiadXML, "IdGrupo").text = str(act.getIdGrupo())
-        ET.SubElement(activiadXML, "Asignatura").text = act.getAsignatura()
-        ET.SubElement(activiadXML, "Titulaciones").text = ", ".join(act.getTitulacion())
+        ET.SubElement(activiadXML, "Asignatura").text = quitar_comas(act.getAsignatura())
+        ET.SubElement(activiadXML, "Titulaciones").text = quitar_comasLista(act.getTitulacion())
         ET.SubElement(activiadXML, "Campus").text = act.getCampus()
-        ET.SubElement(activiadXML, "Cursos").text = ", ".join(act.getCurso())
+        ET.SubElement(activiadXML, "Cursos").text = quitar_comasLista(act.getCurso())
         ET.SubElement(activiadXML, "Duracion").text = str(act.getDuracion())
         ET.SubElement(activiadXML, "DuracionTotal").text = str(act.getDuracionTotal())
         ET.SubElement(activiadXML, "TipoAula").text = act.getTipoAula()
@@ -131,10 +143,10 @@ def exportarActividades(root, actividades):
                 hijaXML = ET.SubElement(listaHijaXML, "ActividadHija")
                 ET.SubElement(hijaXML, "Id").text = str(actHija.getIdActividad())
                 ET.SubElement(hijaXML, "IdGrupo").text = str(actHija.getIdGrupo())
-                ET.SubElement(hijaXML, "Asignatura").text = actHija.getAsignatura()
-                ET.SubElement(hijaXML, "Titulaciones").text = ", ".join(actHija.getTitulacion())
+                ET.SubElement(hijaXML, "Asignatura").text = quitar_comas(actHija.getAsignatura())
+                ET.SubElement(hijaXML, "Titulaciones").text = quitar_comasLista(actHija.getTitulacion())
                 ET.SubElement(hijaXML, "Campus").text = actHija.getCampus()
-                ET.SubElement(hijaXML, "Cursos").text = ", ".join(actHija.getCurso())
+                ET.SubElement(hijaXML, "Cursos").text = quitar_comasLista(actHija.getCurso())
                 ET.SubElement(hijaXML, "Duracion").text = str(actHija.getDuracion())
                 ET.SubElement(hijaXML, "DuracionTotal").text = str(actHija.getDuracionTotal())
                 ET.SubElement(hijaXML, "TipoAula").text = actHija.getTipoAula()
@@ -152,10 +164,10 @@ def exportarRestricciones(root, restriccionesT, restriccionesL):
             if isinstance(value, Actividad):
                 ET.SubElement(valorXML, "Id").text = str(value.getIdActividad())
                 ET.SubElement(valorXML, "IdGrupo").text = str(value.getIdGrupo())
-                ET.SubElement(valorXML, "Asignatura").text = value.getAsignatura()
-                ET.SubElement(valorXML, "Titulaciones").text = ", ".join(value.getTitulacion())
+                ET.SubElement(valorXML, "Asignatura").text = quitar_comas(value.getAsignatura())
+                ET.SubElement(valorXML, "Titulaciones").text = quitar_comasLista(value.getTitulacion())
                 ET.SubElement(valorXML, "Campus").text = value.getCampus()
-                ET.SubElement(valorXML, "Cursos").text = ", ".join(value.getCurso())
+                ET.SubElement(valorXML, "Cursos").text = quitar_comasLista(value.getCurso())
                 ET.SubElement(valorXML, "Duracion").text = str(value.getDuracion())
                 ET.SubElement(valorXML, "DuracionTotal").text = str(value.getDuracionTotal())
                 ET.SubElement(valorXML, "TipoAula").text = value.getTipoAula()
@@ -165,10 +177,10 @@ def exportarRestricciones(root, restriccionesT, restriccionesL):
                         hijaXML = ET.SubElement(listaHijaXML, "ActividadHija")
                         ET.SubElement(hijaXML, "Id").text = str(actHija.getIdActividad())
                         ET.SubElement(hijaXML, "IdGrupo").text = str(actHija.getIdGrupo())
-                        ET.SubElement(hijaXML, "Asignatura").text = actHija.getAsignatura()
-                        ET.SubElement(hijaXML, "Titulaciones").text = ", ".join(actHija.getTitulacion())
+                        ET.SubElement(hijaXML, "Asignatura").text = quitar_comas(actHija.getAsignatura())
+                        ET.SubElement(hijaXML, "Titulaciones").text = quitar_comasLista(actHija.getTitulacion())
                         ET.SubElement(hijaXML, "Campus").text = actHija.getCampus()
-                        ET.SubElement(hijaXML, "Cursos").text = ", ".join(actHija.getCurso())
+                        ET.SubElement(hijaXML, "Cursos").text = quitar_comasLista(actHija.getCurso())
                         ET.SubElement(hijaXML, "Duracion").text = str(actHija.getDuracion())
                         ET.SubElement(hijaXML, "DuracionTotal").text = str(actHija.getDuracionTotal())
                         ET.SubElement(hijaXML, "TipoAula").text = actHija.getTipoAula()
@@ -189,10 +201,10 @@ def exportarRestricciones(root, restriccionesT, restriccionesL):
             if isinstance(value, Actividad):
                 ET.SubElement(valorXML, "Id").text = str(value.getIdActividad())
                 ET.SubElement(valorXML, "IdGrupo").text = str(value.getIdGrupo())
-                ET.SubElement(valorXML, "Asignatura").text = value.getAsignatura()
-                ET.SubElement(valorXML, "Titulaciones").text = ", ".join(value.getTitulacion())
+                ET.SubElement(valorXML, "Asignatura").text = quitar_comas(value.getAsignatura())
+                ET.SubElement(valorXML, "Titulaciones").text = quitar_comasLista(value.getTitulacion())
                 ET.SubElement(valorXML, "Campus").text = value.getCampus()
-                ET.SubElement(valorXML, "Cursos").text = ", ".join(value.getCurso())
+                ET.SubElement(valorXML, "Cursos").text = quitar_comasLista(value.getCurso())
                 ET.SubElement(valorXML, "Duracion").text = str(value.getDuracion())
                 ET.SubElement(valorXML, "DuracionTotal").text = str(value.getDuracionTotal())
                 ET.SubElement(valorXML, "TipoAula").text = value.getTipoAula()
@@ -202,10 +214,10 @@ def exportarRestricciones(root, restriccionesT, restriccionesL):
                         hijaXML = ET.SubElement(listaHijaXML, "ActividadHija")
                         ET.SubElement(hijaXML, "Id").text = str(actHija.getIdActividad())
                         ET.SubElement(hijaXML, "IdGrupo").text = str(actHija.getIdGrupo())
-                        ET.SubElement(hijaXML, "Asignatura").text = actHija.getAsignatura()
-                        ET.SubElement(hijaXML, "Titulaciones").text = ", ".join(actHija.getTitulacion())
+                        ET.SubElement(hijaXML, "Asignatura").text = quitar_comas(actHija.getAsignatura())
+                        ET.SubElement(hijaXML, "Titulaciones").text = quitar_comasLista(actHija.getTitulacion())
                         ET.SubElement(hijaXML, "Campus").text = actHija.getCampus()
-                        ET.SubElement(hijaXML, "Cursos").text = ", ".join(actHija.getCurso())
+                        ET.SubElement(hijaXML, "Cursos").text = quitar_comasLista(actHija.getCurso())
                         ET.SubElement(hijaXML, "Duracion").text = str(actHija.getDuracion())
                         ET.SubElement(hijaXML, "DuracionTotal").text = str(actHija.getDuracionTotal())
                         ET.SubElement(hijaXML, "TipoAula").text = actHija.getTipoAula()
