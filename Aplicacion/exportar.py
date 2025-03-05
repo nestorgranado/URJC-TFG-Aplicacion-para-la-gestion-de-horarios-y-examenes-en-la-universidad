@@ -180,7 +180,7 @@ def exportarRestricciones(root, restriccionesT, restriccionesL):
     
     # Exportar restricciones de Lugar
     rLugarXML = ET.SubElement(root, "RestriccionesLugar")
-    for restriccion in restriccionesT:
+    for restriccion in restriccionesL:
         restriccionXML = ET.SubElement(rLugarXML, "Restriccion")
         ET.SubElement(restriccionXML, "Nombre").text = restriccion.getNombre()
         datosXML = ET.SubElement(restriccionXML, "Datos")
@@ -215,9 +215,10 @@ def exportarRestricciones(root, restriccionesT, restriccionesL):
         ET.SubElement(restriccionXML, "Obligatoria").text = str(restriccion.isObligatoria())
         ET.SubElement(restriccionXML, "Activa").text = str(restriccion.getActividad())
 
-def exportar(path, universidad, alumnos, dias, horas, asignaturas, actividades, restriccionesT, restriccionesL):
+def exportar(path, universidad, alumnos, dias, horas, asignaturas, actividades, restriccionesT, restriccionesL, tipo):
     # Crear elementos raiz
     root = ET.Element("Datos")                              # Raiz archivo XML
+    ET.SubElement(root, "Horario").text = tipo              # Crear Elemento para saber el tipo de horario
     institucionXML = ET.SubElement(root, "Institucion")     # Crear Elemento raiz de la institución
     cursosXML = ET.SubElement(root, "Cursos")               # Crear Elemento raiz de los cursos
     diasXML = ET.SubElement(root, "DiasPorSemana")          # Crear Elemento raiz de los días

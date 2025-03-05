@@ -48,6 +48,7 @@ from interfaces.Ui_roomType import Ui_res_tipoAula
 # Funcionalidades
 from estructuraDatos import *
 from importar import importarInstitucion
+from importarXML import importarXML
 from exportar import exportar
 from exportarFET import exportarFET
 
@@ -57,14 +58,6 @@ def quitar_acentos(texto):
     # Filtramos los caracteres que no sean marcas diacríticas
     texto_sin_acentos = ''.join(char for char in texto_normalizado if unicodedata.category(char) != 'Mn')
     return texto_sin_acentos
-
-def borrar_datos():
-    alumnos.clear()
-    actividades.clear()
-    asignaturasElegidas.clear()            
-    actividadesPorCuros.clear()        
-    restriccionesTiempo.clear()
-    restriccionesLugar.clear()
 
 # Clase para mostrar una ventana emergente con un mensaje de error que se le pase al constructor
 class DialogoError(QDialog): 
@@ -91,8 +84,28 @@ class ImportarUI(QWidget, Ui_importar):
         self.examinarBtn.clicked.connect(self.seleccionarArchivo) # Funcionalidad botón selecionar archivo
 
     def guardar(self):
-        global aulasPorCampus, aulasPorTipo
-        titulaciones, campuses, aulaCampus, aulasTipo, error = importarInstitucion(self.rutaText.text()) # Importación de datos
+        global institucion, alumnos, diasSemana, horasDia, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipoHorario
+        titulaciones = []
+        campuses = []
+        error = ""
+        path = self.rutaText.text()
+
+        # Comprobar si la rura existe
+        if os.path.exists(path):
+            # Obtener nombre del archivo y la extensión
+            nombre_archivo_con_extension = os.path.basename(path)
+            nombre_archivo, extension = os.path.splitext(nombre_archivo_con_extension) 
+
+            # Dividir funcionalida si el archivo es xml o no
+            if extension in ['.xls', '.xlsx', '.csv']:
+                titulaciones, campuses, aulasPorCampus, aulasPorTipo = importarInstitucion(path) # Importación de datos
+            elif extension == '.xml':
+                institucion, alumnos, diasSemana, horasDia, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipoHorario = importarXML(path)
+            else:
+                error = (f"Error: el formato '{extension}' no es soportado")
+
+        else:
+            error = (f"Error: El archivo '{path}' no existe.")
 
         # Si no hay error comprobar que se ha importado y añadirlo a la Institución
         if error == "":
@@ -103,11 +116,6 @@ class ImportarUI(QWidget, Ui_importar):
                 institucion.sumar_campus(campuses)
             elif titulaciones:
                 institucion.sumar_titulacion(titulaciones)
-
-            if aulaCampus:
-                aulasPorCampus = aulaCampus
-            if aulasTipo:
-                aulasPorTipo = aulasTipo
         else:
             dialogoError = DialogoError(error)
             dialogoError.exec()
@@ -1223,12 +1231,12 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.crearCurso()
 
         # Activar Restricciones automáticas
-        restriccion48h = Restriccion("MismoCursoSeparado48h", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0, "TODAS")}, True, True)
+        restriccion48h = Restriccion("MismoCursoSeparado48h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
         restriccionesTiempo.append(restriccion48h)
-        restricion24h = Restriccion("CursosConsecutivosSeparado24h", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0, "TODAS")}, True, True)
+        restricion24h = Restriccion("CursosConsecutivosSeparado24h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
         restriccionesTiempo.append(restricion24h)
 
-        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0, "TODAS")}, True, True)
+        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
         restriccionesLugar.append(restriccionCampus)
 
         self.modificar.clicked.connect(self.mostrarModificarExamenUI)
@@ -1244,52 +1252,52 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.crearHorario.clicked.connect(self.nuevoHorario)
 
     def crearExamenes(self):
-        asignaturasUsadas = set()
-        idActividad = 1
-        cursos_dict = defaultdict(list)
-        for tit in self.titulaciones:
-            campus = tit.getCampus()
-            for asignatura in tit.getAsignaturas():
-                if asignatura.getNombre() not in asignaturasUsadas:
-                    asignaturasElegidas.append(asignatura)
-                    asignaturasUsadas.add(asignatura.getNombre())
-                    estudiantes = []
-                    titulaciones = []
-                    curso = tit.getNombre() + "-" + asignatura.getNombre()
-                    if tit.getNombre() not in listaNegraAsignaturas:
-                        estudiantes.append(curso)
-                    titulaciones.append(asignatura.getTitulacion())
-                    for hija in asignatura.getAsignaturas_hijas():
-                        cursoHija = hija[0] + "-" + hija[1]
-                        if hija[0] not in listaNegraAsignaturas:
-                            estudiantes.append(cursoHija)
-                        titulaciones.append(hija[0])
-                        asignaturasUsadas.add(hija[1])
+        if not actividades:
+            asignaturasUsadas = set()
+            idActividad = 1
+            cursos_dict = defaultdict(list)
+            for tit in self.titulaciones:
+                campus = tit.getCampus()
+                for asignatura in tit.getAsignaturas():
+                    if asignatura.getNombre() not in asignaturasUsadas:
+                        asignaturasElegidas.append(asignatura)
+                        asignaturasUsadas.add(asignatura.getNombre())
+                        estudiantes = []
+                        titulaciones = []
+                        curso = tit.getNombre() + "-" + asignatura.getNombre()
+                        if tit.getNombre() not in listaNegraAsignaturas:
+                            estudiantes.append(curso)
+                        titulaciones.append(asignatura.getTitulacion())
+                        for hija in asignatura.getAsignaturas_hijas():
+                            cursoHija = hija[0] + "-" + hija[1]
+                            if hija[0] not in listaNegraAsignaturas:
+                                estudiantes.append(cursoHija)
+                            titulaciones.append(hija[0])
+                            asignaturasUsadas.add(hija[1])
 
-                    nuevaActividad = Actividad(idActividad, 0, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 2, "TODAS")
-                    cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
-                    idActividad += 1
-                    actividades.append(nuevaActividad)
-        
-        actividadesPorCuros = cursos_dict
+                        nuevaActividad = Actividad(idActividad, 0, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 2, "TODAS")
+                        cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
+                        idActividad += 1
+                        actividades.append(nuevaActividad)
+            
+            actividadesPorCuros = cursos_dict
     
     def crearCurso(self):
-        borrar_datos()
+        if not alumnos:
+            for tit in self.titulaciones:
+                cursos_dict = {}
+                alumnosTit = AlumnosTitulacion(tit.getNombre())
+                for asignatura in tit.getAsignaturas():
+                    numCurso = asignatura.getCurso()
+                    nombreCurso = tit.getNombre() + "-" + str(numCurso)
+                    cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
 
-        for tit in self.titulaciones:
-            cursos_dict = {}
-            alumnosTit = AlumnosTitulacion(tit.getNombre())
-            for asignatura in tit.getAsignaturas():
-                numCurso = asignatura.getCurso()
-                nombreCurso = tit.getNombre() + "-" + str(numCurso)
-                cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
+                    nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
+                    alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
+                    cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
 
-                nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
-                alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
-                cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
-
-            alumnosTit.setCursos(list(cursos_dict.values()))
-            alumnos.append(alumnosTit)
+                alumnosTit.setCursos(list(cursos_dict.values()))
+                alumnos.append(alumnosTit)
 
         self.crearExamenes()
     
@@ -1398,7 +1406,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "Examen")
 
     def mostrarModificarExamenUI(self):
         self.modificarExamenUI = ModificarExamen()
@@ -1895,7 +1903,7 @@ class ClasesUI(QWidget, Ui_Clases):
         self.titulaciones = institucion.getTitulacion()
         self.crearCurso()
 
-        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", "", "", [], 0, 0, "TODAS")}, True, True)
+        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
         restriccionesLugar.append(restriccionCampus)
 
         self.modificar.clicked.connect(self.mostrarModificarClasesUI)
@@ -1906,61 +1914,61 @@ class ClasesUI(QWidget, Ui_Clases):
         self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
 
     def crearClases(self):
-        asignaturasUsadas = set()
-        idActividad = 1
-        cursos_dict = defaultdict(list)
-        for tit in self.titulaciones:
-            campus = tit.getCampus()
-            for asignatura in tit.getAsignaturas():
-                if asignatura.getNombre() not in asignaturasUsadas:
-                    asignaturasElegidas.append(asignatura)
-                    asignaturasUsadas.add(asignatura.getNombre())
-                    estudiantes = []
-                    titulaciones = []
-                    curso = tit.getNombre() + "-" + asignatura.getNombre()
-                    if tit.getNombre() not in listaNegraAsignaturas:
-                        estudiantes.append(curso)
-                    titulaciones.append(asignatura.getTitulacion())
-                    for hija in asignatura.getAsignaturas_hijas():
-                        cursoHija = hija[0] + "-" + hija[1]
-                        if hija[0] not in listaNegraAsignaturas:
-                            estudiantes.append(cursoHija)
-                        titulaciones.append(hija[0])
-                        asignaturasUsadas.add(hija[1])
+        if not actividades:
+            asignaturasUsadas = set()
+            idActividad = 1
+            cursos_dict = defaultdict(list)
+            for tit in self.titulaciones:
+                campus = tit.getCampus()
+                for asignatura in tit.getAsignaturas():
+                    if asignatura.getNombre() not in asignaturasUsadas:
+                        asignaturasElegidas.append(asignatura)
+                        asignaturasUsadas.add(asignatura.getNombre())
+                        estudiantes = []
+                        titulaciones = []
+                        curso = tit.getNombre() + "-" + asignatura.getNombre()
+                        if tit.getNombre() not in listaNegraAsignaturas:
+                            estudiantes.append(curso)
+                        titulaciones.append(asignatura.getTitulacion())
+                        for hija in asignatura.getAsignaturas_hijas():
+                            cursoHija = hija[0] + "-" + hija[1]
+                            if hija[0] not in listaNegraAsignaturas:
+                                estudiantes.append(cursoHija)
+                            titulaciones.append(hija[0])
+                            asignaturasUsadas.add(hija[1])
 
-                    nuevaActividad1 = Actividad(idActividad, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
-                    nuevaActividad2 = Actividad(idActividad + 1, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
-                    nuevaActividad1.addActividadesHija(nuevaActividad2)
+                        nuevaActividad1 = Actividad(idActividad, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
+                        nuevaActividad2 = Actividad(idActividad + 1, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
+                        nuevaActividad1.addActividadesHija(nuevaActividad2)
 
-                    separacionClases = Restriccion("SeparacionClasesMismaAsignatura", {"Actividad": nuevaActividad1, "Actividad2": nuevaActividad2, "Separacion": 1}, True, True)
+                        separacionClases = Restriccion("SeparacionClasesMismaAsignatura", {"Actividad": nuevaActividad1, "Actividad2": nuevaActividad2, "Separacion": 1}, True, True)
 
-                    restriccionesTiempo.append(separacionClases)
+                        restriccionesTiempo.append(separacionClases)
 
-                    cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad1)
-                    #cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad2)
-                    idActividad += 2
-                    actividades.append(nuevaActividad1)
-                    #actividades.append(nuevaActividad2)
+                        cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad1)
+                        #cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad2)
+                        idActividad += 2
+                        actividades.append(nuevaActividad1)
+                        #actividades.append(nuevaActividad2)
         
-        actividadesPorCuros = cursos_dict
+            actividadesPorCuros = cursos_dict
 
     def crearCurso(self):
-        borrar_datos()
+        if not alumnos:
+            for tit in self.titulaciones:
+                cursos_dict = {}
+                alumnosTit = AlumnosTitulacion(tit.getNombre())
+                for asignatura in tit.getAsignaturas():
+                    numCurso = asignatura.getCurso()
+                    nombreCurso = tit.getNombre() + "-" + str(numCurso)
+                    cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
 
-        for tit in self.titulaciones:
-            cursos_dict = {}
-            alumnosTit = AlumnosTitulacion(tit.getNombre())
-            for asignatura in tit.getAsignaturas():
-                numCurso = asignatura.getCurso()
-                nombreCurso = tit.getNombre() + "-" + str(numCurso)
-                cursos_dict.setdefault(numCurso, AlumnosCurso(nombreCurso))
+                    nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
+                    alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
+                    cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
 
-                nombreAsignatura = tit.getNombre() + "-" + asignatura.getNombre()
-                alumnosAsig = AlumnosAsignatura(nombreAsignatura, asignatura.getNumAlumnos())
-                cursos_dict[numCurso].agregar_asignatura(alumnosAsig)
-
-            alumnosTit.setCursos(list(cursos_dict.values()))
-            alumnos.append(alumnosTit)
+                alumnosTit.setCursos(list(cursos_dict.values()))
+                alumnos.append(alumnosTit)
 
         self.crearClases()
 
@@ -1977,7 +1985,7 @@ class ClasesUI(QWidget, Ui_Clases):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "Clase")
 
     def nuevoHorario(self):
         if self.semanal.isChecked():
@@ -2065,8 +2073,16 @@ class HorariosUI(QWidget, Ui_crearHorario):
         super().__init__()
         self.setupUi(self)
 
-        self.examenes.clicked.connect(self.mostrarExamenesUI)
-        self.clases.clicked.connect(self.mostrarClasesUI)
+        global tipoHorario
+        if tipoHorario == "":
+            self.examenes.clicked.connect(self.mostrarExamenesUI)
+            self.clases.clicked.connect(self.mostrarClasesUI)
+        elif tipoHorario == "Examen":
+            self.examenes.clicked.connect(self.mostrarExamenesUI)
+            self.clases.clicked.connect(self.error)
+        else:
+            self.examenes.clicked.connect(self.error)
+            self.clases.clicked.connect(self.mostrarClasesUI)
 
     def mostrarExamenesUI(self):
         self.examenesUI = ExamenesUI()
@@ -2075,6 +2091,10 @@ class HorariosUI(QWidget, Ui_crearHorario):
     def mostrarClasesUI(self):
         self.clasesUI = ClasesUI()
         self.clasesUI.show()
+
+    def error(self):
+        self.dialogoError = DialogoError("Error: El tipo de horario importado no coincide con el tipo de horaio seleccionado")
+        self.dialogoError.exec()
 
 # Main Window
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -2116,7 +2136,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar)
+            exportar(file_path, institucion, alumnos, diasSemana, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "")
 
     def mostrarImportUI(self):
         self.importUI = ImportarUI()
@@ -2151,6 +2171,7 @@ if __name__ == '__main__':
     ruta_fet = "./fet-6.18.1/fet-cl.exe"
 
     # Datos Aplicación
+    tipoHorario = ""                    #Tipo de horaio que se va ha realizar
     institucion = Universidad("URJC")   #ED Universidad
     alumnos = []                        # Titulaciones-Cursos-Asignaturas
     diasSemana = Dias()                 # Dias por semana que va ha tener el horario

@@ -298,31 +298,15 @@ def importarInstitucion(path):
     aulasCampus = defaultdict(list)
     aulasTipo = defaultdict(list)
 
-    # Comprobar si la rura existe
-    if os.path.exists(path):
-        # Obtener nombre del archivo y la extensión
-        nombre_archivo_con_extension = os.path.basename(path)
-        nombre_archivo, extension = os.path.splitext(nombre_archivo_con_extension) 
+    # Obtener nombre del archivo y la extensión
+    nombre_archivo_con_extension = os.path.basename(path)
+    nombre_archivo, extension = os.path.splitext(nombre_archivo_con_extension) 
 
-        # Dividir funcionalida si el archivo es xml o no
-        if extension in ['.xls', '.xlsx', '.csv']:
-            # Depende del nombre del archivo se importaran las titulaciones o los campus
-            if nombre_archivo == 'uxxi':
-                titulaciones = importar_Titulaciones(path, "ETSII")
+    # Depende del nombre del archivo se importaran las titulaciones o los campus
+    if nombre_archivo == 'uxxi':
+        titulaciones = importar_Titulaciones(path, "ETSII")
 
-            elif nombre_archivo == 'mostoles2324.v1':
-                campuses, aulasCampus, aulasTipo = importar_Campus(path)
-
-            else:
-                error = (f"Error: el archivo '{path}' no contiene los datos necesarios para la aplicación")
-
-        elif extension == '.xml':
-            campuses, titulaciones, aulasCampus, aulasTipo = importarXML(path)
-
-        else:
-            error = (f"Error: el formato '{extension}' no es soportado")
-
-    else:
-        error = (f"Error: El archivo '{path}' no existe.")
+    elif nombre_archivo == 'mostoles2324.v1':
+        campuses, aulasCampus, aulasTipo = importar_Campus(path)
     
-    return titulaciones, campuses, aulasCampus, aulasTipo, error
+    return titulaciones, campuses, aulasCampus, aulasTipo
