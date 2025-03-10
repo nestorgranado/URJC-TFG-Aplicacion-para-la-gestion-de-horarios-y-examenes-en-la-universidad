@@ -1387,7 +1387,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                     dialogoError = DialogoError(f"Error: El archivo {file_path} no existe.")
                     dialogoError.exec()
             else:
-                self.fetConnect = FETConnectUI(f"Error: No se encontró {ruta_ejecutable}. Indique la ruta de fet-cl.exe:")
+                self.fetConnect = FETConnectUI(f"Error: No se encontró {ruta_fet}. Indique la ruta de fet-cl.exe:")
                 self.fetConnect.show()
         else:
             self.fetConnect = FETConnectUI(f"Error: La carpeta {ruta_carpeta} no existe. Indique la ruta de fet-cl.exe:")
@@ -2044,7 +2044,7 @@ class ClasesUI(QWidget, Ui_Clases):
                     dialogoError = DialogoError(f"Error: El archivo {file_path} no existe.")
                     dialogoError.exec()
             else:
-                self.fetConnect = FETConnectUI(f"Error: No se encontró {ruta_ejecutable}. Indique la ruta de fet-cl.exe:")
+                self.fetConnect = FETConnectUI(f"Error: No se encontró {ruta_fet}. Indique la ruta de fet-cl.exe:")
                 self.fetConnect.show()
         else:
             self.fetConnect = FETConnectUI(f"Error: La carpeta {ruta_carpeta} no existe. Indique la ruta de fet-cl.exe:")
