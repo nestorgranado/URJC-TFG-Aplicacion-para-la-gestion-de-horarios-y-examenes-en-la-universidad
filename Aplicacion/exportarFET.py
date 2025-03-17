@@ -260,15 +260,15 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                     
                     # Restriccion separacion entre dos asignaturas
                     case "RestriccionXDiasEntreActividades":
-                        constraint_separacionExamenes = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
-                        etree.SubElement(constraint_separacionExamenes, "Weight_Percentage").text = str(restriccion.getObligatoria())
-                        etree.SubElement(constraint_separacionExamenes, "Consecutive_If_Same_Day").text = "false"
-                        etree.SubElement(constraint_separacionExamenes, "Number_of_Activities").text = "2"
-                        etree.SubElement(constraint_separacionExamenes, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
-                        etree.SubElement(constraint_separacionExamenes, "Activity_Id").text = str(restriccion.getDatos()["Actividad2"].getIdActividad())
-                        etree.SubElement(constraint_separacionExamenes, "MinDays").text = str(restriccion.getDatos()["Separacion"])
-                        etree.SubElement(constraint_separacionExamenes, "Active").text = "true"
-                        etree.SubElement(constraint_separacionExamenes, "Comments").text = ""
+                        constraint_separacionclases = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
+                        etree.SubElement(constraint_separacionclases, "Weight_Percentage").text = str(restriccion.getObligatoria())
+                        etree.SubElement(constraint_separacionclases, "Consecutive_If_Same_Day").text = "false"
+                        etree.SubElement(constraint_separacionclases, "Number_of_Activities").text = str(len(restriccion.getDatos()["Actividades"]))
+                        for actividad in restriccion.getDatos()["Actividades"]:
+                            etree.SubElement(constraint_separacionclases, "Activity_Id").text = str(actividad.getIdActividad())
+                        etree.SubElement(constraint_separacionclases, "MinDays").text = str(restriccion.getDatos()["Separacion"])
+                        etree.SubElement(constraint_separacionclases, "Active").text = "true"
+                        etree.SubElement(constraint_separacionclases, "Comments").text = ""
     else:
         for restriccion in restriccionesTiempo:
             if restriccion.getEstado():
@@ -278,9 +278,9 @@ def exportarFET(path, institucion, dias, horas, asignaturas, alumnos, actividade
                         constraint_separacionclases = etree.SubElement(time_constraints, "ConstraintMinDaysBetweenActivities")
                         etree.SubElement(constraint_separacionclases, "Weight_Percentage").text = str(restriccion.getObligatoria())
                         etree.SubElement(constraint_separacionclases, "Consecutive_If_Same_Day").text = "false"
-                        etree.SubElement(constraint_separacionclases, "Number_of_Activities").text = "2"
-                        etree.SubElement(constraint_separacionclases, "Activity_Id").text = str(restriccion.getDatos()["Actividad"].getIdActividad())
-                        etree.SubElement(constraint_separacionclases, "Activity_Id").text = str(restriccion.getDatos()["Actividad2"].getIdActividad())
+                        etree.SubElement(constraint_separacionclases, "Number_of_Activities").text = str(len(restriccion.getDatos()["Actividades"]))
+                        for actividad in restriccion.getDatos()["Actividades"]:
+                            etree.SubElement(constraint_separacionclases, "Activity_Id").text = str(actividad.getIdActividad())
                         etree.SubElement(constraint_separacionclases, "MinDays").text = str(restriccion.getDatos()["Separacion"])
                         etree.SubElement(constraint_separacionclases, "Active").text = "true"
                         etree.SubElement(constraint_separacionclases, "Comments").text = ""

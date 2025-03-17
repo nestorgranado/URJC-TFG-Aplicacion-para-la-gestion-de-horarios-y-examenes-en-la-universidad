@@ -344,6 +344,12 @@ class Actividad:
     def setTipoAula(self, tipo):
         self.tipoAula = tipo
 
+    def addRestIndex(self, index):
+        self.restIndex = index
+    
+    def getRestIndex(self):
+        return self.restIndex
+
 class AlumnosTitulacion:
     def __init__(self, nombre):
         self.nombre = nombre
@@ -436,6 +442,9 @@ class Restriccion:
 
     def getDatos(self):
         return dict(self.datos)
+    
+    def setDatos(self, datos):
+        self.datos = datos
 
     def getEstado(self):
         return self.activo

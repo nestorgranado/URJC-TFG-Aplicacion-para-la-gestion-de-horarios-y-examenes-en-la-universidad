@@ -98,7 +98,14 @@ class ImportarUI(QWidget, Ui_importar):
 
             # Dividir funcionalida si el archivo es xml o no
             if extension in ['.xls', '.xlsx', '.csv']:
-                titulaciones, campuses, aulasPorCampus, aulasPorTipo = importarInstitucion(path) # Importación de datos
+                titulaciones, campuses, aulasPorCampusImp, aulasPorTipoImp = importarInstitucion(path) # Importación de datos
+                if aulasPorCampusImp and aulasPorTipoImp:
+                    if aulasPorCampus and aulasPorTipo:
+                        aulasPorCampus = {clave: aulasPorCampus.get(clave, []) + aulasPorCampusImp.get(clave, []) for clave in set(aulasPorCampus) | set(aulasPorCampusImp)}
+                        aulasPorTipo = {clave: aulasPorTipo.get(clave, []) + aulasPorTipoImp.get(clave, []) for clave in set(aulasPorTipo) | set(aulasPorTipoImp)}
+                    else:
+                        aulasPorCampus = aulasPorCampusImp
+                        aulasPorTipo = aulasPorTipoImp
             elif extension == '.xml':
                 institucion, alumnos, diasSemana, horasDia, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipoHorario = importarXML(path)
             else:
@@ -1111,8 +1118,7 @@ class Res_SeparacionDias(QWidget, Ui_res_separacionDias):
 
     def guardar(self):
         datos = {}
-        datos["Actividad"] = self.actividad1Dato
-        datos["Actividad2"] = self.actividad2Dato
+        datos["Actividades"] = [self.actividad1Dato, self.actividad2Dato]
         datos["Separacion"] = self.separacionText.value()
 
         nueva_restriccion = None
@@ -1433,6 +1439,8 @@ class ListaRestricionesCl(QWidget, Ui_ListaRestriccionesCl):
             match restriccion.getNombre():
                 case "RestriccionTurno" | "MaxHorasPorDia" | "MaxHuecosPorSemana":
                     self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Curso"] + "-" + estado)
+                case "RestriccionXDiasEntreActividades" | "SeparacionClasesMismaAsignatura":
+                    self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividades"][0].getAsignatura() + "-" + estado)
                 case _:
                     self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
         for restriccion in self.restriccionesL:
@@ -1815,19 +1823,21 @@ class ModificarClase(QWidget, Ui_ModificarClases):
         self.nuevasHijas = []
         for i in range(1, len(self.duraciones)):
             try: 
-                actividadHija = self.hijas[i-1]
                 self.hijas[i-1].setDuracion(self.duraciones[i])
                 self.hijas[i-1].setDuracionTotal(self.duracionTotal)
                 self.nuevasHijas.append(self.hijas[i-1])
             except IndexError:
-                nuevaID = self.clase.getIdActividad() + len(self.hijas)
+                nuevaID = self.clase.getIdActividad() + len(self.hijas) + 1
                 nuevaSesion = Actividad(nuevaID, self.clase.getIdGrupo(), self.clase.getAsignatura(), self.clase.getTitulacion(), self.clase.getCampus(), self.clase.getCurso(), self.duraciones[i], self.duracionTotal, self.clase.getTipoAula())
                 self.nuevasHijas.append(nuevaSesion)
             
         self.clase.setActividadesHija(self.nuevasHijas)
         self.clases[self.index] = self.clase
         self.actualizarIdActividad()
+        global actividades, restriccionesTiempo
         actividades = self.clases
+
+        restriccionesTiempo[self.clase.getRestIndex()].setDatos({"Actividades": [self.clase] + self.nuevasHijas, "Separacion": 1})
 
         self.close()
 
@@ -1941,9 +1951,10 @@ class ClasesUI(QWidget, Ui_Clases):
                         nuevaActividad2 = Actividad(idActividad + 1, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
                         nuevaActividad1.addActividadesHija(nuevaActividad2)
 
-                        separacionClases = Restriccion("SeparacionClasesMismaAsignatura", {"Actividad": nuevaActividad1, "Actividad2": nuevaActividad2, "Separacion": 1}, True, True)
+                        separacionClases = Restriccion("SeparacionClasesMismaAsignatura", {"Actividades": [nuevaActividad1, nuevaActividad2], "Separacion": 1}, True, True)
 
                         restriccionesTiempo.append(separacionClases)
+                        nuevaActividad1.addRestIndex(len(restriccionesTiempo) - 1)
 
                         cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad1)
                         #cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad2)

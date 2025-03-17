@@ -260,6 +260,22 @@ def importarXML(path):
 
             datos["Actividad2"] = Actividad(idAct2, idGrupo2, asig2, titList2, campus2, cursos2, duracion2, duracionTot2, tipoAula2)
 
+        # Importar lista de actividades si existe
+        actividadesXML = datosXML.find('Actividades')
+        if actividadesXML is not None:
+            for actividadXML in actividadesXML.findall("Actividad"):
+                idAct = int(actividadXML.find('Id').text)
+                idGrupo = int(actividadXML.find('IdGrupo').text)
+                asig = actividadXML.find('Asignatura').text
+                titList = actividadXML.find('Titulaciones').text.split(", ")
+                campus = actividadXML.find('Campus').text
+                cursos = actividadXML.find('Cursos').text.split(", ")
+                duracion = int(actividadXML.find('Duracion').text)
+                duracionTot = int(actividadXML.find('DuracionTotal').text)
+                tipoAula = actividadXML.find('TipoAula').text
+
+                datos["Actividades"].append(Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula))
+
         # Importar separacion si existe
         separacionXML = datosXML.find('Separacion')
         if separacionXML is not None:
