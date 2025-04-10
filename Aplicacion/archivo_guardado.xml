@@ -106,854 +106,6 @@
                         <Tipo>SEMINARIO</Tipo>
                         <AulaCombinada>False</AulaCombinada>
                     </Aula>
-                    <Aula>
-                        <Número>AulaClaseCombinada1</Número>
-                        <CapacidadClase>0</CapacidadClase>
-                        <CapacidadExamen>200</CapacidadExamen>
-                        <Tipo>AULA</Tipo>
-                        <AulaCombinada>True</AulaCombinada>
-                        <NúmeroCombinaciones>40</NúmeroCombinaciones>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 001</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 001</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 001</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 001</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 001</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 001</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 001</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 002</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 002</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 002</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 002</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA MAGNA 003</Número>
-                                <CapacidadClase>244</CapacidadClase>
-                                <CapacidadExamen>96</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 002</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 002</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 002</Número>
-                                <CapacidadClase>80</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 104</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>64</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 105</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>58</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 104</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>64</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 105</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>58</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 101</Número>
-                                <CapacidadClase>86</CapacidadClase>
-                                <CapacidadExamen>43</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 104</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>64</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 105</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>58</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 106</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>40</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 004</Número>
-                                <CapacidadClase>96</CapacidadClase>
-                                <CapacidadExamen>73</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA INFORMATICA 109</Número>
-                                <CapacidadClase>75</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 104</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>64</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 105</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>58</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 101</Número>
-                                <CapacidadClase>86</CapacidadClase>
-                                <CapacidadExamen>43</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 104</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>64</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 105</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>58</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 106</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>40</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 005</Número>
-                                <CapacidadClase>94</CapacidadClase>
-                                <CapacidadExamen>72</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA INFORMATICA 109</Número>
-                                <CapacidadClase>75</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 101</Número>
-                                <CapacidadClase>86</CapacidadClase>
-                                <CapacidadExamen>43</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 104</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>64</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 105</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>58</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 106</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>40</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 006</Número>
-                                <CapacidadClase>104</CapacidadClase>
-                                <CapacidadExamen>77</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA INFORMATICA 109</Número>
-                                <CapacidadClase>75</CapacidadClase>
-                                <CapacidadExamen>39</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                        <Combinación>
-                            <NúmeroAulas>3</NúmeroAulas>
-                            <Aula>
-                                <Número>AULA 104</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>64</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 105</Número>
-                                <CapacidadClase>79</CapacidadClase>
-                                <CapacidadExamen>58</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                            <Aula>
-                                <Número>AULA 107</Número>
-                                <CapacidadClase>124</CapacidadClase>
-                                <CapacidadExamen>91</CapacidadExamen>
-                                <Tipo>AULA</Tipo>
-                            </Aula>
-                        </Combinación>
-                    </Aula>
                 </Edificio>
                 <Edificio>
                     <Nombre>AULARIO 2(MÓSTOLES)</Nombre>
@@ -11868,82 +11020,117 @@
         </AlumnosTitulacion>
     </Cursos>
     <DiasPorSemana>
-        <NuemroDias>25</NuemroDias>
-        <Dia>
-            <Nombre>Lunes1</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Martes1</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Miercoles1</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Jueves1</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Viernes1</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Sabados1</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Lunes2</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Martes2</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Miercoles2</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Jueves2</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Viernes2</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Sabados2</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Lunes3</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Martes3</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Miercoles3</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Jueves3</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Viernes3</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Sabados3</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Lunes4</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Martes4</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Miercoles4</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Jueves4</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Viernes4</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Sabados4</Nombre>
-        </Dia>
-        <Dia>
-            <Nombre>Lunes5</Nombre>
-        </Dia>
+        <Clases>
+            <NuemroDias>10</NuemroDias>
+            <Dia>
+                <Nombre>Lunes</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Martes</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Miercoles</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Jueves</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Viernes</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>NuevoDia1</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>NuevoDia2</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>NuevoDia3</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>NuevoDia4</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>NuevoDia5</Nombre>
+            </Dia>
+        </Clases>
+        <Examenes>
+            <NuemroDias>25</NuemroDias>
+            <Dia>
+                <Nombre>Lunes1</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Martes1</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Miercoles1</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Jueves1</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Viernes1</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Sabados1</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Lunes2</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Martes2</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Miercoles2</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Jueves2</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Viernes2</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Sabados2</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Lunes3</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Martes3</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Miercoles3</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Jueves3</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Viernes3</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Sabados3</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Lunes4</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Martes4</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Miercoles4</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Jueves4</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Viernes4</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Sabados4</Nombre>
+            </Dia>
+            <Dia>
+                <Nombre>Lunes5</Nombre>
+            </Dia>
+        </Examenes>
     </DiasPorSemana>
     <HorasporDia>
         <NuemroHoras>13</NuemroHoras>
@@ -14247,7 +13434,7 @@
             <Cursos>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA, DOBLE GRADO EN DISEÑO Y DESARROLLO DE VIDEOJUEGOS E INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA</Cursos>
             <Duracion>2</Duracion>
             <DuracionTotal>2</DuracionTotal>
-            <TipoAula>AULA MAGNA</TipoAula>
+            <TipoAula>TODAS</TipoAula>
         </Actividad>
         <Actividad>
             <Id>2</Id>
@@ -16521,65 +15708,6 @@
                 <Obligatoria>True</Obligatoria>
                 <Activa>True</Activa>
             </Restriccion>
-            <Restriccion>
-                <Nombre>RestriccionXDiasEntreActividades</Nombre>
-                <Datos>
-                    <Actividad>
-                        <Id>1</Id>
-                        <IdGrupo>0</IdGrupo>
-                        <Asignatura>LOGICA Y MATEMATICA DISCRETA</Asignatura>
-                        <Titulaciones>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES), DOBLE GRADO EN DISEÑO Y DESARROLLO DE VIDEOJUEGOS E INGENIERIA DE COMPUTADORES (MOSTOLES)</Titulaciones>
-                        <Campus>MOSTOLES</Campus>
-                        <Cursos>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA, DOBLE GRADO EN DISEÑO Y DESARROLLO DE VIDEOJUEGOS E INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA</Cursos>
-                        <Duracion>2</Duracion>
-                        <DuracionTotal>2</DuracionTotal>
-                        <TipoAula>AULA MAGNA</TipoAula>
-                    </Actividad>
-                    <Actividad2>
-                        <Id>3</Id>
-                        <IdGrupo>0</IdGrupo>
-                        <Asignatura>FUNDAMENTOS FISICOS DE LOS COMPUTADORES</Asignatura>
-                        <Titulaciones>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES), DOBLE GRADO EN INGENIERIA INFORMATICA E INGENIERIA DE COMPUTADORES (MOSTOLES)</Titulaciones>
-                        <Campus>MOSTOLES</Campus>
-                        <Cursos>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES)-FUNDAMENTOS FISICOS DE LOS COMPUTADORES, DOBLE GRADO EN INGENIERIA INFORMATICA E INGENIERIA DE COMPUTADORES (MOSTOLES)-FUNDAMENTOS FISICOS DE LOS COMPUTADORES</Cursos>
-                        <Duracion>2</Duracion>
-                        <DuracionTotal>2</DuracionTotal>
-                        <TipoAula>TODAS</TipoAula>
-                    </Actividad2>
-                    <Separacion>3</Separacion>
-                </Datos>
-                <Obligatoria>True</Obligatoria>
-                <Activa>True</Activa>
-            </Restriccion>
-            <Restriccion>
-                <Nombre>RestriccionExamenesMismoDia</Nombre>
-                <Datos>
-                    <Actividad>
-                        <Id>1</Id>
-                        <IdGrupo>0</IdGrupo>
-                        <Asignatura>LOGICA Y MATEMATICA DISCRETA</Asignatura>
-                        <Titulaciones>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES), DOBLE GRADO EN DISEÑO Y DESARROLLO DE VIDEOJUEGOS E INGENIERIA DE COMPUTADORES (MOSTOLES)</Titulaciones>
-                        <Campus>MOSTOLES</Campus>
-                        <Cursos>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA, DOBLE GRADO EN DISEÑO Y DESARROLLO DE VIDEOJUEGOS E INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA</Cursos>
-                        <Duracion>2</Duracion>
-                        <DuracionTotal>2</DuracionTotal>
-                        <TipoAula>AULA MAGNA</TipoAula>
-                    </Actividad>
-                    <Actividad2>
-                        <Id>8</Id>
-                        <IdGrupo>0</IdGrupo>
-                        <Asignatura>ALGEBRA</Asignatura>
-                        <Titulaciones>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES)</Titulaciones>
-                        <Campus>MOSTOLES</Campus>
-                        <Cursos>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES)-ALGEBRA</Cursos>
-                        <Duracion>2</Duracion>
-                        <DuracionTotal>2</DuracionTotal>
-                        <TipoAula>TODAS</TipoAula>
-                    </Actividad2>
-                </Datos>
-                <Obligatoria>False</Obligatoria>
-                <Activa>True</Activa>
-            </Restriccion>
         </RestriccionesTiempo>
         <RestriccionesLugar>
             <Restriccion>
@@ -16596,25 +15724,6 @@
                         <DuracionTotal>0</DuracionTotal>
                         <TipoAula>TODAS</TipoAula>
                     </Actividad>
-                </Datos>
-                <Obligatoria>True</Obligatoria>
-                <Activa>True</Activa>
-            </Restriccion>
-            <Restriccion>
-                <Nombre>RestriccionAulaPreferida</Nombre>
-                <Datos>
-                    <Actividad>
-                        <Id>1</Id>
-                        <IdGrupo>0</IdGrupo>
-                        <Asignatura>LOGICA Y MATEMATICA DISCRETA</Asignatura>
-                        <Titulaciones>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES), DOBLE GRADO EN DISEÑO Y DESARROLLO DE VIDEOJUEGOS E INGENIERIA DE COMPUTADORES (MOSTOLES)</Titulaciones>
-                        <Campus>MOSTOLES</Campus>
-                        <Cursos>GRADO EN INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA, DOBLE GRADO EN DISEÑO Y DESARROLLO DE VIDEOJUEGOS E INGENIERIA DE COMPUTADORES (MOSTOLES)-LOGICA Y MATEMATICA DISCRETA</Cursos>
-                        <Duracion>2</Duracion>
-                        <DuracionTotal>2</DuracionTotal>
-                        <TipoAula>AULA MAGNA</TipoAula>
-                    </Actividad>
-                    <Tipo>AULA MAGNA</Tipo>
                 </Datos>
                 <Obligatoria>True</Obligatoria>
                 <Activa>True</Activa>

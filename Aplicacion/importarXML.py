@@ -152,16 +152,26 @@ def importarXML(path):
             alumnosTit.agregar_curso(alumnosCur)
         alumnos.append(alumnosTit)
     
-    # Importar Días y Horas
+    # Importar Días
     diasListXML =  root.find("DiasPorSemana")
-    horasListXML =  root.find("HorasporDia")
-    diasSemana = Dias()
-    horasDia = Horas()
 
+    diasClaseXML = diasListXML.find("Clases")
+    diasSemanaClase = Dias()
     dias = []
-    for diaXML in diasListXML.findall('Dia'):
+    for diaXML in diasClaseXML.findall('Dia'):
         dias.append(diaXML.find('Nombre').text)
-    diasSemana.setDias(dias)
+    diasSemanaClase.setDias(dias)
+
+    diasExamenesXML = diasListXML.find("Examenes")
+    diasSemanaExamen = Dias()
+    dias = []
+    for diaXML in diasExamenesXML.findall('Dia'):
+        dias.append(diaXML.find('Nombre').text)
+    diasSemanaExamen.setDias(dias)
+
+    # Importar Horas
+    horasListXML =  root.find("HorasporDia")
+    horasDia = Horas()
 
     horas = []
     for horaXML in horasListXML.findall('Hora'):
@@ -379,5 +389,5 @@ def importarXML(path):
 
         restriccionesLugar.append(Restriccion(nombreRest, datos, obligatoria, activa))
 
-    return institucion, alumnos, diasSemana, horasDia, actividades, asignaturas, aulasCampus_dict, aulasTipo_dict, actividadesCuros, restriccionesTiempo, restriccionesLugar, tipo
+    return institucion, alumnos, diasSemanaClase, diasSemanaExamen, horasDia, actividades, asignaturas, aulasCampus_dict, aulasTipo_dict, actividadesCuros, restriccionesTiempo, restriccionesLugar, tipo
 
