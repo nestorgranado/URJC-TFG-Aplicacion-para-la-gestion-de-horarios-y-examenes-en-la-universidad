@@ -171,12 +171,20 @@ def importarXML(path):
 
     # Importar Horas
     horasListXML =  root.find("HorasporDia")
-    horasDia = Horas()
 
+    horasClaseXML = horasListXML.find("Clases")
+    horasDiaClase = Horas()
     horas = []
-    for horaXML in horasListXML.findall('Hora'):
+    for horaXML in horasClaseXML.findall('Hora'):
         horas.append(horaXML.find('Nombre').text)
-    horasDia.setHoras(horas)
+    horasDiaClase.setHoras(horas)
+
+    horasExamenesXML = horasListXML.find("Examenes")
+    horasDiaExamen = Horas()
+    horas = []
+    for horaXML in horasExamenesXML.findall('Hora'):
+        horas.append(horaXML.find('Nombre').text)
+    horasDiaExamen.setHoras(horas)
 
     # Importar Asignaturas
     asignaturasListXML = root.find("Asignaturas")
@@ -389,5 +397,5 @@ def importarXML(path):
 
         restriccionesLugar.append(Restriccion(nombreRest, datos, obligatoria, activa))
 
-    return institucion, alumnos, diasSemanaClase, diasSemanaExamen, horasDia, actividades, asignaturas, aulasCampus_dict, aulasTipo_dict, actividadesCuros, restriccionesTiempo, restriccionesLugar, tipo
+    return institucion, alumnos, diasSemanaClase, diasSemanaExamen, horasDiaClase, horasDiaExamen, actividades, asignaturas, aulasCampus_dict, aulasTipo_dict, actividadesCuros, restriccionesTiempo, restriccionesLugar, tipo
 

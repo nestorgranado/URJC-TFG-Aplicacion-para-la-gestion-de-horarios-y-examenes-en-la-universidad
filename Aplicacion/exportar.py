@@ -109,11 +109,19 @@ def exportarDias(root, diasSemanaClases, diasSemanaExamenes):
         ET.SubElement(diaXML, "Nombre").text = dia
 
 # Exportar Horas por Día
-def exportarHoras(root, horasDia):
-    ET.SubElement(root, "NuemroHoras").text = str(horasDia.getNumHoras())
+def exportarHoras(root, horasDiaClases, horasDiaExamenes):
+    clasesXML = ET.SubElement(root, "Clases")
+    ET.SubElement(clasesXML, "NuemroHoras").text = str(horasDiaClases.getNumHoras())
 
-    for hora in horasDia.getHoras():
-        horaXML = ET.SubElement(root, "Hora")
+    for hora in horasDiaClases.getHoras():
+        horaXML = ET.SubElement(clasesXML, "Hora")
+        ET.SubElement(horaXML, "Nombre").text = hora
+
+    examenesXML = ET.SubElement(root, "Examenes")
+    ET.SubElement(examenesXML, "NuemroHoras").text = str(horasDiaExamenes.getNumHoras())
+
+    for hora in horasDiaExamenes.getHoras():
+        horaXML = ET.SubElement(examenesXML, "Hora")
         ET.SubElement(horaXML, "Nombre").text = hora
 
 # Exportar Asignaturas
@@ -260,7 +268,7 @@ def exportarRestricciones(root, restriccionesT, restriccionesL):
         ET.SubElement(restriccionXML, "Obligatoria").text = str(restriccion.isObligatoria())
         ET.SubElement(restriccionXML, "Activa").text = str(restriccion.getActividad())
 
-def exportar(path, universidad, alumnos, diasClases, diasExamenes, horas, asignaturas, actividades, restriccionesT, restriccionesL, tipo):
+def exportar(path, universidad, alumnos, diasClases, diasExamenes, horasClases, horasExamenes, asignaturas, actividades, restriccionesT, restriccionesL, tipo):
     # Crear elementos raiz
     root = ET.Element("Datos")                              # Raiz archivo XML
     ET.SubElement(root, "Horario").text = tipo              # Crear Elemento para saber el tipo de horario
@@ -283,7 +291,7 @@ def exportar(path, universidad, alumnos, diasClases, diasExamenes, horas, asigna
 
     # Exportar los dias y las horas
     exportarDias(diasXML, diasClases, diasExamenes)
-    exportarHoras(horasXML, horas)
+    exportarHoras(horasXML, horasClases, horasExamenes)
 
     # Exportar asignaturas
     if asignaturas:

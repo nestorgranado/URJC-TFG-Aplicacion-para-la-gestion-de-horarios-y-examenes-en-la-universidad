@@ -84,7 +84,7 @@ class ImportarUI(QWidget, Ui_importar):
         self.examinarBtn.clicked.connect(self.seleccionarArchivo) # Funcionalidad botón selecionar archivo
 
     def guardar(self):
-        global institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDia, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipoHorario
+        global institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipoHorario
         titulaciones = []
         campuses = []
         error = ""
@@ -107,7 +107,7 @@ class ImportarUI(QWidget, Ui_importar):
                         aulasPorCampus = aulasPorCampusImp
                         aulasPorTipo = aulasPorTipoImp
             elif extension == '.xml':
-                institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDia, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipoHorario = importarXML(path)
+                institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, tipoHorario = importarXML(path)
             else:
                 error = (f"Error: el formato '{extension}' no es soportado")
 
@@ -1359,7 +1359,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                         file_path += ".fet"
                     
                     # Guardar el archivo en la ruta seleccionada
-                    exportarFET(file_path, institucion, diasSemanaExamenes, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
+                    exportarFET(file_path, institucion, diasSemanaExamenes, horasDiaExamenes, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Examen")
                 
                 # Obtener el directorio base del archivo .fet
                 base_dir = os.path.dirname(file_path)
@@ -1412,7 +1412,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "Examen")
+            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "Examen")
 
     def mostrarModificarExamenUI(self):
         self.modificarExamenUI = ModificarExamen()
@@ -1847,7 +1847,7 @@ class OtrosHorariosUI(QWidget, Ui_otrosHorarios):
         self.setupUi(self)
 
         self.totalDias = diasSemanaClases.getDias()
-        self.totalHoras = horasDia.getHoras()
+        self.totalHoras = horasDiaClases.getHoras()
 
         self.numDiasText.setValue(5)
         self.numHorasText.setValue(13)
@@ -1899,9 +1899,9 @@ class OtrosHorariosUI(QWidget, Ui_otrosHorarios):
                 i+=1
 
     def guardar(self):
-        global diasSemanaClases, horasDia
+        global diasSemanaClases, horasDiaClases
         diasSemanaClases.setDias([self.listaDias.item(i).text() for i in range(self.listaDias.count())])
-        horasDia.setHoras([self.listaHoras.item(i).text() for i in range(self.listaHoras.count())])
+        horasDiaClases.setHoras([self.listaHoras.item(i).text() for i in range(self.listaHoras.count())])
         self.close()
 
 class ClasesUI(QWidget, Ui_Clases):
@@ -1996,13 +1996,13 @@ class ClasesUI(QWidget, Ui_Clases):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "Clase")
+            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "Clase")
 
     def nuevoHorario(self):
         if self.semanal.isChecked():
-                global diasSemanaClases, horasDia
+                global diasSemanaClases, horasDiaClases
                 diasSemanaClases = Dias()
-                horasDia = Horas()
+                horasDiaClases = Horas()
 
         global ruta_fet
         ruta_carpeta = os.path.dirname(ruta_fet)
@@ -2021,7 +2021,7 @@ class ClasesUI(QWidget, Ui_Clases):
                         file_path += ".fet"
                     
                     # Guardar el archivo en la ruta seleccionada
-                    exportarFET(file_path, institucion, diasSemanaClases, horasDia, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Clase")
+                    exportarFET(file_path, institucion, diasSemanaClases, horasDiaClases, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesTiempo, restriccionesLugar, "Clase")
                 
                 # Obtener el directorio base del archivo .fet
                 base_dir = os.path.dirname(file_path)
@@ -2139,7 +2139,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDia, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "")
+            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actividades, restriccionesTiempo, restriccionesLugar, "")
 
     def mostrarImportUI(self):
         self.importUI = ImportarUI()
@@ -2182,11 +2182,10 @@ if __name__ == '__main__':
     aulasPorTipo = {}                   # Aulas separadas por Tipo de aula
         # Dias y horas
     diasSemanaClases = Dias()                 
-    #horasDiaClases = Horas()  
+    horasDiaClases = Horas()  
     diasSemanaExamenes = Dias()                 
-    #horasDiaExamenes = Horas()   
-
-    horasDia = Horas()             
+    horasDiaExamenes = Horas()   
+                
         # Actividades
     actividades = []                    # Actividades (Examenes, Clases)
     actividadesPorCuros = {}            # Examenes separados por Curso

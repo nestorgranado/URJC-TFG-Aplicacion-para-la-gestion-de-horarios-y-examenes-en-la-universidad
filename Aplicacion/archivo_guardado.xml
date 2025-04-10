@@ -11021,7 +11021,7 @@
     </Cursos>
     <DiasPorSemana>
         <Clases>
-            <NuemroDias>10</NuemroDias>
+            <NuemroDias>5</NuemroDias>
             <Dia>
                 <Nombre>Lunes</Nombre>
             </Dia>
@@ -11036,21 +11036,6 @@
             </Dia>
             <Dia>
                 <Nombre>Viernes</Nombre>
-            </Dia>
-            <Dia>
-                <Nombre>NuevoDia1</Nombre>
-            </Dia>
-            <Dia>
-                <Nombre>NuevoDia2</Nombre>
-            </Dia>
-            <Dia>
-                <Nombre>NuevoDia3</Nombre>
-            </Dia>
-            <Dia>
-                <Nombre>NuevoDia4</Nombre>
-            </Dia>
-            <Dia>
-                <Nombre>NuevoDia5</Nombre>
             </Dia>
         </Clases>
         <Examenes>
@@ -11133,46 +11118,93 @@
         </Examenes>
     </DiasPorSemana>
     <HorasporDia>
-        <NuemroHoras>13</NuemroHoras>
-        <Hora>
-            <Nombre>09:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>10:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>11:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>12:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>13:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>14:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>15:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>16:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>17:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>18:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>19:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>20:00</Nombre>
-        </Hora>
-        <Hora>
-            <Nombre>21:00</Nombre>
-        </Hora>
+        <Clases>
+            <NuemroHoras>14</NuemroHoras>
+            <Hora>
+                <Nombre>09:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>10:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>11:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>12:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>13:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>14:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>15:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>16:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>17:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>18:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>19:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>20:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>NuevaHora1</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>NuevaHora2</Nombre>
+            </Hora>
+        </Clases>
+        <Examenes>
+            <NuemroHoras>13</NuemroHoras>
+            <Hora>
+                <Nombre>09:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>10:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>11:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>12:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>13:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>14:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>15:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>16:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>17:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>18:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>19:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>20:00</Nombre>
+            </Hora>
+            <Hora>
+                <Nombre>21:00</Nombre>
+            </Hora>
+        </Examenes>
     </HorasporDia>
     <Asignaturas>
         <Asignatura>
