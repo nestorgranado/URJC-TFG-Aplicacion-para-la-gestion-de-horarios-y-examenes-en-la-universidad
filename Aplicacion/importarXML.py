@@ -26,9 +26,6 @@ def importarXML(path):
     tree = ET.parse(path)
     # Obtener a raiz de XML
     root = tree.getroot()
-
-    # Tipo Horario
-    tipo = root.find('Horario').text
     
     # Crear la institución
     instituciónXML = root.find('Institucion')
@@ -232,170 +229,180 @@ def importarXML(path):
         actividadesCuros[str(titList[0] + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
 
     # Importar Restricciones
+    restriccionesClases = {"RestriccionesTiempo": [], "RestriccionesLugar": []}
+    restriccionesExamenes = {"RestriccionesTiempo": [], "RestriccionesLugar": []}
+
     restriccionesListXML = root.find('Restricciones')
-    # Restricciones de Tiempo
-    restriccionesTListXML = restriccionesListXML.find('RestriccionesTiempo')
-    restriccionesTiempo = []
-    for restriccionXML in restriccionesTListXML.findall('Restriccion'):
-        nombreRest = restriccionXML.find('Nombre').text
-        obligatoria = restriccionXML.find('Obligatoria').text
-        activa = restriccionXML.find('Activa').text
-        datos = {}
-        datosXML = restriccionXML.find('Datos')
-        # Importat actividad si existe
-        actividadXML = datosXML.find('Actividad')
-        if actividadXML is not None:
-            idAct = int(actividadXML.find('Id').text)
-            idGrupo = int(actividadXML.find('IdGrupo').text)
-            asig = actividadXML.find('Asignatura').text
-            if idAct == 0:
-                titList = []
-                campus = ""
-                cursos = []
-            else:
-                titList = actividadXML.find('Titulaciones').text.split(", ")
-                campus = actividadXML.find('Campus').text
-                cursos = actividadXML.find('Cursos').text.split(", ")
+    i = 0
+    for tipoHorario in [restriccionesClases, restriccionesExamenes]:
+        tipoHorarioXML = None
+        if i == 0:
+            tipoHorarioXML = restriccionesListXML.find("Clases")
+        elif i == 1:
+            tipoHorarioXML = restriccionesListXML.find("Examenes")
 
-            duracion = int(actividadXML.find('Duracion').text)
-            duracionTot = int(actividadXML.find('DuracionTotal').text)
-            tipoAula = actividadXML.find('TipoAula').text
-
-            datos["Actividad"] = Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula)
-
-        # Importar actividad2 si existe
-        actividad2XML = datosXML.find('Actividad2')
-        if actividad2XML is not None:
-            idAct2 = int(actividad2XML.find('Id').text)
-            idGrupo2 = int(actividad2XML.find('IdGrupo').text)
-            asig2 = actividad2XML.find('Asignatura').text
-            titList2 = actividad2XML.find('Titulaciones').text.split(", ")
-            campus2 = actividad2XML.find('Campus').text
-            cursos2 = actividad2XML.find('Cursos').text.split(", ")
-            duracion2 = int(actividad2XML.find('Duracion').text)
-            duracionTot2 = int(actividad2XML.find('DuracionTotal').text)
-            tipoAula2 = actividad2XML.find('TipoAula').text
-
-            datos["Actividad2"] = Actividad(idAct2, idGrupo2, asig2, titList2, campus2, cursos2, duracion2, duracionTot2, tipoAula2)
-
-        # Importar lista de actividades si existe
-        actividadesXML = datosXML.find('Actividades')
-        if actividadesXML is not None:
-            for actividadXML in actividadesXML.findall("Actividad"):
+        restriccionesTListXML = tipoHorarioXML.find('RestriccionesTiempo')
+        for restriccionXML in restriccionesTListXML.findall('Restriccion'):
+            nombreRest = restriccionXML.find('Nombre').text
+            obligatoria = restriccionXML.find('Obligatoria').text
+            activa = restriccionXML.find('Activa').text
+            datos = {}
+            datosXML = restriccionXML.find('Datos')
+            # Importat actividad si existe
+            actividadXML = datosXML.find('Actividad')
+            if actividadXML is not None:
                 idAct = int(actividadXML.find('Id').text)
                 idGrupo = int(actividadXML.find('IdGrupo').text)
                 asig = actividadXML.find('Asignatura').text
-                titList = actividadXML.find('Titulaciones').text.split(", ")
-                campus = actividadXML.find('Campus').text
-                cursos = actividadXML.find('Cursos').text.split(", ")
+                if idAct == 0:
+                    titList = []
+                    campus = ""
+                    cursos = []
+                else:
+                    titList = actividadXML.find('Titulaciones').text.split(", ")
+                    campus = actividadXML.find('Campus').text
+                    cursos = actividadXML.find('Cursos').text.split(", ")
+
                 duracion = int(actividadXML.find('Duracion').text)
                 duracionTot = int(actividadXML.find('DuracionTotal').text)
                 tipoAula = actividadXML.find('TipoAula').text
 
-                datos["Actividades"].append(Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula))
+                datos["Actividad"] = Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula)
 
-        # Importar separacion si existe
-        separacionXML = datosXML.find('Separacion')
-        if separacionXML is not None:
-            datos["Separacion"] = int(separacionXML.text)
+            # Importar actividad2 si existe
+            actividad2XML = datosXML.find('Actividad2')
+            if actividad2XML is not None:
+                idAct2 = int(actividad2XML.find('Id').text)
+                idGrupo2 = int(actividad2XML.find('IdGrupo').text)
+                asig2 = actividad2XML.find('Asignatura').text
+                titList2 = actividad2XML.find('Titulaciones').text.split(", ")
+                campus2 = actividad2XML.find('Campus').text
+                cursos2 = actividad2XML.find('Cursos').text.split(", ")
+                duracion2 = int(actividad2XML.find('Duracion').text)
+                duracionTot2 = int(actividad2XML.find('DuracionTotal').text)
+                tipoAula2 = actividad2XML.find('TipoAula').text
 
-        # Importar tipoAula si existe
-        tipoXML = datosXML.find('Tipo')
-        if tipoXML is not None:
-            datos["Tipo"] = tipoXML.text
+                datos["Actividad2"] = Actividad(idAct2, idGrupo2, asig2, titList2, campus2, cursos2, duracion2, duracionTot2, tipoAula2)
 
-        # Importar Curso si existe
-        cursoXML = datosXML.find('Curso')
-        if cursoXML is not None:
-            datos["Curso"] = cursoXML.text
-        
-        # Importar HoraInicio y HoraFin si existe
-        iniXML = datosXML.find('HoraIni')
-        finXML = datosXML.find('HoraFin')
-        if None not in (iniXML, finXML):
-            datos["HoraIni"] = iniXML.text
-            datos["HoraFin"] = finXML.text
+            # Importar lista de actividades si existe
+            actividadesXML = datosXML.find('Actividades')
+            if actividadesXML is not None:
+                datos["Actividades"] = []
+                for actividadXML in actividadesXML.findall("Actividad"):
+                    idAct = int(actividadXML.find('Id').text)
+                    idGrupo = int(actividadXML.find('IdGrupo').text)
+                    asig = actividadXML.find('Asignatura').text
+                    titList = actividadXML.find('Titulaciones').text.split(", ")
+                    campus = actividadXML.find('Campus').text
+                    cursos = actividadXML.find('Cursos').text.split(", ")
+                    duracion = int(actividadXML.find('Duracion').text)
+                    duracionTot = int(actividadXML.find('DuracionTotal').text)
+                    tipoAula = actividadXML.find('TipoAula').text
 
-        # Importar Horas si existe
-        horasXML = datosXML.find('Horas')
-        if horasXML is not None:
-            datos["Horas"] = horasXML.text 
+                    datos["Actividades"].append(Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula))
 
-        restriccionesTiempo.append(Restriccion(nombreRest, datos, obligatoria, activa))
+            # Importar separacion si existe
+            separacionXML = datosXML.find('Separacion')
+            if separacionXML is not None:
+                datos["Separacion"] = int(separacionXML.text)
 
-    # Restricciones de Lugar
-    restriccionesLListXML = restriccionesListXML.find('RestriccionesLugar')
-    restriccionesLugar = []
-    for restriccionXML in restriccionesLListXML.findall('Restriccion'):
-        nombreRest = restriccionXML.find('Nombre').text
-        obligatoria = restriccionXML.find('Obligatoria').text
-        activa = restriccionXML.find('Activa').text
-        datos = {}
-        datosXML = restriccionXML.find('Datos')
-        # Importat actividad si existe
-        actividadXML = datosXML.find('Actividad')
-        if actividadXML is not None:
-            idAct = int(actividadXML.find('Id').text)
-            idGrupo = int(actividadXML.find('IdGrupo').text)
-            asig = actividadXML.find('Asignatura').text
-            if idAct == 0:
-                titList = []
-                campus = ""
-                cursos = []
-            else:
-                titList = actividadXML.find('Titulaciones').text.split(", ")
-                campus = actividadXML.find('Campus').text
-                cursos = actividadXML.find('Cursos').text.split(", ")
+            # Importar tipoAula si existe
+            tipoXML = datosXML.find('Tipo')
+            if tipoXML is not None:
+                datos["Tipo"] = tipoXML.text
 
-            duracion = int(actividadXML.find('Duracion').text)
-            duracionTot = int(actividadXML.find('DuracionTotal').text)
-            tipoAula = actividadXML.find('TipoAula').text
+            # Importar Curso si existe
+            cursoXML = datosXML.find('Curso')
+            if cursoXML is not None:
+                datos["Curso"] = cursoXML.text
+            
+            # Importar HoraInicio y HoraFin si existe
+            iniXML = datosXML.find('HoraIni')
+            finXML = datosXML.find('HoraFin')
+            if None not in (iniXML, finXML):
+                datos["HoraIni"] = iniXML.text
+                datos["HoraFin"] = finXML.text
 
-            datos["Actividad"] = Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula)
+            # Importar Horas si existe
+            horasXML = datosXML.find('Horas')
+            if horasXML is not None:
+                datos["Horas"] = horasXML.text 
 
-        # Importar actividad2 si existe
-        actividad2XML = datosXML.find('Actividad2')
-        if actividad2XML is not None:
-            idAct2 = int(actividad2XML.find('Id').text)
-            idGrupo2 = int(actividad2XML.find('IdGrupo').text)
-            asig2 = actividad2XML.find('Asignatura').text
-            titList2 = actividad2XML.find('Titulaciones').text.split(", ")
-            campus2 = actividad2XML.find('Campus').text
-            cursos2 = actividad2XML.find('Cursos').text.split(", ")
-            duracion2 = int(actividad2XML.find('Duracion').text)
-            duracionTot2 = int(actividad2XML.find('DuracionTotal').text)
-            tipoAula2 = actividad2XML.find('TipoAula').text
+            tipoHorario["RestriccionesTiempo"].append(Restriccion(nombreRest, datos, obligatoria, activa))
 
-            datos["Actividad2"] = Actividad(idAct2, idGrupo2, asig2, titList2, campus2, cursos2, duracion2, duracionTot2, tipoAula2)
+        # Restricciones de Lugar
+        restriccionesLListXML = tipoHorarioXML.find('RestriccionesLugar')
+        for restriccionXML in restriccionesLListXML.findall('Restriccion'):
+            nombreRest = restriccionXML.find('Nombre').text
+            obligatoria = restriccionXML.find('Obligatoria').text
+            activa = restriccionXML.find('Activa').text
+            datos = {}
+            datosXML = restriccionXML.find('Datos')
+            # Importat actividad si existe
+            actividadXML = datosXML.find('Actividad')
+            if actividadXML is not None:
+                idAct = int(actividadXML.find('Id').text)
+                idGrupo = int(actividadXML.find('IdGrupo').text)
+                asig = actividadXML.find('Asignatura').text
+                if idAct == 0:
+                    titList = []
+                    campus = ""
+                    cursos = []
+                else:
+                    titList = actividadXML.find('Titulaciones').text.split(", ")
+                    campus = actividadXML.find('Campus').text
+                    cursos = actividadXML.find('Cursos').text.split(", ")
 
-        # Importar separacion si existe
-        separacionXML = datosXML.find('Separacion')
-        if separacionXML is not None:
-            datos["Separacion"] = int(separacionXML.text)
+                duracion = int(actividadXML.find('Duracion').text)
+                duracionTot = int(actividadXML.find('DuracionTotal').text)
+                tipoAula = actividadXML.find('TipoAula').text
 
-        # Importar tipoAula si existe
-        tipoXML = datosXML.find('Tipo')
-        if tipoXML is not None:
-            datos["Tipo"] = tipoXML.text
+                datos["Actividad"] = Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula)
 
-        # Importar Curso si existe
-        cursoXML = datosXML.find('Curso')
-        if cursoXML is not None:
-            datos["Curso"] = cursoXML.text
-        
-        # Importar HoraInicio y HoraFin si existe
-        iniXML = datosXML.find('HoraIni')
-        finXML = datosXML.find('HoraFin')
-        if None not in (iniXML, finXML):
-            datos["HoraIni"] = iniXML.text
-            datos["HoraFin"] = finXML.text
+            # Importar actividad2 si existe
+            actividad2XML = datosXML.find('Actividad2')
+            if actividad2XML is not None:
+                idAct2 = int(actividad2XML.find('Id').text)
+                idGrupo2 = int(actividad2XML.find('IdGrupo').text)
+                asig2 = actividad2XML.find('Asignatura').text
+                titList2 = actividad2XML.find('Titulaciones').text.split(", ")
+                campus2 = actividad2XML.find('Campus').text
+                cursos2 = actividad2XML.find('Cursos').text.split(", ")
+                duracion2 = int(actividad2XML.find('Duracion').text)
+                duracionTot2 = int(actividad2XML.find('DuracionTotal').text)
+                tipoAula2 = actividad2XML.find('TipoAula').text
 
-        # Importar Horas si existe
-        horasXML = datosXML.find('Horas')
-        if horasXML is not None:
-            datos["Horas"] = horasXML.text 
+                datos["Actividad2"] = Actividad(idAct2, idGrupo2, asig2, titList2, campus2, cursos2, duracion2, duracionTot2, tipoAula2)
 
-        restriccionesLugar.append(Restriccion(nombreRest, datos, obligatoria, activa))
+            # Importar separacion si existe
+            separacionXML = datosXML.find('Separacion')
+            if separacionXML is not None:
+                datos["Separacion"] = int(separacionXML.text)
 
-    return institucion, alumnos, diasSemanaClase, diasSemanaExamen, horasDiaClase, horasDiaExamen, actividades, asignaturas, aulasCampus_dict, aulasTipo_dict, actividadesCuros, restriccionesTiempo, restriccionesLugar, tipo
+            # Importar tipoAula si existe
+            tipoXML = datosXML.find('Tipo')
+            if tipoXML is not None:
+                datos["Tipo"] = tipoXML.text
+
+            # Importar Curso si existe
+            cursoXML = datosXML.find('Curso')
+            if cursoXML is not None:
+                datos["Curso"] = cursoXML.text
+            
+            # Importar HoraInicio y HoraFin si existe
+            iniXML = datosXML.find('HoraIni')
+            finXML = datosXML.find('HoraFin')
+            if None not in (iniXML, finXML):
+                datos["HoraIni"] = iniXML.text
+                datos["HoraFin"] = finXML.text
+
+            # Importar Horas si existe
+            horasXML = datosXML.find('Horas')
+            if horasXML is not None:
+                datos["Horas"] = horasXML.text 
+
+            tipoHorario["RestriccionesLugar"].append(Restriccion(nombreRest, datos, obligatoria, activa))
+        i += 1
+
+    return institucion, alumnos, diasSemanaClase, diasSemanaExamen, horasDiaClase, horasDiaExamen, actividades, asignaturas, aulasCampus_dict, aulasTipo_dict, actividadesCuros, restriccionesClases, restriccionesExamenes
 
