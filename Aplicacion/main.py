@@ -84,7 +84,7 @@ class ImportarUI(QWidget, Ui_importar):
         self.examinarBtn.clicked.connect(self.seleccionarArchivo) # Funcionalidad botón selecionar archivo
 
     def guardar(self):
-        global institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesClases, restriccionesExamenes
+        global institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, actClases, actExamenes, asignaturasElegidas, aulasPorCampus, aulasPorTipo, clasesPorCuros, examenesPorCuros, restriccionesClases, restriccionesExamenes
         titulaciones = []
         campuses = []
         error = ""
@@ -107,7 +107,7 @@ class ImportarUI(QWidget, Ui_importar):
                         aulasPorCampus = aulasPorCampusImp
                         aulasPorTipo = aulasPorTipoImp
             elif extension == '.xml':
-                institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, actividades, asignaturasElegidas, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesClases, restriccionesExamenes = importarXML(path)
+                institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, actClases, actExamenes, asignaturasElegidas, aulasPorCampus, aulasPorTipo, clasesPorCuros, examenesPorCuros, restriccionesClases, restriccionesExamenes = importarXML(path)
             else:
                 error = (f"Error: el formato '{extension}' no es soportado")
 
@@ -965,7 +965,13 @@ class Res_TipoAula(QWidget, Ui_res_tipoAula):
         super().__init__()
         self.setupUi(self) 
 
-        self.actividades = list(actividades)
+        global actClases, actExamenes
+        self.actividades = None
+        match tipoHorario:
+            case "Clase": 
+                self.actividades = list(actClases)
+            case "Examen":
+                self.actividades = list(actExamenes)
         self.campus = institucion.getCampus()
         self.restriccion = restriccion
         self.restIndex = restIndex
@@ -1033,7 +1039,13 @@ class Res_MismoDia(QWidget, Ui_res_mismoDia):
         super().__init__()
         self.setupUi(self) 
 
-        self.actividades = list(actividades)
+        global actClases, actExamenes
+        self.actividades = None
+        match tipoHorario:
+            case "Clase": 
+                self.actividades = list(actClases)
+            case "Examen":
+                self.actividades = list(actExamenes)
         self.restriccion = restriccion
         self.restIndex = restIndex
 
@@ -1097,7 +1109,14 @@ class Res_SeparacionDias(QWidget, Ui_res_separacionDias):
         super().__init__()
         self.setupUi(self) 
 
-        self.actividades = list(actividades)
+        global actClases, actExamenes
+        self.actividades = None
+        match tipoHorario:
+            case "Clase": 
+                self.actividades = list(actClases)
+            case "Examen":
+                self.actividades = list(actExamenes)
+
         self.restriccion = restriccion
         self.restIndex = restIndex
         self.tipo = tipo
@@ -1205,7 +1224,7 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
         for titulacion in self.titulaciones:
             self.titulacionText.addItem(titulacion.getNombre())
         
-        self.actividades = list(actividades)
+        self.actividades = list(actExamenes)
 
         self.titulacionText.currentIndexChanged.connect(self.actualizar_examenes)
         self.actividadesList.itemClicked.connect(self.updateLineEditText)
@@ -1253,7 +1272,8 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
             self.index = None
 
     def guardar(self):
-        actividades = list(self.actividades)
+        global actExamenes
+        actExamenes = list(self.actividades)
         self.close()        
 
 class ExamenesUI(QWidget, Ui_Examenes):
@@ -1278,44 +1298,45 @@ class ExamenesUI(QWidget, Ui_Examenes):
         self.crearHorario.clicked.connect(self.nuevoHorario)
 
     def crearExamenes(self):
-        global restriccionesExamenes, actividadesPorCuros
-        # Activar Restricciones automáticas
-        restriccion48h = Restriccion("MismoCursoSeparado48h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesExamenes["RestriccionesTiempo"].append(restriccion48h)
-        restricion24h = Restriccion("CursosConsecutivosSeparado24h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesExamenes["RestriccionesTiempo"].append(restricion24h)
+        global actExamenes, restriccionesExamenes, examenesPorCuros
+        if not actExamenes:
+            # Activar Restricciones automáticas
+            restriccion48h = Restriccion("MismoCursoSeparado48h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesExamenes["RestriccionesTiempo"].append(restriccion48h)
+            restricion24h = Restriccion("CursosConsecutivosSeparado24h", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesExamenes["RestriccionesTiempo"].append(restricion24h)
 
-        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesExamenes["RestriccionesLugar"].append(restriccionCampus)
+            restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesExamenes["RestriccionesLugar"].append(restriccionCampus)
 
-        asignaturasUsadas = set()
-        idActividad = 1
-        cursos_dict = defaultdict(list)
-        for tit in self.titulaciones:
-            campus = tit.getCampus()
-            for asignatura in tit.getAsignaturas():
-                if asignatura.getNombre() not in asignaturasUsadas:
-                    asignaturasElegidas.append(asignatura)
-                    asignaturasUsadas.add(asignatura.getNombre())
-                    estudiantes = []
-                    titulaciones = []
-                    curso = tit.getNombre() + "-" + asignatura.getNombre()
-                    if tit.getNombre() not in listaNegraAsignaturas:
-                        estudiantes.append(curso)
-                    titulaciones.append(asignatura.getTitulacion())
-                    for hija in asignatura.getAsignaturas_hijas():
-                        cursoHija = hija[0] + "-" + hija[1]
-                        if hija[0] not in listaNegraAsignaturas:
-                            estudiantes.append(cursoHija)
-                        titulaciones.append(hija[0])
-                        asignaturasUsadas.add(hija[1])
+            asignaturasUsadas = set()
+            idActividad = 1
+            cursos_dict = defaultdict(list)
+            for tit in self.titulaciones:
+                campus = tit.getCampus()
+                for asignatura in tit.getAsignaturas():
+                    if asignatura.getNombre() not in asignaturasUsadas:
+                        asignaturasElegidas.append(asignatura)
+                        asignaturasUsadas.add(asignatura.getNombre())
+                        estudiantes = []
+                        titulaciones = []
+                        curso = tit.getNombre() + "-" + asignatura.getNombre()
+                        if tit.getNombre() not in listaNegraAsignaturas:
+                            estudiantes.append(curso)
+                        titulaciones.append(asignatura.getTitulacion())
+                        for hija in asignatura.getAsignaturas_hijas():
+                            cursoHija = hija[0] + "-" + hija[1]
+                            if hija[0] not in listaNegraAsignaturas:
+                                estudiantes.append(cursoHija)
+                            titulaciones.append(hija[0])
+                            asignaturasUsadas.add(hija[1])
 
-                    nuevaActividad = Actividad(idActividad, 0, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 2, "TODAS")
-                    cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
-                    idActividad += 1
-                    actividades.append(nuevaActividad)
-        
-        actividadesPorCuros = cursos_dict
+                        nuevaActividad = Actividad(idActividad, 0, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 2, "TODAS")
+                        cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
+                        idActividad += 1
+                        actExamenes.append(nuevaActividad)
+            
+            examenesPorCuros = cursos_dict
     
     def crearCurso(self):
         if not alumnos:
@@ -1388,7 +1409,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                         file_path += ".fet"
                     
                     # Guardar el archivo en la ruta seleccionada
-                    exportarFET(file_path, institucion, diasSemanaExamenes, horasDiaExamenes, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesExamenes["RestriccionesTiempo"], restriccionesExamenes["RestriccionesLugar"], "Examen")
+                    exportarFET(file_path, institucion, diasSemanaExamenes, horasDiaExamenes, asignaturasElegidas, alumnos, actExamenes, aulasPorCampus, aulasPorTipo, examenesPorCuros, restriccionesExamenes["RestriccionesTiempo"], restriccionesExamenes["RestriccionesLugar"], "Examen")
                 
                 # Obtener el directorio base del archivo .fet
                 base_dir = os.path.dirname(file_path)
@@ -1441,7 +1462,7 @@ class ExamenesUI(QWidget, Ui_Examenes):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actividades, restriccionesClases, restriccionesExamenes)
+            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actClases, actExamenes, restriccionesClases, restriccionesExamenes)
 
     def mostrarModificarExamenUI(self):
         self.modificarExamenUI = ModificarExamen()
@@ -1583,8 +1604,13 @@ class Res_Turno(QWidget, Ui_res_turno):
                 self.cursoText.addItem(cusoNum)
 
     def getCurso(self):
+        global actClases, actExamenes
         self.cursoName = self.titulacionText.currentText()  + "-" +  self.cursoText.currentText()
-        self.actividades = actividadesPorCuros[self.cursoName]
+        match (tipoHorario):
+            case "Clase":
+                self.actividades  = clasesPorCuros[self.cursoName]
+            case "Examen":
+                self.actividades  = examenesPorCuros[self.cursoName]
 
     def guardar(self):
         dato = {"Curso": self.cursoName, "HoraIni": self.horaIniText.time().toString("HH:mm"), "HoraFin": self.horaFinText.time().toString("HH:mm")}
@@ -1759,7 +1785,7 @@ class ModificarClase(QWidget, Ui_ModificarClases):
         super().__init__()
         self.setupUi(self)
 
-        self.clases = list(actividades)
+        self.clases = list(actClases)
         self.duraciones = []
         self.duracionTotal = 0
 
@@ -1887,8 +1913,8 @@ class ModificarClase(QWidget, Ui_ModificarClases):
         self.clase.setActividadesHija(self.nuevasHijas)
         self.clases[self.index] = self.clase
         self.actualizarIdActividad()
-        global actividades, restriccionesClases
-        actividades = self.clases
+        global actClases, restriccionesClases
+        actClases = self.clases
 
         restriccionesClases["RestriccionesTiempo"][self.clase.getRestIndex()].setDatos({"Actividades": [self.clase] + self.nuevasHijas, "Separacion": 1})
 
@@ -1974,48 +2000,47 @@ class ClasesUI(QWidget, Ui_Clases):
         self.restricciones.clicked.connect(self.mostrarRestriccionesUI)
 
     def crearClases(self):
-        global restriccionesClases, actividadesPorCuros
-        restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
-        restriccionesClases["RestriccionesLugar"].append(restriccionCampus)
+        global actClases, restriccionesClases, clasesPorCuros
+        if not actClases:
+            restriccionCampus = Restriccion("MismoCampusDondeSeImparte", {"Actividad": Actividad(0, 0, "Todas", [], "", [], 0, 0, "TODAS")}, True, True)
+            restriccionesClases["RestriccionesLugar"].append(restriccionCampus)
 
-        asignaturasUsadas = set()
-        idActividad = 1
-        cursos_dict = defaultdict(list)
-        for tit in self.titulaciones:
-            campus = tit.getCampus()
-            for asignatura in tit.getAsignaturas():
-                if asignatura.getNombre() not in asignaturasUsadas:
-                    asignaturasElegidas.append(asignatura)
-                    asignaturasUsadas.add(asignatura.getNombre())
-                    estudiantes = []
-                    titulaciones = []
-                    curso = tit.getNombre() + "-" + asignatura.getNombre()
-                    if tit.getNombre() not in listaNegraAsignaturas:
-                        estudiantes.append(curso)
-                    titulaciones.append(asignatura.getTitulacion())
-                    for hija in asignatura.getAsignaturas_hijas():
-                        cursoHija = hija[0] + "-" + hija[1]
-                        if hija[0] not in listaNegraAsignaturas:
-                            estudiantes.append(cursoHija)
-                        titulaciones.append(hija[0])
-                        asignaturasUsadas.add(hija[1])
+            asignaturasUsadas = set()
+            idActividad = 1
+            cursos_dict = defaultdict(list)
+            for tit in self.titulaciones:
+                campus = tit.getCampus()
+                for asignatura in tit.getAsignaturas():
+                    if asignatura.getNombre() not in asignaturasUsadas:
+                        asignaturasElegidas.append(asignatura)
+                        asignaturasUsadas.add(asignatura.getNombre())
+                        estudiantes = []
+                        titulaciones = []
+                        curso = tit.getNombre() + "-" + asignatura.getNombre()
+                        if tit.getNombre() not in listaNegraAsignaturas:
+                            estudiantes.append(curso)
+                        titulaciones.append(asignatura.getTitulacion())
+                        for hija in asignatura.getAsignaturas_hijas():
+                            cursoHija = hija[0] + "-" + hija[1]
+                            if hija[0] not in listaNegraAsignaturas:
+                                estudiantes.append(cursoHija)
+                            titulaciones.append(hija[0])
+                            asignaturasUsadas.add(hija[1])
 
-                    nuevaActividad1 = Actividad(idActividad, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
-                    nuevaActividad2 = Actividad(idActividad + 1, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
-                    nuevaActividad1.addActividadesHija(nuevaActividad2)
+                        nuevaActividad1 = Actividad(idActividad, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
+                        nuevaActividad2 = Actividad(idActividad + 1, idActividad, asignatura.getNombre(), titulaciones, campus, estudiantes, 2, 4, "TODAS")
+                        nuevaActividad1.addActividadesHija(nuevaActividad2)
 
-                    separacionClases = Restriccion("SeparacionClasesMismaAsignatura", {"Actividades": [nuevaActividad1, nuevaActividad2], "Separacion": 1}, True, True)
+                        separacionClases = Restriccion("SeparacionClasesMismaAsignatura", {"Actividades": [nuevaActividad1, nuevaActividad2], "Separacion": 1}, True, True)
 
-                    restriccionesClases["RestriccionesTiempo"].append(separacionClases)
-                    nuevaActividad1.addRestIndex(len(restriccionesClases["RestriccionesTiempo"]) - 1)
+                        restriccionesClases["RestriccionesTiempo"].append(separacionClases)
+                        nuevaActividad1.addRestIndex(len(restriccionesClases["RestriccionesTiempo"]) - 1)
 
-                    cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad1)
-                    #cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad2)
-                    idActividad += 2
-                    actividades.append(nuevaActividad1)
-                    #actividades.append(nuevaActividad2)
-    
-        actividadesPorCuros = cursos_dict
+                        cursos_dict[str(tit.getNombre() + "-" + str(asignatura.getCurso()))].append(nuevaActividad1)
+                        idActividad += 2
+                        actClases.append(nuevaActividad1)
+        
+            clasesPorCuros = cursos_dict
 
     def crearCurso(self):
         if not alumnos:
@@ -2049,7 +2074,7 @@ class ClasesUI(QWidget, Ui_Clases):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actividades, restriccionesClases, restriccionesExamenes)
+            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actClases, actExamenes, restriccionesClases, restriccionesExamenes)
 
     def nuevoHorario(self):
         if self.semanal.isChecked():
@@ -2074,7 +2099,7 @@ class ClasesUI(QWidget, Ui_Clases):
                         file_path += ".fet"
                     
                     # Guardar el archivo en la ruta seleccionada
-                    exportarFET(file_path, institucion, diasSemanaClases, horasDiaClases, asignaturasElegidas, alumnos, actividades, aulasPorCampus, aulasPorTipo, actividadesPorCuros, restriccionesClases["RestriccionesTiempo"], restriccionesClases["RestriccionesLugar"], "Clase")
+                    exportarFET(file_path, institucion, diasSemanaClases, horasDiaClases, asignaturasElegidas, alumnos, actClases, aulasPorCampus, aulasPorTipo, clasesPorCuros, restriccionesClases["RestriccionesTiempo"], restriccionesClases["RestriccionesLugar"], "Clase")
                 
                 # Obtener el directorio base del archivo .fet
                 base_dir = os.path.dirname(file_path)
@@ -2196,7 +2221,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 file_path += ".xml"
             
             # Guardar el archivo en la ruta seleccionada
-            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actividades, restriccionesClases, restriccionesExamenes)
+            exportar(file_path, institucion, alumnos, diasSemanaClases, diasSemanaExamenes, horasDiaClases, horasDiaExamenes, asignaturasElegidas, actClases, actExamenes, restriccionesClases, restriccionesExamenes)
 
     def mostrarImportUI(self):
         self.importUI = ImportarUI()
@@ -2243,9 +2268,13 @@ if __name__ == '__main__':
     diasSemanaExamenes = Dias()                 
     horasDiaExamenes = Horas()   
                 
-        # Actividades
-    actividades = []                    # Actividades (Examenes, Clases)
-    actividadesPorCuros = {}            # Examenes separados por Curso
+        # Actividades             
+    actClases = []
+    actExamenes = []
+        # Actividades separados por Curso
+    examenesPorCuros = {}           
+    clasesPorCuros = {}             
+
         # Restricciones
     restriccionesClases = {"RestriccionesTiempo": [], "RestriccionesLugar": []}
     restriccionesExamenes = {"RestriccionesTiempo": [], "RestriccionesLugar": []}

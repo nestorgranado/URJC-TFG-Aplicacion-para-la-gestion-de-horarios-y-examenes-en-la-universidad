@@ -280,6 +280,7 @@ class Actividad:
         self.duracionTotal = duracionTotal
         self.actividadesHija = []
         self.tipoAula = tipoAula
+        self.restIndex = None
 
     def getIdActividad(self):
         return self.idActividad

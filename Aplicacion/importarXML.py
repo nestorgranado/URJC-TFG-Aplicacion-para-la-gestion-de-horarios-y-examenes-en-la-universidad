@@ -209,24 +209,58 @@ def importarXML(path):
     
     # Importar Actividades
     actividadesListXML = root.find('Actividades')
-    actividades = []
-    actividadesCuros = defaultdict(list)
+    actividadesClases = []
+    actividadesExamenes = []
+    clasesCuros = defaultdict(list)
+    examenesCuros = defaultdict(list)
 
-    for actividadXML in actividadesListXML.findall('Actividad'):
-        idAct = int(actividadXML.find('Id').text)
-        idGrupo = int(actividadXML.find('IdGrupo').text)
-        asig = actividadXML.find('Asignatura').text
-        titList = actividadXML.find('Titulaciones').text.split(", ")
-        campus = actividadXML.find('Campus').text
-        cursos = actividadXML.find('Cursos').text.split(", ")
-        duracion = int(actividadXML.find('Duracion').text)
-        duracionTot = int(actividadXML.find('DuracionTotal').text)
-        tipoAula = actividadXML.find('TipoAula').text
+    i = 0
+    for (tipoHorario, tipoCurso) in zip([actividadesClases, actividadesExamenes], [clasesCuros, examenesCuros]):
+        tipoHorarioXML = None
+        if i == 0:
+            tipoHorarioXML = actividadesListXML.find("Clases")
+        elif i == 1:
+            tipoHorarioXML = actividadesListXML.find("Examenes")
 
-        nuevaActividad = Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula)
-        actividades.append(nuevaActividad)
-        asignatura = buscarAsignatura(asig, asignaturas)
-        actividadesCuros[str(titList[0] + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
+        for actividadXML in tipoHorarioXML.findall('Actividad'):
+            idAct = int(actividadXML.find('Id').text)
+            idGrupo = int(actividadXML.find('IdGrupo').text)
+            asig = actividadXML.find('Asignatura').text
+            titList = actividadXML.find('Titulaciones').text.split(", ")
+            campus = actividadXML.find('Campus').text
+            cursos = actividadXML.find('Cursos').text.split(", ")
+            duracion = int(actividadXML.find('Duracion').text)
+            duracionTot = int(actividadXML.find('DuracionTotal').text)
+            tipoAula = actividadXML.find('TipoAula').text
+
+            nuevaActividad = Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula)
+
+            actividadesHijasXML = actividadXML.find('ActividadesHijas')
+            if actividadesHijasXML is not None:
+                for actividadHijaXML in actividadesHijasXML.findall('ActividadHija'):
+                    idAct = int(actividadHijaXML.find('Id').text)
+                    idGrupo = int(actividadHijaXML.find('IdGrupo').text)
+                    asig = actividadHijaXML.find('Asignatura').text
+                    titList = actividadHijaXML.find('Titulaciones').text.split(", ")
+                    campus = actividadHijaXML.find('Campus').text
+                    cursos = actividadHijaXML.find('Cursos').text.split(", ")
+                    duracion = int(actividadHijaXML.find('Duracion').text)
+                    duracionTot = int(actividadHijaXML.find('DuracionTotal').text)
+                    tipoAula = actividadHijaXML.find('TipoAula').text
+
+                    nuevaActividadHija = Actividad(idAct, idGrupo, asig, titList, campus, cursos, duracion, duracionTot, tipoAula)
+                    nuevaActividad.addActividadesHija(nuevaActividadHija)
+
+            restIndexXML = actividadXML.find('RestIndex')
+            if restIndexXML is not None:
+                restIndex = actividadXML.find('RestIndex').text
+                nuevaActividad.addRestIndex(int(restIndex))
+
+            tipoHorario.append(nuevaActividad)
+            asignatura = buscarAsignatura(asig, asignaturas)
+            tipoCurso[str(titList[0] + "-" + str(asignatura.getCurso()))].append(nuevaActividad)
+
+        i += 1
 
     # Importar Restricciones
     restriccionesClases = {"RestriccionesTiempo": [], "RestriccionesLugar": []}
@@ -404,5 +438,5 @@ def importarXML(path):
             tipoHorario["RestriccionesLugar"].append(Restriccion(nombreRest, datos, obligatoria, activa))
         i += 1
 
-    return institucion, alumnos, diasSemanaClase, diasSemanaExamen, horasDiaClase, horasDiaExamen, actividades, asignaturas, aulasCampus_dict, aulasTipo_dict, actividadesCuros, restriccionesClases, restriccionesExamenes
+    return institucion, alumnos, diasSemanaClase, diasSemanaExamen, horasDiaClase, horasDiaExamen, actividadesClases, actividadesExamenes, asignaturas, aulasCampus_dict, aulasTipo_dict, clasesCuros, examenesCuros, restriccionesClases, restriccionesExamenes
 
