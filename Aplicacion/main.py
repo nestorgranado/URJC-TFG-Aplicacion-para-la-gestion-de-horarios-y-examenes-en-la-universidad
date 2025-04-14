@@ -638,6 +638,7 @@ class AulaCombinadaUI(QWidget, Ui_CrearAulaCombinada):
         self.aulas = self.edificios[self.edificio_index].getAulas() # Obtener las aulas del edificio seleccionado
 
     def crearAulas(self):
+        global totalAulasCombinadas, aulasPorTipo
         cantidad = self.cantidadText.value()
         capacidad = self.capacidadText.value()
         tAula = self.tipoAulaText.currentText()
@@ -667,18 +668,18 @@ class AulaCombinadaUI(QWidget, Ui_CrearAulaCombinada):
             for i in range(cantidad):
                 newAula = None
                 if self.tipoHorario == "Clase":
-                    newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", self.edificios[self.edificio_index].getNombre(), capacidad, 0, tAula, listaCombinaciones)
+                    newAula = AulaCombinada(f"AulaClaseCombinadaClase{totalAulasCombinadas + i}", self.edificios[self.edificio_index].getNombre(), capacidad, 0, tAula, listaCombinaciones)
                     self.edificios[self.edificio_index].agregar_aula(newAula)
 
                 if self.tipoHorario == "Examen":
-                    newAula = AulaCombinada(f"AulaClaseCombinada{i+1}", self.edificios[self.edificio_index].getNombre(), 0, capacidad, tAula, listaCombinaciones)
+                    newAula = AulaCombinada(f"AulaClaseCombinadaExamen{totalAulasCombinadas + i}", self.edificios[self.edificio_index].getNombre(), 0, capacidad, tAula, listaCombinaciones)
                     self.edificios[self.edificio_index].agregar_aula(newAula)
                 
-                global aulasPorTipo
                 aulasPorTipo["TODAS"].append(newAula)
                 aulasPorTipo[tAula].append(newAula)
 
-                self.close()
+            totalAulasCombinadas += cantidad
+            self.close()
         else:
             self.error = DialogoError("No hay combinaciones de aulas que satisfagan esta restricción")
             self.error.exec()
@@ -2254,6 +2255,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 if __name__ == '__main__':
     # Ruta FET
     ruta_fet = "./fet-6.18.1/fet-cl.exe"
+
+    # Variables auxiliares
+    totalAulasCombinadas = 0
 
     # Datos Aplicación
     tipoHorario = ""                    #Tipo de horaio que se va ha realizar
