@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'modifyAsignaturaCJZVnh.ui'
+## Form generated from reading UI file 'modifyAsignaturarvEDHx.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -43,7 +43,7 @@ class Ui_ModificarAsignatura(object):
         self.splitter.addWidget(self.save)
         self.layoutWidget = QWidget(ModificarAsignatura)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(669, 358, 239, 26))
+        self.layoutWidget.setGeometry(QRect(380, 350, 239, 26))
         self.horizontalLayout = QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
@@ -64,31 +64,10 @@ class Ui_ModificarAsignatura(object):
 
         self.asignaturasHijas = QGroupBox(ModificarAsignatura)
         self.asignaturasHijas.setObjectName(u"asignaturasHijas")
-        self.asignaturasHijas.setGeometry(QRect(369, 378, 631, 451))
+        self.asignaturasHijas.setGeometry(QRect(369, 388, 631, 461))
         self.listHijas = QListWidget(self.asignaturasHijas)
         self.listHijas.setObjectName(u"listHijas")
-        self.listHijas.setGeometry(QRect(20, 40, 271, 391))
-        self.layoutWidget_2 = QWidget(self.asignaturasHijas)
-        self.layoutWidget_2.setObjectName(u"layoutWidget_2")
-        self.layoutWidget_2.setGeometry(QRect(300, 100, 239, 26))
-        self.horizontalLayout_2 = QHBoxLayout(self.layoutWidget_2)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.addHija = QPushButton(self.layoutWidget_2)
-        self.addHija.setObjectName(u"addHija")
-
-        self.horizontalLayout_2.addWidget(self.addHija)
-
-        self.modifyHija = QPushButton(self.layoutWidget_2)
-        self.modifyHija.setObjectName(u"modifyHija")
-
-        self.horizontalLayout_2.addWidget(self.modifyHija)
-
-        self.supHija = QPushButton(self.layoutWidget_2)
-        self.supHija.setObjectName(u"supHija")
-
-        self.horizontalLayout_2.addWidget(self.supHija)
-
+        self.listHijas.setGeometry(QRect(20, 40, 271, 411))
         self.nombreHijaText = QLineEdit(self.asignaturasHijas)
         self.nombreHijaText.setObjectName(u"nombreHijaText")
         self.nombreHijaText.setGeometry(QRect(375, 68, 241, 21))
@@ -101,6 +80,9 @@ class Ui_ModificarAsignatura(object):
         self.nombreHija = QLabel(self.asignaturasHijas)
         self.nombreHija.setObjectName(u"nombreHija")
         self.nombreHija.setGeometry(QRect(301, 68, 68, 16))
+        self.addHija = QPushButton(self.asignaturasHijas)
+        self.addHija.setObjectName(u"addHija")
+        self.addHija.setGeometry(QRect(300, 100, 121, 24))
         self.curso = QLabel(ModificarAsignatura)
         self.curso.setObjectName(u"curso")
         self.curso.setGeometry(QRect(380, 310, 31, 16))
@@ -145,11 +127,9 @@ class Ui_ModificarAsignatura(object):
         self.modify.setText(QCoreApplication.translate("ModificarAsignatura", u"Modificar", None))
         self.sup.setText(QCoreApplication.translate("ModificarAsignatura", u"Borrar", None))
         self.asignaturasHijas.setTitle(QCoreApplication.translate("ModificarAsignatura", u"Asignaturas Hijas", None))
-        self.addHija.setText(QCoreApplication.translate("ModificarAsignatura", u"A\u00f1adir", None))
-        self.modifyHija.setText(QCoreApplication.translate("ModificarAsignatura", u"Modificar", None))
-        self.supHija.setText(QCoreApplication.translate("ModificarAsignatura", u"Borrar", None))
         self.codigoHija.setText(QCoreApplication.translate("ModificarAsignatura", u"C\u00f3digo Hija", None))
         self.nombreHija.setText(QCoreApplication.translate("ModificarAsignatura", u"Nombre Hija", None))
+        self.addHija.setText(QCoreApplication.translate("ModificarAsignatura", u"A\u00f1adir", None))
         self.curso.setText(QCoreApplication.translate("ModificarAsignatura", u"Curso", None))
         self.codigo.setText(QCoreApplication.translate("ModificarAsignatura", u"C\u00f3digo", None))
         self.numAlumnos.setText(QCoreApplication.translate("ModificarAsignatura", u"N\u00famero alumnos", None))

@@ -45,8 +45,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>669</x>
-     <y>358</y>
+     <x>380</x>
+     <y>350</y>
      <width>239</width>
      <height>26</height>
     </rect>
@@ -79,9 +79,9 @@
    <property name="geometry">
     <rect>
      <x>369</x>
-     <y>378</y>
+     <y>388</y>
      <width>631</width>
-     <height>451</height>
+     <height>461</height>
     </rect>
    </property>
    <property name="title">
@@ -93,42 +93,9 @@
       <x>20</x>
       <y>40</y>
       <width>271</width>
-      <height>391</height>
+      <height>411</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QWidget" name="layoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>100</y>
-      <width>239</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QPushButton" name="addHija">
-       <property name="text">
-        <string>Añadir</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="modifyHija">
-       <property name="text">
-        <string>Modificar</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="supHija">
-       <property name="text">
-        <string>Borrar</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
    </widget>
    <widget class="QLineEdit" name="nombreHijaText">
     <property name="geometry">
@@ -174,6 +141,19 @@
     </property>
     <property name="text">
      <string>Nombre Hija</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="addHija">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>100</y>
+      <width>121</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Añadir</string>
     </property>
    </widget>
   </widget>

@@ -236,6 +236,8 @@ class Asignatura:
         self.asignaturas_hijas = asignaturasHijasList
     
     def getAsignaturas_hijas(self):
+        if self.asignaturas_hijas == None:
+            self.asignaturas_hijas = []
         return list(self.asignaturas_hijas)
 
 class Dias:

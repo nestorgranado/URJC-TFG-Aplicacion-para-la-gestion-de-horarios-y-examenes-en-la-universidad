@@ -709,9 +709,7 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         self.add.clicked.connect(self.agregar_elemento)
         self.sup.clicked.connect(self.borrar_elemento)
 
-        self.modifyHija.clicked.connect(self.modificar_hija)
         self.addHija.clicked.connect(self.agregar_hija)
-        self.supHija.clicked.connect(self.borrar_hija)
 
         self.save.clicked.connect(self.guardar) # guardar
         
@@ -769,15 +767,38 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
             # Obtener el nuevo texto del QLineEdit
             nuevo_codigo = self.codigoText.text()
             nuevo_nombre = self.nombreText.text()
-            nuevo_numAlumnos = str(self.numAlumnosText.value())
+            nuevo_numAlumnos = int(self.numAlumnosText.value())
             nuevo_curso = int(self.cursoText.text())
             
             # Actualizar el elemento
             self.asignaturas[self.asignatura_index].setCodigo(nuevo_codigo)
             self.asignaturas[self.asignatura_index].setNombre(nuevo_nombre)
-            self.asignaturas[self.asignatura_index].setNumAlumnos(nuevo_numAlumnos)
             self.asignaturas[self.asignatura_index].setCurso(nuevo_curso)
 
+            if self.asignaturas[self.asignatura_index].getAsignaturas_hijas() and self.asignaturas[self.asignatura_index].getNumAlumnos() != nuevo_numAlumnos:
+                self.asignaturas[self.asignatura_index].setNumAlumnos(nuevo_numAlumnos)
+
+                for hija in self.asignaturas[self.asignatura_index].getAsignaturas_hijas():
+                    salir = False
+                    i = 0
+                    titBuscada = hija[0]
+                    asigBuscada = hija[1]
+                    while not salir:
+                        if titBuscada == self.titulaciones[i].getNombre():
+                            listaAsignaturas = self.titulaciones[i].getAsignaturas()
+                            j = 0
+                            while not salir:
+                                if asigBuscada == listaAsignaturas[j].getNombre():
+                                    listaAsignaturas[j].setNumAlumnos(nuevo_numAlumnos)
+                                    salir = True
+                                j += 1
+                        i += 1
+            elif self.asignaturas[self.asignatura_index].getNumAlumnos() != nuevo_numAlumnos:
+                tupla = (self.asignaturas[self.asignatura_index].getTitulacion(), self.asignaturas[self.asignatura_index].getNombre())
+                for tit in self.titulaciones:
+                    for asig in tit.getAsignaturas():
+                        if tupla in asig.getAsignaturas_hijas():
+                            asig.setNumAlumnos(nuevo_numAlumnos)
          
             # Actualizar el elemento visualmente en el QListWidget
             nuevo_item = "(" + str(nuevo_codigo) + ") " + str(nuevo_nombre)
@@ -804,6 +825,14 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
 
     def borrar_elemento(self):
         if self.asignatura_index is not None:  # Verificar si hay un elemento seleccionado
+            # Eliminar elemento de la asignatura padre si tiene
+            if not self.asignaturas[self.asignatura_index].getAsignaturas_hijas():
+                tupla = (self.asignaturas[self.asignatura_index].getTitulacion(), self.asignaturas[self.asignatura_index].getNombre())
+                for tit in self.titulaciones:
+                    for asig in tit.getAsignaturas():
+                        listaHijas = asig.getAsignaturas_hijas()
+                        if tupla in listaHijas:
+                            asig.setAsignaturas_hijas(listaHijas.remove(tupla))
             # Eliminar el elemento
             del self.asignaturas[self.asignatura_index]
             
@@ -822,22 +851,6 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
             # Actualizar datos
             self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
 
-    def modificar_hija(self):
-        if self.hija_index is not None:  # Verificar si hay un elemento seleccionado
-            # Obtener el nuevo texto del QLineEdit
-            nuevo_hija = (self.codigoHijaText.text(), self.nombreHijaText.text())
-            
-            # Actualizar el elemento
-            self.hijas[self.hija_index] = nuevo_hija
-         
-            # Actualizar el elemento visualmente en el QListWidget
-            nuevo_item = "(" + str(self.codigoHijaText.text()) + ") " + str(self.nombreHijaText.text())
-            self.listHijas.item(self.hija_index).setText(nuevo_item)
-
-            # Actualizar datos
-            self.asignaturas[self.asignatura_index].setAsignaturas_hijas(self.hijas)
-            self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
-
     def agregar_hija(self):
         # Obtener el nuevo texto del QLineEdit
         nuevo_hija = (self.codigoHijaText.text(), self.nombreHijaText.text())
@@ -852,23 +865,6 @@ class ModificarAsignatura(QWidget, Ui_ModificarAsignatura):
         # Actualizar datos
         self.asignaturas[self.asignatura_index].setAsignaturas_hijas(self.hijas)
         self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
-
-    def borrar_hija(self):
-        if self.hija_index is not None:  # Verificar si hay un elemento seleccionado
-            # Eliminar el elemento
-            del self.hijas[self.hija_index]
-            
-            # Eliminar el elemento del QListWidget
-            self.listHijas.takeItem(self.hija_index)
-            
-            # Limpiar el QLineEdit y reiniciar el índice seleccionado
-            self.codigoHijaText.clear()
-            self.nombreHijaText.clear()
-            self.hija_index = None
-
-            # Actualizar datos
-            self.asignaturas[self.asignatura_index].setAsignaturas_hijas(self.hijas)
-            self.titulaciones[self.titulacion_index].setAsignaturas(self.asignaturas)
     
     def guardar(self):
         institucion.setTitulacion(self.titulaciones)
@@ -1234,21 +1230,28 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
         self.save.clicked.connect(self.guardar)
 
         self.index = None
+        self.actividadesBorradas = []
 
     def actualizar_examenes(self):
         self.titulacion_index = self.titulacionText.currentIndex() - 1
-        titName = self.titulaciones[self.titulacion_index].getNombre()
+        self.titName = self.titulaciones[self.titulacion_index].getNombre()
 
+        self.actividadesTitulacion = []
+        actividadesTitulacionNombre = []
         for actividad in self.actividades:
-            if titName in actividad.getTitulacion():
-                self.actividadesList.addItem(actividad.getAsignatura())
+            if self.titName in actividad.getTitulacion():
+                self.actividadesTitulacion.append(actividad)
+                actividadesTitulacionNombre.append(actividad.getAsignatura())
+
+        self.actividadesList.clear()
+        self.actividadesList.addItems(actividadesTitulacionNombre)
     
     def updateLineEditText(self, item):
         self.index = self.actividadesList.row(item)  # Guardar índice del elemento seleccionado
         # Rellenar los datos del elemneto selecionado
-        self.asignaturaText.setText(self.actividades[self.index].getAsignatura())
-        self.alumnosText.setText(", ".join(self.actividades[self.index].getCurso()))
-        self.duracionText.setValue(self.actividades[self.index].getDuracion())
+        self.asignaturaText.setText(self.actividadesTitulacion[self.index].getAsignatura())
+        self.alumnosText.setText(", ".join(self.actividadesTitulacion[self.index].getCurso()))
+        self.duracionText.setValue(self.actividadesTitulacion[self.index].getDuracion())
 
     def modificar_elemento(self):
         if self.index is not None:  # Verificar si hay un elemento seleccionado
@@ -1256,12 +1259,13 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
             nuevo_duracion = self.duracionText.value()
             
             # Actualizar el elemento
-            self.actividades[self.index].setDuracion(nuevo_duracion)
+            self.actividadesTitulacion[self.index].setDuracion(nuevo_duracion)
 
     def borrar_elemento(self):
         if self.index is not None:  # Verificar si hay un elemento seleccionado
             # Eliminar el elemento
-            del self.actividades[self.index]
+            self.actividadesBorradas.append(self.actividadesTitulacion[self.index])
+            del self.actividadesTitulacion[self.index]
             
             # Eliminar el elemento del QListWidget
             self.actividadesList.takeItem(self.index)
@@ -1274,6 +1278,18 @@ class ModificarExamen(QWidget, Ui_ModificarExamenes):
 
     def guardar(self):
         global actExamenes
+        if self.actividadesBorradas:
+            for actBorrada in self.actividadesBorradas:
+                self.actividades.remove(actBorrada)
+            i = 1
+            for actividad in self.actividades:
+                actividad.setIdActividad(i)
+                i += 1
+        for i in range(len(self.actividades)):
+            for actividadTit in self.actividadesTitulacion:
+                if self.actividades[i].getIdActividad() == actividadTit.getIdActividad():
+                    self.actividades[i] = actividadTit
+
         actExamenes = list(self.actividades)
         self.close()        
 

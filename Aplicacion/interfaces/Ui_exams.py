@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'examsGTdYKZ.ui'
+## Form generated from reading UI file 'examsFgcysK.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -105,7 +105,7 @@ class Ui_Examenes(object):
         Examenes.setWindowTitle(QCoreApplication.translate("Examenes", u"horarioEx", None))
         self.Title.setText(QCoreApplication.translate("Examenes", u"Examenes", None))
         self.Datos.setTitle(QCoreApplication.translate("Examenes", u"Datos", None))
-        self.modificar.setText(QCoreApplication.translate("Examenes", u"ModificarExamenes", None))
+        self.modificar.setText(QCoreApplication.translate("Examenes", u"Modificar Examenes", None))
         self.label.setText(QCoreApplication.translate("Examenes", u"Periodo de examenes", None))
         self.dias.setText(QCoreApplication.translate("Examenes", u"D\u00edas", None))
         self.aulasCombinadas.setText(QCoreApplication.translate("Examenes", u"Aulas Combinadas", None))

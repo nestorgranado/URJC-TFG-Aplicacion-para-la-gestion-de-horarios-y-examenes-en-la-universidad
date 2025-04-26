@@ -56,7 +56,7 @@
      <item>
       <widget class="QPushButton" name="modificar">
        <property name="text">
-        <string>ModificarExamenes</string>
+        <string>Modificar Examenes</string>
        </property>
       </widget>
      </item>
