@@ -34,7 +34,7 @@ def cargar_archivo_Titulaciones(path):
             "ASIG_HIJA": str
         })
     elif extension in ['.xls', '.xlsx']:
-        df = pd.read_excel(path, sheet_name="CompartenDetalleLimpio(leeme)", dtype={
+        df = pd.read_excel(path, sheet_name="listaTitulaciones", dtype={
             'COD_PLAN_PADRE': str,
             'PLAN_PADRE': str,
             'COD_ASIG_PADRE': str,
@@ -61,7 +61,7 @@ def cargar_archivo_Campus(path):
             'CAPACIDAD EXAMEN': int
         })
     elif extension in ['.xls', '.xlsx']:
-        df = pd.read_excel(path, sheet_name="ESPACIOS", dtype={
+        df = pd.read_excel(path, sheet_name="campus", dtype={
             'CAMPUS': str,
             'EDIFICIO': str,
             'ESPACIO': str,
@@ -195,10 +195,10 @@ def importarInstitucion(path):
     nombre_archivo, extension = os.path.splitext(nombre_archivo_con_extension) 
 
     # Depende del nombre del archivo se importaran las titulaciones o los campus
-    if nombre_archivo == 'uxxi':
+    if nombre_archivo == 'titulaciones':
         titulaciones = importar_Titulaciones(path, "ETSII")
 
-    elif nombre_archivo == 'mostoles2324.v1':
+    elif nombre_archivo == 'campus':
         campuses, aulasCampus, aulasTipo = importar_Campus(path)
     
     return titulaciones, campuses, aulasCampus, aulasTipo
