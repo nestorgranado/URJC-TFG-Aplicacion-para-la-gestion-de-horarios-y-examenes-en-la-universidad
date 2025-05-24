@@ -47,6 +47,17 @@ Si usas Linux o macOS y necesitas permisos de administrador:
 ```sh
 sudo pip install lxml
 ```
+Instalar openpyxl:
+
+```sh
+pip install openpyxl
+```
+
+Si usas Linux o macOS y necesitas permisos de administrador:
+
+```sh
+sudo pip install openpyxl
+```
 
 ## Uso
 
