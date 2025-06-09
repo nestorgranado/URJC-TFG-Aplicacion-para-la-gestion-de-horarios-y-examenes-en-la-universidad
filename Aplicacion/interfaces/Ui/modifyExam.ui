@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Modificar Examenes</string>
+    <string>Modificar Exámenes</string>
    </property>
   </widget>
   <widget class="QListWidget" name="actividadesList">

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>491</width>
-    <height>284</height>
+    <height>287</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -102,7 +102,7 @@
        </font>
       </property>
       <property name="text">
-       <string>se realizan simultaneamente</string>
+       <string>se realizan simultáneamente</string>
       </property>
      </widget>
     </item>

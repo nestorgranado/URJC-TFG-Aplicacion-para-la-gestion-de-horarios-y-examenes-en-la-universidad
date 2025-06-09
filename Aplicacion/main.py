@@ -222,6 +222,12 @@ class ModificarName(QWidget, Ui_ModificarName):
             
             # Actualizar el elemento en la lista de Campus
             self.nameList[self.selected_index].setNombre(nuevo_texto)
+
+            # Actualizar el elemento de la lista de aulas por campus
+            global aulasPorCampus
+            antiguo = aulasPorCampus[quitar_acentos(self.list.item(self.selected_index).text())]
+            aulasPorCampus[quitar_acentos(nuevo_texto)] = antiguo
+            del antiguo
             
             # Actualizar el elemento visualmente en el QListWidget
             self.list.item(self.selected_index).setText(nuevo_texto)
@@ -234,6 +240,10 @@ class ModificarName(QWidget, Ui_ModificarName):
         nuevo_campus = Campus(nuevo_texto)
         self.nameList.append(nuevo_campus)
         
+        # Añadir el campus a la lista de aulas por campus
+        global aulasPorCampus
+        aulasPorCampus[quitar_acentos(nuevo_texto)] = []
+        
         # Agregar el nuevo texto como un nuevo item en el QListWidget
         self.list.addItem(nuevo_texto)
 
@@ -241,6 +251,9 @@ class ModificarName(QWidget, Ui_ModificarName):
         if self.selected_index is not None:  # Verificar si hay un elemento seleccionado
             # Eliminar el elemento de la lista de Campus
             del self.nameList[self.selected_index]
+
+            # Eliminar campus de las aulas por campus
+            del aulasPorCampus[quitar_acentos(self.nombreText.text())]
             
             # Eliminar el elemento del QListWidget
             self.list.takeItem(self.selected_index)
@@ -487,12 +500,13 @@ class ModificarAula(QWidget, Ui_ModificarAula):
         indice = 0
         salir = False
         while indice < len(lista) and not salir:
-            if lista[indice].getNumero() == aula.getNumero():
+            if lista[indice].getNumero() == aula.getNumero() and lista[indice].getEdificio() == aula.getEdificio():
                 salir = True
             indice+=1
         return indice
     
     def modificar_elemento(self):
+        global aulasPorTipo, aulasPorCampus
         if self.aula_index is not None:  # Verificar si hay un elemento seleccionado
             aula = self.aulas[self.aula_index]
             tipo = aula.getTipo()
@@ -506,8 +520,12 @@ class ModificarAula(QWidget, Ui_ModificarAula):
             # Actualizar el elemento en la lista de titulaciones
             nueva_aula = Aula(nuevo_numero, self.edificios[self.edificio_index].getNombre(), nuevo_capClase, nuevo_capExamen, nuevo_tipo) 
 
+            # Actualizar aulas por campus
+            indiceAulaCampus = self.calcularIndice(aulasPorCampus[self.campuses[self.campus_index].getNombre()])
+            aulasPorCampus[self.campuses[self.campus_index]][indiceAulaCampus] = nueva_aula
+
+            # Actulizar aulas por tipo
             if tipo != nuevo_tipo:
-                global aulasPorTipo
                 indiceAulaTipo = self.calcularIndice(aulasPorTipo["TODAS"])
                 aulasPorTipo["TODAS"][indiceAulaTipo] = nueva_aula
                 indiceAulaTipo = self.calcularIndice(aulasPorTipo[tipo])
@@ -566,9 +584,20 @@ class ModificarAula(QWidget, Ui_ModificarAula):
         institucion.setCampus(self.campuses)
 
     def borrar_elemento(self):
+        global aulasPorTipo, aulasPorCampus
         if self.aula_index is not None:  # Verificar si hay un elemento seleccionado
+            aula = self.aulas[self.aula_index]
             # Eliminar el elemento de la lista de Campus
             del self.aulas[self.aula_index]
+
+            # Eliminar de aulas por campus
+            indiceAulaCampus = self.calcularIndice(aulasPorCampus[self.campuses[self.campus_index].getNombre()])
+            del aulasPorCampus[self.campuses[self.campus_index]][indiceAulaCampus]
+            # Eliminar de aulas por tipo
+            indiceAulaTipo = self.calcularIndice(aulasPorTipo["TODAS"])
+            del aulasPorTipo["TODAS"][indiceAulaTipo]
+            indiceAulaTipo = self.calcularIndice(aulasPorTipo[aula.getTipo()])
+            del aulasPorTipo[aula.getTipo()][indiceAulaTipo]
             
             # Eliminar el elemento del QListWidget
             self.list.takeItem(self.aula_index)
@@ -2276,12 +2305,12 @@ if __name__ == '__main__':
     totalAulasCombinadas = 0
 
     # Datos Aplicación
-    tipoHorario = ""                    #Tipo de horaio que se va ha realizar
-    institucion = Universidad("URJC")   #ED Universidad
-    alumnos = []                        # Titulaciones-Cursos-Asignaturas
-    asignaturasElegidas = []            # Asignaturas que se han usado para las Actividades
-    aulasPorCampus = {}                 # Aulas separadas por campus
-    aulasPorTipo = {}                   # Aulas separadas por Tipo de aula
+    tipoHorario = ""                                                                                      # Tipo de horaio que se va ha realizar
+    institucion = Universidad("URJC")                                                                     # ED Universidad
+    alumnos = []                                                                                          # Titulaciones-Cursos-Asignaturas
+    asignaturasElegidas = []                                                                              # Asignaturas que se han usado para las Actividades
+    aulasPorCampus = {}                                                                                   # Aulas separadas por campus
+    aulasPorTipo = {"TODAS": [], "AULA": [], "AULA MAGNA": [], "SEMINARIO": [], "LABORATORIO": []}        # Aulas separadas por Tipo de aula
         # Dias y horas
     diasSemanaClases = Dias()                 
     horasDiaClases = Horas()  

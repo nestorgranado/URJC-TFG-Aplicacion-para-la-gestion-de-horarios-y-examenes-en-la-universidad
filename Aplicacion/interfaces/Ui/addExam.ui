@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Examenes</string>
+    <string>Exámenes</string>
    </property>
   </widget>
   <widget class="QLabel" name="titulacion">

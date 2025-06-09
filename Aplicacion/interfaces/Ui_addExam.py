@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'addExamNBiudb.ui'
+## Form generated from reading UI file 'addExamzMihZU.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -55,7 +55,7 @@ class Ui_addExamen(object):
 
     def retranslateUi(self, addExamen):
         addExamen.setWindowTitle(QCoreApplication.translate("addExamen", u"a\u00f1adirExamen", None))
-        self.Title.setText(QCoreApplication.translate("addExamen", u"Examenes", None))
+        self.Title.setText(QCoreApplication.translate("addExamen", u"Ex\u00e1menes", None))
         self.titulacion.setText(QCoreApplication.translate("addExamen", u"Titluaci\u00f3n", None))
         self.duracion.setText(QCoreApplication.translate("addExamen", u"Duraci\u00f3n", None))
         self.save.setText(QCoreApplication.translate("addExamen", u"Guardar", None))

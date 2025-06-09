@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'othersnqJcTD.ui'
+## Form generated from reading UI file 'othersZhseUm.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -99,7 +99,7 @@ class Ui_otrosHorarios(object):
 
     def retranslateUi(self, otrosHorarios):
         otrosHorarios.setWindowTitle(QCoreApplication.translate("otrosHorarios", u"otrosHorarios", None))
-        self.numDias.setText(QCoreApplication.translate("otrosHorarios", u"N\u00famero de dias", None))
+        self.numDias.setText(QCoreApplication.translate("otrosHorarios", u"N\u00famero de d\u00edas", None))
         self.title.setText(QCoreApplication.translate("otrosHorarios", u"D\u00edas por Semana", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.dias), QCoreApplication.translate("otrosHorarios", u"D\u00edas por semana", None))
         self.title_2.setText(QCoreApplication.translate("otrosHorarios", u"Horas por D\u00eda", None))

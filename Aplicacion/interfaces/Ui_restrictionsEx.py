@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'restrictionsExNeUqgh.ui'
+## Form generated from reading UI file 'restrictionsExfiRKSv.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -62,7 +62,7 @@ class Ui_RestriccionesEx(object):
     def retranslateUi(self, RestriccionesEx):
         RestriccionesEx.setWindowTitle(QCoreApplication.translate("RestriccionesEx", u"RestriccionesEx", None))
         self.Title.setText(QCoreApplication.translate("RestriccionesEx", u"Restricciones", None))
-        self.mismoDia.setText(QCoreApplication.translate("RestriccionesEx", u"Examenes mimmo d\u00eda y hora", None))
+        self.mismoDia.setText(QCoreApplication.translate("RestriccionesEx", u"Ex\u00e1menes mimmo d\u00eda y hora", None))
         self.separacion.setText(QCoreApplication.translate("RestriccionesEx", u"Separaci\u00f3n entre asignaturas", None))
         self.tipoAula.setText(QCoreApplication.translate("RestriccionesEx", u"Tipo aula para un examen", None))
         self.todas.setText(QCoreApplication.translate("RestriccionesEx", u"Todas las restricciones", None))

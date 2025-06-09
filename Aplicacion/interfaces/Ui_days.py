@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'daysSLmaVu.ui'
+## Form generated from reading UI file 'daysaVJECO.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -36,18 +36,18 @@ class Ui_dias(object):
         self.save = QPushButton(dias)
         self.save.setObjectName(u"save")
         self.save.setGeometry(QRect(30, 450, 75, 24))
-        self.widget = QWidget(dias)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(30, 90, 164, 25))
-        self.formLayout = QFormLayout(self.widget)
+        self.layoutWidget = QWidget(dias)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(30, 90, 171, 25))
+        self.formLayout = QFormLayout(self.layoutWidget)
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setContentsMargins(0, 0, 0, 0)
-        self.numDias = QLabel(self.widget)
+        self.numDias = QLabel(self.layoutWidget)
         self.numDias.setObjectName(u"numDias")
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.numDias)
 
-        self.numDiasText = QSpinBox(self.widget)
+        self.numDiasText = QSpinBox(self.layoutWidget)
         self.numDiasText.setObjectName(u"numDiasText")
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.numDiasText)
@@ -62,6 +62,6 @@ class Ui_dias(object):
         dias.setWindowTitle(QCoreApplication.translate("dias", u"dias", None))
         self.title.setText(QCoreApplication.translate("dias", u"D\u00edas por Semana", None))
         self.save.setText(QCoreApplication.translate("dias", u"Guardar", None))
-        self.numDias.setText(QCoreApplication.translate("dias", u"N\u00famero de dias", None))
+        self.numDias.setText(QCoreApplication.translate("dias", u"N\u00famero de d\u00edas", None))
     # retranslateUi
 

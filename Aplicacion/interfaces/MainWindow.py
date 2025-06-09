@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainWindowKEcSOM.ui'
+## Form generated from reading UI file 'MainWindowAsVDQE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -95,7 +95,7 @@ class Ui_MainWindow(object):
         self.institucion.setText(QCoreApplication.translate("MainWindow", u"Instituci\u00f3n", None))
         self.edificio.setText(QCoreApplication.translate("MainWindow", u"Edificio", None))
         self.aula.setText(QCoreApplication.translate("MainWindow", u"Aula", None))
-        self.titulacion.setText(QCoreApplication.translate("MainWindow", u"Titulacion", None))
+        self.titulacion.setText(QCoreApplication.translate("MainWindow", u"Titulaci\u00f3n", None))
         self.asignatura.setText(QCoreApplication.translate("MainWindow", u"Asignatura", None))
         self.crearHorario.setText(QCoreApplication.translate("MainWindow", u"Crear Horario", None))
     # retranslateUi

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'examsFgcysK.ui'
+## Form generated from reading UI file 'examsCIPjPc.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -103,10 +103,10 @@ class Ui_Examenes(object):
 
     def retranslateUi(self, Examenes):
         Examenes.setWindowTitle(QCoreApplication.translate("Examenes", u"horarioEx", None))
-        self.Title.setText(QCoreApplication.translate("Examenes", u"Examenes", None))
+        self.Title.setText(QCoreApplication.translate("Examenes", u"Ex\u00e1menes", None))
         self.Datos.setTitle(QCoreApplication.translate("Examenes", u"Datos", None))
-        self.modificar.setText(QCoreApplication.translate("Examenes", u"Modificar Examenes", None))
-        self.label.setText(QCoreApplication.translate("Examenes", u"Periodo de examenes", None))
+        self.modificar.setText(QCoreApplication.translate("Examenes", u"Modificar Ex\u00e1menes", None))
+        self.label.setText(QCoreApplication.translate("Examenes", u"Periodo de ex\u00e1menes", None))
         self.dias.setText(QCoreApplication.translate("Examenes", u"D\u00edas", None))
         self.aulasCombinadas.setText(QCoreApplication.translate("Examenes", u"Aulas Combinadas", None))
         self.exportar.setText(QCoreApplication.translate("Examenes", u"Exportar Datos", None))

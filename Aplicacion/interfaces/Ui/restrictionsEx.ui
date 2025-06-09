@@ -29,7 +29,7 @@
    <item row="2" column="0">
     <widget class="QPushButton" name="mismoDia">
      <property name="text">
-      <string>Examenes mimmo día y hora</string>
+      <string>Exámenes mimmo día y hora</string>
      </property>
     </widget>
    </item>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'activityTurnfPIepG.ui'
+## Form generated from reading UI file 'activityTurnOQpAug.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -100,7 +100,7 @@ class Ui_res_turno(object):
         self.save.setText(QCoreApplication.translate("res_turno", u"Guardar", None))
         self.horaIni.setText(QCoreApplication.translate("res_turno", u"Hora Inicio", None))
         self.horaFin.setText(QCoreApplication.translate("res_turno", u"Hora Fin", None))
-        self.titulacion.setText(QCoreApplication.translate("res_turno", u"Titulacion", None))
+        self.titulacion.setText(QCoreApplication.translate("res_turno", u"Titulaci\u00f3n", None))
         self.curso.setText(QCoreApplication.translate("res_turno", u"Curso", None))
         self.obligatoria.setText(QCoreApplication.translate("res_turno", u"Obligatoria", None))
     # retranslateUi

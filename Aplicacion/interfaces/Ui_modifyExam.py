@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'modifyExamznNtxR.ui'
+## Form generated from reading UI file 'modifyExammOkVfH.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -84,7 +84,7 @@ class Ui_ModificarExamenes(object):
 
     def retranslateUi(self, ModificarExamenes):
         ModificarExamenes.setWindowTitle(QCoreApplication.translate("ModificarExamenes", u"modificarExamenes", None))
-        self.Title.setText(QCoreApplication.translate("ModificarExamenes", u"Modificar Examenes", None))
+        self.Title.setText(QCoreApplication.translate("ModificarExamenes", u"Modificar Ex\u00e1menes", None))
         self.asignatura.setText(QCoreApplication.translate("ModificarExamenes", u"Asignatura", None))
         self.alumnos.setText(QCoreApplication.translate("ModificarExamenes", u"Alumnos", None))
         self.duracion.setText(QCoreApplication.translate("ModificarExamenes", u"Duarci\u00f3n", None))

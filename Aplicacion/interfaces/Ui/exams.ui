@@ -28,7 +28,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Examenes</string>
+    <string>Exámenes</string>
    </property>
   </widget>
   <widget class="QGroupBox" name="Datos">
@@ -56,7 +56,7 @@
      <item>
       <widget class="QPushButton" name="modificar">
        <property name="text">
-        <string>Modificar Examenes</string>
+        <string>Modificar Exámenes</string>
        </property>
       </widget>
      </item>
@@ -65,7 +65,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Periodo de examenes</string>
+          <string>Periodo de exámenes</string>
          </property>
         </widget>
        </item>

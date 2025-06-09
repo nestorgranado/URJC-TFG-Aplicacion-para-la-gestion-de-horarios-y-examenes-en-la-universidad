@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'addVirtuaRoomsdoGsNn.ui'
+## Form generated from reading UI file 'addVirtuaRoomsozrOWW.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -74,7 +74,7 @@ class Ui_CrearAulaCombinada(object):
         self.campus.setText(QCoreApplication.translate("CrearAulaCombinada", u"Campus", None))
         self.edificio.setText(QCoreApplication.translate("CrearAulaCombinada", u"Edificio", None))
         self.cantidad.setText(QCoreApplication.translate("CrearAulaCombinada", u"Cantidad de Aulas Combinadas", None))
-        self.capacidad.setText(QCoreApplication.translate("CrearAulaCombinada", u"Capacidad Minima", None))
+        self.capacidad.setText(QCoreApplication.translate("CrearAulaCombinada", u"Capacidad M\u00ednima", None))
         self.add.setText(QCoreApplication.translate("CrearAulaCombinada", u"Crear", None))
         self.tipoAula.setText(QCoreApplication.translate("CrearAulaCombinada", u"Tipo Aula", None))
     # retranslateUi

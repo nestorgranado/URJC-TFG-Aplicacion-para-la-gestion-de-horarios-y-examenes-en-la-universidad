@@ -110,7 +110,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Capacidad Minima</string>
+    <string>Capacidad Mínima</string>
    </property>
   </widget>
   <widget class="QSpinBox" name="capacidadText">

@@ -87,7 +87,7 @@
      <item row="0" column="2">
       <widget class="QPushButton" name="titulacion">
        <property name="text">
-        <string>Titulacion</string>
+        <string>Titulación</string>
        </property>
       </widget>
      </item>

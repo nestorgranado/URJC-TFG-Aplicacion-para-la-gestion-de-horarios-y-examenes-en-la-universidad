@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'daysBetweenExamsNhtBvg.ui'
+## Form generated from reading UI file 'daysBetweenExamslkNavB.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -22,10 +22,10 @@ class Ui_res_separacionDias(object):
     def setupUi(self, res_separacionDias):
         if not res_separacionDias.objectName():
             res_separacionDias.setObjectName(u"res_separacionDias")
-        res_separacionDias.resize(517, 281)
+        res_separacionDias.resize(548, 281)
         self.Title = QLabel(res_separacionDias)
         self.Title.setObjectName(u"Title")
-        self.Title.setGeometry(QRect(20, 20, 501, 61))
+        self.Title.setGeometry(QRect(20, 20, 521, 61))
         font = QFont()
         font.setPointSize(28)
         self.Title.setFont(font)

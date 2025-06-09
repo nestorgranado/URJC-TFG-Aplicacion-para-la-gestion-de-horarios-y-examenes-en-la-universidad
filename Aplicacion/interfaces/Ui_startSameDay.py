@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'startSameDaydZlhct.ui'
+## Form generated from reading UI file 'startSameDaydSmgJF.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.7.3
 ##
@@ -22,7 +22,7 @@ class Ui_res_mismoDia(object):
     def setupUi(self, res_mismoDia):
         if not res_mismoDia.objectName():
             res_mismoDia.setObjectName(u"res_mismoDia")
-        res_mismoDia.resize(491, 284)
+        res_mismoDia.resize(491, 287)
         self.actividad1 = QLabel(res_mismoDia)
         self.actividad1.setObjectName(u"actividad1")
         self.actividad1.setGeometry(QRect(30, 150, 71, 16))
@@ -73,7 +73,7 @@ class Ui_res_mismoDia(object):
         self.actividad2.setText(QCoreApplication.translate("res_mismoDia", u"Actividad 2", None))
         self.save.setText(QCoreApplication.translate("res_mismoDia", u"Guardar", None))
         self.Title.setText(QCoreApplication.translate("res_mismoDia", u"Dos Actividades ", None))
-        self.Title2.setText(QCoreApplication.translate("res_mismoDia", u"se realizan simultaneamente", None))
+        self.Title2.setText(QCoreApplication.translate("res_mismoDia", u"se realizan simult\u00e1neamente", None))
         self.obligatoria.setText(QCoreApplication.translate("res_mismoDia", u"Obligatoria", None))
     # retranslateUi
 
