@@ -108,7 +108,7 @@ def importar_Titulaciones(path, nombre):
         if asignaturas_dict[codigo_asig] is None:
             asignatura = Asignatura(
                 codigo=codigo_asig,
-                nombre=row['ASIG_PADRE'],
+                nombre=row['ASIG_PADRE'] + "(" + codigo_plan + ")",
                 titulacion=nombreTitulacionFinal,
                 numAlumnos=row['TOTAL'],
                 curso=row['CURSO_PADRE']
@@ -121,7 +121,7 @@ def importar_Titulaciones(path, nombre):
             campus_hijasMatches = re.findall(r'\((.*?)\)', nombre_plan)
             campusHija = campus_hijasMatches[-1].strip() if campus_hijasMatches else None
             nombreHija = plan_hija + " (" + campusHija + ")"
-            tupla_hija = (nombreHija, row['ASIG_HIJA'])
+            tupla_hija = (nombreHija, row['ASIG_HIJA']+ "(" + cod_plan_hija + ")")
             asignaturas_dict[codigo_asig].agregar_hija(tupla_hija)
 
         # Agregar la asignatura a la titulación si no está ya añadida

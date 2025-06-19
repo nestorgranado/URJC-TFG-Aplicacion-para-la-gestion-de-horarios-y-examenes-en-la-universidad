@@ -95,14 +95,14 @@ def exportarCursos(root, alumnos):
 # Exportar Días por Semana
 def exportarDias(root, diasSemanaClases, diasSemanaExamenes):
     clasesXML = ET.SubElement(root, "Clases")
-    ET.SubElement(clasesXML, "NuemroDias").text = str(diasSemanaClases.getNumDias())
+    ET.SubElement(clasesXML, "NumeroDias").text = str(diasSemanaClases.getNumDias())
 
     for dia in diasSemanaClases.getDias():
         diaXML = ET.SubElement(clasesXML, "Dia")
         ET.SubElement(diaXML, "Nombre").text = dia
 
     examenesXML = ET.SubElement(root, "Examenes")
-    ET.SubElement(examenesXML, "NuemroDias").text = str(diasSemanaExamenes.getNumDias())
+    ET.SubElement(examenesXML, "NumeroDias").text = str(diasSemanaExamenes.getNumDias())
 
     for dia in diasSemanaExamenes.getDias():
         diaXML = ET.SubElement(examenesXML, "Dia")
@@ -111,14 +111,14 @@ def exportarDias(root, diasSemanaClases, diasSemanaExamenes):
 # Exportar Horas por Día
 def exportarHoras(root, horasDiaClases, horasDiaExamenes):
     clasesXML = ET.SubElement(root, "Clases")
-    ET.SubElement(clasesXML, "NuemroHoras").text = str(horasDiaClases.getNumHoras())
+    ET.SubElement(clasesXML, "NumeroHoras").text = str(horasDiaClases.getNumHoras())
 
     for hora in horasDiaClases.getHoras():
         horaXML = ET.SubElement(clasesXML, "Hora")
         ET.SubElement(horaXML, "Nombre").text = hora
 
     examenesXML = ET.SubElement(root, "Examenes")
-    ET.SubElement(examenesXML, "NuemroHoras").text = str(horasDiaExamenes.getNumHoras())
+    ET.SubElement(examenesXML, "NumeroHoras").text = str(horasDiaExamenes.getNumHoras())
 
     for hora in horasDiaExamenes.getHoras():
         horaXML = ET.SubElement(examenesXML, "Hora")

@@ -938,7 +938,11 @@ class ListaRestricionesEx(QWidget, Ui_ListaRestriccionesEx):
                 estado = "Activa"
             else:
                 estado = "Desactivada"
-            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+            match restriccion.getNombre():
+                case "RestriccionXDiasEntreActividades":
+                    self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividades"][0].getAsignatura() + "-" + estado)
+                case _:
+                    self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
         for restriccion in self.restriccionesL:
             if restriccion.getEstado():
                 estado = "Activa"
@@ -1019,6 +1023,7 @@ class Res_TipoAula(QWidget, Ui_res_tipoAula):
         if restriccion != None:
             self.actividadText.setCurrentText(restriccion.getDatos()["Actividad"].getAsignatura())
             self.tipoAulaText.setCurrentText(restriccion.getDatos()["Tipo"])
+            self.actividadDato = restriccion.getDatos()["Actividad"]
 
         # Recoger dato del selector
         self.actividadText.currentIndexChanged.connect(self.recogerDatoExamen)
@@ -1159,6 +1164,8 @@ class Res_SeparacionDias(QWidget, Ui_res_separacionDias):
         if restriccion != None:
             self.actividad1Text.setCurrentText(restriccion.getDatos()["Actividades"][0].getAsignatura())
             self.actividad2Text.setCurrentText(restriccion.getDatos()["Actividades"][1].getAsignatura())
+            self.actividad1Dato = restriccion.getDatos()["Actividades"][0]
+            self.actividad2Dato = restriccion.getDatos()["Actividades"][1]
             self.separacionText.setValue(restriccion.getDatos()["Separacion"])
             if restriccion.isObligatoria():
                 self.obligatoria.setChecked(True)
@@ -1560,7 +1567,13 @@ class ListaRestricionesCl(QWidget, Ui_ListaRestriccionesCl):
                 estado = "Activa"
             else:
                 estado = "Desactivada"
-            self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
+            match restriccion.getNombre():
+                case "RestriccionTurno" | "MaxHorasPorDia" | "MaxHuecosPorSemana":
+                    self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Curso"] + "-" + estado)
+                case "RestriccionXDiasEntreActividades" | "SeparacionClasesMismaAsignatura":
+                    self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividades"][0].getAsignatura() + "-" + estado)
+                case _:
+                    self.listaRest.addItem(restriccion.getNombre() + "-" + restriccion.getDatos()["Actividad"].getAsignatura() + "-" + estado)
         for restriccion in self.restriccionesL:
             if restriccion.getEstado():
                 estado = "Activa"
@@ -1688,9 +1701,9 @@ class Res_MaxHorasDia(QWidget, Ui_MaxHorasDia):
         self.titulacionText.currentIndexChanged.connect(self.actualizarGrupos)
 
         if self.restriccion != None:
-            self.titulacionText.setCurrentText(restriccion.getDatos["Curso"].split('-')[0])
-            self.grupoText.setCurrentText(restriccion.getDatos["Curso"])
-            self.horasText.setValue(restriccion.getDatos["Horas"])
+            self.titulacionText.setCurrentText(restriccion.getDatos()["Curso"].split('-')[0])
+            self.grupoText.setCurrentText(restriccion.getDatos()["Curso"])
+            self.horasText.setValue(restriccion.getDatos()["Horas"])
 
         # Guardar
         self.save.clicked.connect(self.guardar)
@@ -1748,9 +1761,9 @@ class Res_MaxHuecosSemana(QWidget, Ui_MaxHuecosSemana):
         self.titulacionText.currentIndexChanged.connect(self.actualizarGrupos)
 
         if self.restriccion != None:
-            self.titulacionText.setCurrentText(self.restriccion.getDatos["Curso"].split('-')[0])
-            self.grupoText.setCurrentText(self.restriccion.getDatos["Curso"])
-            self.horasText.setValue(self.restriccion.getDatos["Horas"])
+            self.titulacionText.setCurrentText(self.restriccion.getDatos()["Curso"].split('-')[0])
+            self.grupoText.setCurrentText(self.restriccion.getDatos()["Curso"])
+            self.huecosText.setValue(self.restriccion.getDatos()["Horas"])
 
         # Guardar
         self.save.clicked.connect(self.guardar)
